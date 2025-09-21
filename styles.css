@@ -77,9 +77,16 @@ img {
   box-shadow: 0 16px 34px rgba(237, 122, 122, 0.22);
 }
 
+.eyebrow-icon {
+  margin-right: 0.65rem;
+  font-size: 1.25em;
+  display: inline-flex;
+  align-items: center;
+}
+
 h1 {
   font-family: var(--body-font);
-  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+  font-size: clamp(1.7rem, 2.8vw, 2.3rem);
   margin: 0.6rem 0 0.8rem;
   letter-spacing: 0.03em;
   font-weight: 700;

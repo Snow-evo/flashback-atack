@@ -69,8 +69,8 @@ img {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.72);
   color: var(--accent);
-  font-family: var(--heading-font);
-  font-weight: 600;
+  font-family: var(--body-font);
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: none;
   font-size: clamp(1.8rem, 5vw, 2.8rem);
@@ -78,10 +78,11 @@ img {
 }
 
 h1 {
-  font-family: var(--heading-font);
+  font-family: var(--body-font);
   font-size: clamp(1.9rem, 3.2vw, 2.6rem);
   margin: 0.6rem 0 0.8rem;
   letter-spacing: 0.03em;
+  font-weight: 700;
 }
 
 .lead {

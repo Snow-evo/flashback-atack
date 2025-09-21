@@ -122,6 +122,13 @@ img {
   }
 }
 
+.eyebrow-icon {
+  margin-right: 0.65rem;
+  font-size: 1.25em;
+  display: inline-flex;
+  align-items: center;
+}
+
 h1 {
   font-family: var(--body-font);
   font-size: clamp(1.7rem, 2.8vw, 2.3rem);

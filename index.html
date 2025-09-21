@@ -784,35 +784,124 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       var favoriteButtons = document.querySelectorAll('.favorite-button');
+      var storageKey = 'favoriteTips';
+      var favorites = getStoredFavorites();
+
+      function getStoredFavorites() {
+        try {
+          var stored = window.localStorage.getItem(storageKey);
+
+          if (!stored) {
+            return [];
+          }
+
+          var parsed = JSON.parse(stored);
+
+          if (!Array.isArray(parsed)) {
+            return [];
+          }
+
+          var sanitized = parsed.filter(function (item) {
+            return typeof item === 'string' && item;
+          });
+
+          if (sanitized.length !== parsed.length) {
+            try {
+              window.localStorage.setItem(storageKey, JSON.stringify(sanitized));
+            } catch (storageError) {
+              // ignore cleanup failure
+            }
+          }
+
+          return sanitized;
+        } catch (error) {
+          return [];
+        }
+      }
+
+      function saveFavorites() {
+        try {
+          window.localStorage.setItem(storageKey, JSON.stringify(favorites));
+        } catch (error) {
+          // localStorageが利用できない場合は永続化をスキップ
+        }
+      }
+
+      function setButtonState(button, isFavorite) {
+        button.setAttribute('aria-pressed', String(isFavorite));
+
+        if (button.dataset.labelAdd && button.dataset.labelRemove) {
+          button.setAttribute(
+            'aria-label',
+            isFavorite ? button.dataset.labelRemove : button.dataset.labelAdd
+          );
+        }
+
+        var srText = button.querySelector('.sr-only');
+        if (srText) {
+          srText.textContent = isFavorite ? 'お気に入りを解除' : 'お気に入りに追加';
+        }
+      }
+
+      function addFavorite(id) {
+        if (id && favorites.indexOf(id) === -1) {
+          favorites.push(id);
+          saveFavorites();
+        }
+      }
+
+      function removeFavorite(id) {
+        var index = favorites.indexOf(id);
+
+        if (index !== -1) {
+          favorites.splice(index, 1);
+          saveFavorites();
+        }
+      }
 
       favoriteButtons.forEach(function (button) {
         var listItem = button.closest('li');
         var heading = listItem ? listItem.querySelector('h3') : null;
+        var tipNumber = listItem ? listItem.querySelector('.tip-number') : null;
+        var title = heading ? heading.textContent.trim() : '';
+        var tipNumberValue = tipNumber ? tipNumber.textContent.trim() : '';
+        var identifier = '';
 
-        if (heading) {
-          var title = heading.textContent.trim();
+        if (tipNumberValue && title) {
+          identifier = tipNumberValue + ':' + title;
+        } else if (title) {
+          identifier = title;
+        } else {
+          identifier = tipNumberValue;
+        }
+
+        identifier = identifier ? identifier.trim() : '';
+        button.dataset.favoriteId = identifier;
+
+        if (title) {
           var labelAdd = '「' + title + '」をお気に入りに追加';
           var labelRemove = '「' + title + '」のお気に入りを解除';
           button.dataset.labelAdd = labelAdd;
           button.dataset.labelRemove = labelRemove;
-          button.setAttribute('aria-label', labelAdd);
         }
+
+        var isInitiallyFavorite = identifier && favorites.indexOf(identifier) !== -1;
+        setButtonState(button, isInitiallyFavorite);
 
         button.addEventListener('click', function () {
           var isPressed = button.getAttribute('aria-pressed') === 'true';
           var nextState = !isPressed;
-          button.setAttribute('aria-pressed', String(nextState));
 
-          if (button.dataset.labelAdd && button.dataset.labelRemove) {
-            button.setAttribute(
-              'aria-label',
-              nextState ? button.dataset.labelRemove : button.dataset.labelAdd
-            );
-          }
+          setButtonState(button, nextState);
 
-          var srText = button.querySelector('.sr-only');
-          if (srText) {
-            srText.textContent = nextState ? 'お気に入りを解除' : 'お気に入りに追加';
+          var favoriteId = button.dataset.favoriteId;
+
+          if (favoriteId) {
+            if (nextState) {
+              addFavorite(favoriteId);
+            } else {
+              removeFavorite(favoriteId);
+            }
           }
         });
       });

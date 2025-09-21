@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
+  <header id="top" class="site-header">
     <div class="inner">
       <p class="eyebrow" aria-label="Flashback First Aid">
         <span class="eyebrow-icon" aria-hidden="true">
@@ -480,5 +480,38 @@
     </div>
     
   </footer>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="ページの先頭へ戻る">
+    <span aria-hidden="true">▲</span>
+    <span class="visually-hidden">ページの先頭へ戻る</span>
+  </button>
+
+  <script>
+    (function () {
+      const backToTopButton = document.getElementById('backToTop');
+      if (!backToTopButton) return;
+
+      const prefersReducedMotionQuery = typeof window.matchMedia === 'function'
+        ? window.matchMedia('(prefers-reduced-motion: reduce)')
+        : null;
+
+      const toggleVisibility = () => {
+        if (window.scrollY > 240) {
+          backToTopButton.classList.add('is-visible');
+        } else {
+          backToTopButton.classList.remove('is-visible');
+        }
+      };
+
+      window.addEventListener('scroll', toggleVisibility, { passive: true });
+      toggleVisibility();
+
+      backToTopButton.addEventListener('click', () => {
+        const prefersReducedMotion = prefersReducedMotionQuery && prefersReducedMotionQuery.matches;
+        const scrollOptions = prefersReducedMotion ? { top: 0 } : { top: 0, behavior: 'smooth' };
+        window.scrollTo(scrollOptions);
+      });
+    })();
+  </script>
 </body>
 </html>

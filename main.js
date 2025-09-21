@@ -21,12 +21,18 @@
 
   function loadFavorites(serializedValue) {
     if (typeof serializedValue === 'string') {
-      return parseFavorites(serializedValue);
+      return parseFavorites(serializedValue).values;
     }
 
     try {
       const stored = window.localStorage.getItem(STORAGE_KEY);
-      return parseFavorites(stored);
+      const { values, migrated } = parseFavorites(stored);
+
+      if (stored && migrated) {
+        persistNormalizedFavorites(values);
+      }
+
+      return values;
     } catch (error) {
       return [];
     }
@@ -34,22 +40,84 @@
 
   function parseFavorites(serialized) {
     if (!serialized) {
-      return [];
+      return { values: [], migrated: false };
     }
 
     try {
       const parsed = JSON.parse(serialized);
       if (!Array.isArray(parsed)) {
-        return [];
+        return { values: [], migrated: false };
       }
 
-      return parsed
-        .filter((item) => typeof item === 'string')
-        .map((item) => item.trim())
-        .filter((item) => item.length > 0);
+      const values = [];
+      let migrated = false;
+
+      parsed.forEach((item) => {
+        if (typeof item !== 'string') {
+          migrated = true;
+          return;
+        }
+
+        const trimmed = item.trim();
+        if (trimmed !== item) {
+          migrated = true;
+        }
+
+        if (!trimmed) {
+          return;
+        }
+
+        const normalized = normalizeFavoriteId(trimmed);
+        if (!normalized) {
+          migrated = true;
+          return;
+        }
+
+        if (normalized !== trimmed) {
+          migrated = true;
+        }
+
+        values.push(normalized);
+      });
+
+      return { values, migrated };
     } catch (error) {
-      return [];
+      return { values: [], migrated: false };
     }
+  }
+
+  function persistNormalizedFavorites(values) {
+    try {
+      const payload = JSON.stringify(Array.from(new Set(values)).sort());
+      window.localStorage.setItem(STORAGE_KEY, payload);
+    } catch (error) {
+      // localStorageが利用できない場合は永続化をスキップ
+    }
+  }
+
+  function normalizeFavoriteId(value) {
+    if (!value) {
+      return null;
+    }
+
+    const tipFormatMatch = value.match(/^tip-(\d+)$/u);
+    if (tipFormatMatch) {
+      const numericId = Number.parseInt(tipFormatMatch[1], 10);
+      if (!Number.isNaN(numericId)) {
+        return `tip-${String(numericId).padStart(2, '0')}`;
+      }
+      return null;
+    }
+
+    const legacyFormatMatch = value.match(/^0*(\d+)\s*[:：]/u);
+    if (legacyFormatMatch) {
+      const numericId = Number.parseInt(legacyFormatMatch[1], 10);
+      if (!Number.isNaN(numericId)) {
+        return `tip-${String(numericId).padStart(2, '0')}`;
+      }
+    }
+
+    return null;
   }
 
   function persistFavorites() {

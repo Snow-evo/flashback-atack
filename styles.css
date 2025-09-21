@@ -80,6 +80,11 @@ img {
   box-shadow: 0 14px 30px rgba(237, 122, 122, 0.2);
 }
 
+.eyebrow-label {
+  display: inline-flex;
+  align-items: center;
+}
+
 .eyebrow-icon {
   display: inline-flex;
   align-items: center;

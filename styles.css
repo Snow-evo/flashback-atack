@@ -60,23 +60,28 @@ img {
   z-index: 1;
 }
 
+
 .eyebrow {
-  display: inline-block;
-  padding: 0.35rem 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.9rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.72);
   color: var(--accent);
+  font-family: var(--heading-font);
   font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  box-shadow: 0 16px 34px rgba(237, 122, 122, 0.22);
 }
 
 h1 {
   font-family: var(--heading-font);
-  font-size: clamp(2.4rem, 4vw, 3.4rem);
-  margin: 0.75rem 0 1rem;
-  letter-spacing: 0.04em;
+  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+  margin: 0.6rem 0 0.8rem;
+  letter-spacing: 0.03em;
 }
 
 .lead {

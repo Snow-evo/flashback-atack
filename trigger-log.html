@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="フラッシュバック時に感じたトリガーや感情を素早く記録できるフォーム。記録は端末にのみ保存されます。">
+  <title>フラッシュバック・トリガー記録</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="trigger-log.css">
+</head>
+<body class="trigger-log-page">
+  <header class="site-header log-header">
+    <div class="inner">
+      <p class="eyebrow" aria-label="Trigger Log">
+        <span class="eyebrow-icon" aria-hidden="true">
+          <svg class="bandage-icon" viewBox="0 0 64 24" role="presentation" focusable="false">
+            <rect class="bandage-base" x="4" y="6" width="56" height="12" rx="6"></rect>
+            <rect class="bandage-center" x="22" y="4" width="20" height="16" rx="5"></rect>
+            <circle class="bandage-hole" cx="28" cy="12" r="1.4"></circle>
+            <circle class="bandage-hole" cx="32" cy="12" r="1.4"></circle>
+            <circle class="bandage-hole" cx="36" cy="12" r="1.4"></circle>
+          </svg>
+        </span>
+        <span class="eyebrow-label">Trigger Log</span>
+      </p>
+      <h1>フラッシュバック・トリガー記録</h1>
+      <p class="lead">いま感じたこと、ちょっとだけ残そう。</p>
+      <a class="log-back-link" href="index.html">ガイドに戻る</a>
+    </div>
+  </header>
+
+  <main class="log-main">
+    <section class="log-section">
+      <div class="inner">
+        <div class="log-card log-card--form">
+          <div class="log-card__header">
+            <h2>トリガー記録フォーム</h2>
+            <p>心にひっかかった出来事を数タップでメモできます。入力内容はお使いの端末にのみ保存されます。</p>
+          </div>
+          <form id="trigger-log-form" class="trigger-form" novalidate>
+            <div class="form-field" data-field="trigger">
+              <div class="field-heading">
+                <h3>トリガー <span class="field-required">必須</span></h3>
+                <p class="field-description">当てはまるものを選択。複数選べます。</p>
+              </div>
+              <div class="tag-chips" data-tag-group="trigger" data-required="true">
+                <button type="button" class="tag-chip" data-value="sound" data-label="🔊 大きな音" aria-pressed="false">🔊 大きな音</button>
+                <button type="button" class="tag-chip" data-value="smell" data-label="👃 匂い" aria-pressed="false">👃 匂い</button>
+                <button type="button" class="tag-chip" data-value="gaze" data-label="👀 視線" aria-pressed="false">👀 視線</button>
+                <button type="button" class="tag-chip" data-value="words" data-label="🗣 言葉" aria-pressed="false">🗣 言葉</button>
+                <button type="button" class="tag-chip" data-value="person" data-label="👤 人" aria-pressed="false">👤 人</button>
+                <button type="button" class="tag-chip" data-value="place" data-label="📍 場所・環境" aria-pressed="false">📍 場所・環境</button>
+                <button type="button" class="tag-chip" data-value="unknown" data-label="❓ わからない" aria-pressed="false">❓ わからない</button>
+                <button type="button" class="tag-chip tag-chip--other" data-value="other" data-label="✍ その他" data-controls="trigger-other-field" aria-pressed="false" aria-expanded="false">✍ その他</button>
+              </div>
+              <p class="field-error" data-error-target="trigger" aria-live="polite"></p>
+              <div class="other-input" id="trigger-other-field" data-other-field="trigger" hidden>
+                <label for="trigger-other">その他の内容（1〜40文字）</label>
+                <div class="input-with-counter">
+                  <input type="text" id="trigger-other" name="triggerOther" inputmode="text" autocomplete="off" maxlength="40" data-maxlength="40">
+                  <span class="char-count" data-count-for="trigger-other">0 / 40</span>
+                </div>
+                <p class="field-error" data-error-target="trigger-other" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <div class="field-heading">
+                <h3>詳細 <span class="field-optional">任意</span></h3>
+              </div>
+              <textarea id="trigger-details" name="details" rows="5" maxlength="1000" placeholder="何が起きたか／自分に起きた反応などをメモ（任意）"></textarea>
+              <div class="field-footer">
+                <span class="char-count" data-count-for="trigger-details">0 / 1000</span>
+              </div>
+              <p class="field-error" data-error-target="trigger-details" aria-live="polite"></p>
+            </div>
+
+            <div class="form-field" data-field="emotion">
+              <div class="field-heading">
+                <h3>感情 <span class="field-optional">任意</span></h3>
+                <p class="field-description">浮かんだ感情があれば記録しておきましょう。</p>
+              </div>
+              <div class="tag-chips" data-tag-group="emotion">
+                <button type="button" class="tag-chip" data-value="anger" data-label="😠 怒り" aria-pressed="false">😠 怒り</button>
+                <button type="button" class="tag-chip" data-value="sadness" data-label="😢 悲しみ" aria-pressed="false">😢 悲しみ</button>
+                <button type="button" class="tag-chip" data-value="anxiety" data-label="😰 不安" aria-pressed="false">😰 不安</button>
+                <button type="button" class="tag-chip" data-value="numb" data-label="😶 無感覚" aria-pressed="false">😶 無感覚</button>
+                <button type="button" class="tag-chip tag-chip--other" data-value="other" data-label="✍ その他" data-controls="emotion-other-field" aria-pressed="false" aria-expanded="false">✍ その他</button>
+              </div>
+              <div class="other-input" id="emotion-other-field" data-other-field="emotion" hidden>
+                <label for="emotion-other">そのほかの感情（1〜40文字）</label>
+                <div class="input-with-counter">
+                  <input type="text" id="emotion-other" name="emotionOther" inputmode="text" autocomplete="off" maxlength="40" data-maxlength="40">
+                  <span class="char-count" data-count-for="emotion-other">0 / 40</span>
+                </div>
+                <p class="field-error" data-error-target="emotion-other" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <div class="form-field" data-field="action">
+              <div class="field-heading">
+                <h3>行動 <span class="field-optional">任意</span></h3>
+                <p class="field-description">そのときの反応や行動をメモ。</p>
+              </div>
+              <div class="tag-chips" data-tag-group="action">
+                <button type="button" class="tag-chip" data-value="freeze" data-label="🪨 固まった" aria-pressed="false">🪨 固まった</button>
+                <button type="button" class="tag-chip" data-value="cry" data-label="😭 泣いた" aria-pressed="false">😭 泣いた</button>
+                <button type="button" class="tag-chip" data-value="anger" data-label="⚡ 怒った" aria-pressed="false">⚡ 怒った</button>
+                <button type="button" class="tag-chip" data-value="avoid" data-label="↩️ 回避した" aria-pressed="false">↩️ 回避した</button>
+                <button type="button" class="tag-chip tag-chip--other" data-value="other" data-label="✍ その他" data-controls="action-other-field" aria-pressed="false" aria-expanded="false">✍ その他</button>
+              </div>
+              <div class="other-input" id="action-other-field" data-other-field="action" hidden>
+                <label for="action-other">そのほかの行動（1〜40文字）</label>
+                <div class="input-with-counter">
+                  <input type="text" id="action-other" name="actionOther" inputmode="text" autocomplete="off" maxlength="40" data-maxlength="40">
+                  <span class="char-count" data-count-for="action-other">0 / 40</span>
+                </div>
+                <p class="field-error" data-error-target="action-other" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="log-submit-button">記録する</button>
+            </div>
+            <p class="form-feedback" id="form-feedback" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="log-section">
+      <div class="inner">
+        <div class="log-card log-card--history">
+          <div class="log-card__header log-history__header">
+            <h2>記録一覧</h2>
+            <button type="button" class="text-button log-clear-button" data-action="clear-logs">すべて削除</button>
+          </div>
+          <p class="log-history__description">あとで見返したいときに、ここから確認できます。データは端末内に保存されます。</p>
+          <p class="log-empty-message" data-empty-message>まだ記録がありません。</p>
+          <ol class="log-list" id="log-list" aria-live="polite" aria-label="保存したトリガー記録"></ol>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="trigger-log.js" defer></script>
+</body>
+</html>

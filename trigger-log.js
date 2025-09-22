@@ -287,6 +287,16 @@
       return;
     }
 
+    const timestampElement = entry.querySelector('.log-entry__timestamp');
+    const displayTime = timestampElement ? timestampElement.textContent.trim() : '';
+    const confirmMessage = displayTime
+      ? `${displayTime}の記録を削除しますか？\n削除すると元に戻せません。`
+      : 'この記録を削除しますか？\n削除すると元に戻せません。';
+    const confirmed = window.confirm(confirmMessage);
+    if (!confirmed) {
+      return;
+    }
+
     const entryId = entry.dataset.entryId;
     const logs = loadLogs();
     const updatedLogs = logs.filter((item) => item.id !== entryId);

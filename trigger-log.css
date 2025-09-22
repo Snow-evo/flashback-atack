@@ -95,6 +95,10 @@ body.trigger-log-page .bandage-icon .bandage-hole {
   margin-top: 1.8rem;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 .form-field {
   display: grid;
   gap: 0.75rem;
@@ -249,6 +253,9 @@ body.trigger-log-page .bandage-icon .bandage-hole {
 .form-actions {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .log-submit-button {
@@ -294,6 +301,16 @@ body.trigger-log-page .bandage-icon .bandage-hole {
 
 .form-feedback.is-error {
   color: #d0615f;
+}
+
+.form-editing-notice {
+  margin: 0.4rem 0 0;
+  padding: 0.75rem 1rem;
+  border-radius: 16px;
+  background: rgba(98, 187, 161, 0.12);
+  color: var(--accent);
+  font-size: 0.92rem;
+  font-weight: 600;
 }
 
 .text-button {
@@ -357,9 +374,17 @@ body.trigger-log-page .bandage-icon .bandage-hole {
 
 .log-entry__header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.log-entry__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
 }
 
 .log-entry__timestamp {

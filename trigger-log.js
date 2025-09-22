@@ -5,6 +5,11 @@
   let formFeedback = null;
   let logList = null;
   let emptyMessage = null;
+  let triggerForm = null;
+  let submitButton = null;
+  let cancelEditButton = null;
+  let editingNotice = null;
+  let editingEntryId = null;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
@@ -18,9 +23,19 @@
       return;
     }
 
+    triggerForm = form;
     formFeedback = document.getElementById('form-feedback');
     logList = document.getElementById('log-list');
     emptyMessage = document.querySelector('[data-empty-message]');
+    submitButton = form.querySelector('.log-submit-button');
+    cancelEditButton = form.querySelector('[data-action="cancel-edit"]');
+    editingNotice = document.getElementById('editing-notice');
+
+    if (cancelEditButton) {
+      cancelEditButton.addEventListener('click', handleCancelEdit);
+    }
+
+    setEditingUiState(false);
 
     initializeTagGroups();
     initializeCharCounters(form);
@@ -94,6 +109,38 @@
     }
   }
 
+  function setEditingUiState(isEditing, entry) {
+    if (triggerForm) {
+      if (isEditing) {
+        triggerForm.dataset.editing = 'true';
+      } else {
+        triggerForm.removeAttribute('data-editing');
+      }
+    }
+
+    if (submitButton) {
+      submitButton.textContent = isEditing ? '更新する' : '記録する';
+    }
+
+    if (cancelEditButton) {
+      cancelEditButton.hidden = !isEditing;
+    }
+
+    if (editingNotice) {
+      if (isEditing) {
+        const formattedTimestamp = entry && typeof entry.createdAt === 'string' ? formatDateTime(entry.createdAt) : '';
+        const message = formattedTimestamp
+          ? `${formattedTimestamp} の記録を編集中です。変更後に「更新する」を押してください。`
+          : '保存済みの記録を編集中です。変更後に「更新する」を押してください。';
+        editingNotice.hidden = false;
+        editingNotice.textContent = message;
+      } else {
+        editingNotice.hidden = true;
+        editingNotice.textContent = '';
+      }
+    }
+  }
+
   function initializeCharCounters(form) {
     const fields = form.querySelectorAll('textarea, input[type="text"]');
     fields.forEach((field) => {
@@ -156,6 +203,44 @@
       return;
     }
 
+    const logs = loadLogs();
+    if (editingEntryId) {
+      let targetFound = false;
+      const updatedLogs = logs.map((item) => {
+        if (item.id !== editingEntryId) {
+          return item;
+        }
+
+        targetFound = true;
+        return {
+          ...item,
+          triggers: triggerSelection.labels,
+          triggerOther: triggerSelection.otherSelected ? triggerSelection.otherValue : '',
+          details: detailsValue,
+          emotions: emotionSelection.labels,
+          emotionOther: emotionSelection.otherSelected ? emotionSelection.otherValue : '',
+          actions: actionSelection.labels,
+          actionOther: actionSelection.otherSelected ? actionSelection.otherValue : '',
+        };
+      });
+
+      if (!targetFound) {
+        showFeedback('編集対象の記録が見つかりませんでした。', true);
+        resetFormState(form);
+        return;
+      }
+
+      if (!persistLogs(updatedLogs)) {
+        showFeedback('記録の更新に失敗しました。', true);
+        return;
+      }
+
+      renderLogs(updatedLogs);
+      showFeedback('記録を更新しました。');
+      resetFormState(form);
+      return;
+    }
+
     const entry = {
       id: generateEntryId(),
       createdAt: new Date().toISOString(),
@@ -168,7 +253,6 @@
       actionOther: actionSelection.otherSelected ? actionSelection.otherValue : '',
     };
 
-    const logs = loadLogs();
     const updatedLogs = [entry, ...logs];
 
     if (!persistLogs(updatedLogs)) {
@@ -182,26 +266,84 @@
   }
 
   function handleLogListClick(event) {
-    const button = event.target.closest('.log-entry__delete');
-    if (!button) {
+    const editButton = event.target.closest('.log-entry__edit');
+    if (editButton) {
+      const entryElement = editButton.closest('.log-entry');
+      if (!entryElement || !entryElement.dataset.entryId) {
+        return;
+      }
+
+      startEditingEntry(entryElement.dataset.entryId);
       return;
     }
 
-    const entry = button.closest('.log-entry');
+    const deleteButton = event.target.closest('.log-entry__delete');
+    if (!deleteButton) {
+      return;
+    }
+
+    const entry = deleteButton.closest('.log-entry');
     if (!entry || !entry.dataset.entryId) {
       return;
     }
 
+    const entryId = entry.dataset.entryId;
     const logs = loadLogs();
-    const updatedLogs = logs.filter((item) => item.id !== entry.dataset.entryId);
+    const updatedLogs = logs.filter((item) => item.id !== entryId);
 
     if (!persistLogs(updatedLogs)) {
       showFeedback('削除に失敗しました。', true);
       return;
     }
 
+    const wasEditing = editingEntryId === entryId;
     renderLogs(updatedLogs);
-    showFeedback('記録を削除しました。');
+    if (triggerForm && wasEditing) {
+      resetFormState(triggerForm);
+      showFeedback('編集中の記録が削除されました。');
+    } else {
+      showFeedback('記録を削除しました。');
+    }
+  }
+
+  function startEditingEntry(entryId) {
+    if (!triggerForm) {
+      return;
+    }
+
+    const logs = loadLogs();
+    const entry = logs.find((item) => item.id === entryId);
+    if (!entry) {
+      showFeedback('記録の読み込みに失敗しました。', true);
+      return;
+    }
+
+    editingEntryId = entryId;
+    resetFormState(triggerForm, { keepEditing: true });
+
+    applyGroupSelectionFromEntry('trigger', entry.triggers, entry.triggerOther);
+    applyGroupSelectionFromEntry('emotion', entry.emotions, entry.emotionOther);
+    applyGroupSelectionFromEntry('action', entry.actions, entry.actionOther);
+
+    const detailsField = triggerForm.querySelector('#trigger-details');
+    if (detailsField) {
+      detailsField.value = typeof entry.details === 'string' ? entry.details : '';
+      updateCharCount(detailsField);
+      setInputError(detailsField, detailsField.id, '');
+    }
+
+    setEditingUiState(true, entry);
+
+    if (triggerForm.scrollIntoView) {
+      triggerForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    const firstInteractive = triggerForm.querySelector('.tag-chip');
+    if (firstInteractive) {
+      firstInteractive.focus({ preventScroll: true });
+    }
+
+    showFeedback('保存済みの記録を編集中です。変更後に「更新する」を押してください。');
   }
 
   function handleClearLogs() {
@@ -221,8 +363,25 @@
       return;
     }
 
+    const wasEditing = Boolean(editingEntryId);
     renderLogs([]);
+    if (triggerForm && wasEditing) {
+      resetFormState(triggerForm);
+    }
     showFeedback('すべての記録を削除しました。');
+  }
+
+  function handleCancelEdit() {
+    if (!triggerForm) {
+      return;
+    }
+
+    const wasEditing = Boolean(editingEntryId);
+    resetFormState(triggerForm);
+
+    if (wasEditing) {
+      showFeedback('編集をやめました。');
+    }
   }
 
   function collectGroupSelection(groupName) {
@@ -255,6 +414,46 @@
     }
 
     return { labels, otherSelected, otherValue };
+  }
+
+  function applyGroupSelectionFromEntry(groupName, labels, otherValue) {
+    const group = document.querySelector(`[data-tag-group="${groupName}"]`);
+    const normalizedLabels = Array.isArray(labels)
+      ? labels
+          .map((item) => (typeof item === 'string' ? item.trim() : ''))
+          .filter((item) => item !== '')
+      : [];
+    const labelSet = new Set(normalizedLabels);
+    const trimmedOther = typeof otherValue === 'string' ? otherValue.trim() : '';
+
+    if (group) {
+      const buttons = group.querySelectorAll('.tag-chip');
+      buttons.forEach((button) => {
+        const label = (button.dataset.label || button.textContent || '').trim();
+        const isOther = button.dataset.value === 'other';
+        const shouldSelect = isOther ? Boolean(trimmedOther) : Boolean(label && labelSet.has(label));
+
+        button.classList.toggle('is-selected', shouldSelect);
+        button.setAttribute('aria-pressed', shouldSelect ? 'true' : 'false');
+        if (button.dataset.controls) {
+          button.setAttribute('aria-expanded', shouldSelect ? 'true' : 'false');
+        }
+      });
+
+      setGroupError(groupName, '');
+    }
+
+    const otherField = document.querySelector(`[data-other-field="${groupName}"]`);
+    if (otherField) {
+      const input = otherField.querySelector('input[type="text"]');
+      const shouldShow = Boolean(trimmedOther);
+      otherField.hidden = !shouldShow;
+      if (input) {
+        input.value = shouldShow ? trimmedOther : '';
+        updateCharCount(input);
+        setInputError(input, input.id, '');
+      }
+    }
   }
 
   function validateOtherInput(groupName, value) {
@@ -336,7 +535,8 @@
     }
   }
 
-  function resetFormState(form) {
+  function resetFormState(form, options = {}) {
+    const { keepEditing = false } = options;
     form.reset();
 
     const tagButtons = form.querySelectorAll('.tag-chip');
@@ -377,6 +577,11 @@
     form.querySelectorAll('.form-field').forEach((field) => {
       field.classList.remove('has-error');
     });
+
+    if (!keepEditing) {
+      editingEntryId = null;
+      setEditingUiState(false);
+    }
   }
 
   function renderLogs(logs) {
@@ -415,11 +620,30 @@
       timeElement.textContent = formatDateTime(entry.createdAt);
       header.appendChild(timeElement);
 
+      const displayTime = timeElement.textContent || '';
+
+      const actions = document.createElement('div');
+      actions.className = 'log-entry__actions';
+
+      const editButton = document.createElement('button');
+      editButton.type = 'button';
+      editButton.className = 'text-button log-entry__edit';
+      editButton.textContent = '編集';
+      if (displayTime) {
+        editButton.setAttribute('aria-label', `${displayTime}の記録を編集`);
+      }
+      actions.appendChild(editButton);
+
       const deleteButton = document.createElement('button');
       deleteButton.type = 'button';
       deleteButton.className = 'text-button log-entry__delete';
       deleteButton.textContent = '削除';
-      header.appendChild(deleteButton);
+      if (displayTime) {
+        deleteButton.setAttribute('aria-label', `${displayTime}の記録を削除`);
+      }
+      actions.appendChild(deleteButton);
+
+      header.appendChild(actions);
 
       listItem.appendChild(header);
 

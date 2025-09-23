@@ -57,14 +57,12 @@
       return templateCache.get(src);
     }
 
-    const request = fetch(src, { credentials: 'same-origin' })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-        return response.text();
-      })
+    const request = loadTemplateMarkup(src)
       .then((html) => {
+        if (!html) {
+          return null;
+        }
+
         const template = document.createElement('template');
         template.innerHTML = html.trim();
         return template;
@@ -76,6 +74,74 @@
 
     templateCache.set(src, request);
     return request;
+  }
+
+  function loadTemplateMarkup(src) {
+    if (typeof fetch === 'function') {
+      return fetch(src, { credentials: 'same-origin' })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          return response.text();
+        })
+        .catch((error) => {
+          if (shouldFallbackToXhr(error)) {
+            return loadTemplateMarkupWithXhr(src);
+          }
+          throw error;
+        });
+    }
+
+    return loadTemplateMarkupWithXhr(src);
+  }
+
+  function shouldFallbackToXhr(error) {
+    if (typeof XMLHttpRequest !== 'function') {
+      return false;
+    }
+
+    if (window.location.protocol === 'file:') {
+      return true;
+    }
+
+    return Boolean(error) && error.name === 'TypeError';
+  }
+
+  function loadTemplateMarkupWithXhr(src) {
+    return new Promise((resolve, reject) => {
+      if (typeof XMLHttpRequest !== 'function') {
+        reject(new Error('XMLHttpRequest not available'));
+        return;
+      }
+
+      const request = new XMLHttpRequest();
+      request.open('GET', src, true);
+      request.responseType = 'text';
+
+      request.onload = () => {
+        const { status, responseText } = request;
+
+        if (status >= 200 && status < 300) {
+          resolve(responseText);
+          return;
+        }
+
+        if (status === 0 && responseText) {
+          // Local files may report status 0. Treat available content as success.
+          resolve(responseText);
+          return;
+        }
+
+        reject(new Error(`HTTP ${status}`));
+      };
+
+      request.onerror = () => {
+        reject(new Error('Network error'));
+      };
+
+      request.send();
+    });
   }
 
   function setupBackToTop() {

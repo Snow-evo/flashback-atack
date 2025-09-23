@@ -10,7 +10,6 @@
 
   whenDocumentReady(() => {
     initializeTips();
-    initializeBackToTop();
   });
 
   function whenDocumentReady(callback) {
@@ -172,37 +171,6 @@
     if (srText) {
       srText.textContent = isFavorite ? 'お気に入を解除' : 'お気に入りに追加';
     }
-  }
-
-  function initializeBackToTop() {
-    const backToTopButton = document.getElementById('backToTop');
-    if (!backToTopButton) {
-      return;
-    }
-
-    const prefersReducedMotionQuery =
-      typeof window.matchMedia === 'function'
-        ? window.matchMedia('(prefers-reduced-motion: reduce)')
-        : null;
-
-    const toggleVisibility = () => {
-      if (window.scrollY > 240) {
-        backToTopButton.classList.add('is-visible');
-      } else {
-        backToTopButton.classList.remove('is-visible');
-      }
-    };
-
-    window.addEventListener('scroll', toggleVisibility, { passive: true });
-    toggleVisibility();
-
-    backToTopButton.addEventListener('click', () => {
-      const prefersReducedMotion = Boolean(
-        prefersReducedMotionQuery && prefersReducedMotionQuery.matches
-      );
-      const scrollOptions = prefersReducedMotion ? { top: 0 } : { top: 0, behavior: 'smooth' };
-      window.scrollTo(scrollOptions);
-    });
   }
 
   function createFavoritesStore(storageKey) {

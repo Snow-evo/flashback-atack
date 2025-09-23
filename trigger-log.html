@@ -10,30 +10,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="trigger-log.css">
+  <script src="components.js" defer></script>
 </head>
 <body class="trigger-log-page">
-  <header class="site-header log-header">
-    <div class="inner">
-      <p class="eyebrow" aria-label="Trigger Log">
-        <span class="eyebrow-icon" aria-hidden="true">
-          <svg class="bandage-icon" viewBox="0 0 64 24" role="presentation" focusable="false">
-            <rect class="bandage-base" x="4" y="6" width="56" height="12" rx="6"></rect>
-            <rect class="bandage-center" x="22" y="4" width="20" height="16" rx="5"></rect>
-            <circle class="bandage-hole" cx="28" cy="12" r="1.4"></circle>
-            <circle class="bandage-hole" cx="32" cy="12" r="1.4"></circle>
-            <circle class="bandage-hole" cx="36" cy="12" r="1.4"></circle>
-          </svg>
-        </span>
-        <span class="eyebrow-label">Trigger Log</span>
-      </p>
-      <h1 class="log-header__title" aria-label="フラッシュバック・トリガー記録">
-        <span class="log-header__title-main">フラッシュバック</span>
-        <span class="log-header__title-sub">トリガー記録</span>
-      </h1>
-      <p class="lead">いま感じたこと、ちょっとだけ残そう。</p>
-      <a class="log-back-link" href="index.html">ガイドに戻る</a>
-    </div>
-  </header>
+  <div data-component="site-header" data-component-src="components/site-header-log.html"></div>
 
   <main class="log-main">
     <section class="log-section">
@@ -150,6 +130,10 @@
       </div>
     </section>
   </main>
+
+  <div data-component="site-footer" data-component-src="components/site-footer.html"></div>
+
+  <div data-component="back-to-top" data-component-src="components/back-to-top.html"></div>
 
   <script src="trigger-log.js" defer></script>
 </body>

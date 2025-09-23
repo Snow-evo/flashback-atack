@@ -48,6 +48,86 @@ img {
   padding: 0 0 0.5rem;
 }
 
+.quick-access {
+  position: sticky;
+  top: 0;
+  z-index: 1200;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 25px rgba(168, 181, 206, 0.15);
+}
+
+.quick-access .inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.6rem, 2vw, 1rem);
+  padding: 0.6rem 0.25rem;
+}
+
+.quick-access__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  box-shadow: 0 12px 24px rgba(168, 181, 206, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.quick-access__link:hover,
+.quick-access__link:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 30px rgba(168, 181, 206, 0.25);
+  background: rgba(255, 255, 255, 0.98);
+}
+
+.quick-access__link:focus-visible {
+  outline: 3px solid rgba(237, 122, 122, 0.4);
+  outline-offset: 3px;
+}
+
+.quick-access__icon {
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+.quick-access__link--log {
+  background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 18px 30px rgba(237, 122, 122, 0.28);
+}
+
+.quick-access__link--log:hover,
+.quick-access__link--log:focus-visible {
+  background: linear-gradient(135deg, var(--accent), #f19999);
+  box-shadow: 0 22px 34px rgba(237, 122, 122, 0.36);
+}
+
+@media (max-width: 600px) {
+  .quick-access .inner {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.5rem 0.4rem;
+  }
+
+  .quick-access__link {
+    flex: 1 1 calc(50% - 0.5rem);
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
 .site-header {
   padding: clamp(3.2rem, 7vw, 4.5rem) 0 clamp(2rem, 6vw, 3rem);
   background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.6), transparent 55%),

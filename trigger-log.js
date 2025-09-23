@@ -2,19 +2,32 @@
   'use strict';
 
   const STORAGE_KEY = 'triggerLogs';
-  let formFeedback = null;
-  let logList = null;
-  let emptyMessage = null;
-  let triggerForm = null;
-  let submitButton = null;
-  let cancelEditButton = null;
-  let editingNotice = null;
-  let editingEntryId = null;
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
+  const state = createInitialState();
+
+  whenDocumentReady(init);
+
+  function createInitialState() {
+    return {
+      editingEntryId: null,
+      elements: {
+        form: null,
+        feedback: null,
+        logList: null,
+        emptyMessage: null,
+        submitButton: null,
+        cancelEditButton: null,
+        editingNotice: null,
+      },
+    };
+  }
+
+  function whenDocumentReady(callback) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', callback, { once: true });
+    } else {
+      callback();
+    }
   }
 
   function init() {
@@ -23,16 +36,17 @@
       return;
     }
 
-    triggerForm = form;
-    formFeedback = document.getElementById('form-feedback');
-    logList = document.getElementById('log-list');
-    emptyMessage = document.querySelector('[data-empty-message]');
-    submitButton = form.querySelector('.log-submit-button');
-    cancelEditButton = form.querySelector('[data-action="cancel-edit"]');
-    editingNotice = document.getElementById('editing-notice');
+    const elements = state.elements;
+    elements.form = form;
+    elements.feedback = document.getElementById('form-feedback');
+    elements.logList = document.getElementById('log-list');
+    elements.emptyMessage = document.querySelector('[data-empty-message]');
+    elements.submitButton = form.querySelector('.log-submit-button');
+    elements.cancelEditButton = form.querySelector('[data-action="cancel-edit"]');
+    elements.editingNotice = document.getElementById('editing-notice');
 
-    if (cancelEditButton) {
-      cancelEditButton.addEventListener('click', handleCancelEdit);
+    if (elements.cancelEditButton) {
+      elements.cancelEditButton.addEventListener('click', handleCancelEdit);
     }
 
     setEditingUiState(false);
@@ -41,15 +55,15 @@
     initializeCharCounters(form);
     renderLogs(loadLogs());
 
-    form.addEventListener('submit', (event) => handleSubmit(event, form));
+    form.addEventListener('submit', handleSubmit);
 
     const clearButton = document.querySelector('[data-action="clear-logs"]');
     if (clearButton) {
       clearButton.addEventListener('click', handleClearLogs);
     }
 
-    if (logList) {
-      logList.addEventListener('click', handleLogListClick);
+    if (elements.logList) {
+      elements.logList.addEventListener('click', handleLogListClick);
     }
   }
 
@@ -110,11 +124,13 @@
   }
 
   function setEditingUiState(isEditing, entry) {
-    if (triggerForm) {
+    const { form, submitButton, cancelEditButton, editingNotice } = state.elements;
+
+    if (form) {
       if (isEditing) {
-        triggerForm.dataset.editing = 'true';
+        form.dataset.editing = 'true';
       } else {
-        triggerForm.removeAttribute('data-editing');
+        form.removeAttribute('data-editing');
       }
     }
 
@@ -128,7 +144,8 @@
 
     if (editingNotice) {
       if (isEditing) {
-        const formattedTimestamp = entry && typeof entry.createdAt === 'string' ? formatDateTime(entry.createdAt) : '';
+        const formattedTimestamp =
+          entry && typeof entry.createdAt === 'string' ? formatDateTime(entry.createdAt) : '';
         const message = formattedTimestamp
           ? `${formattedTimestamp} の記録を編集中です。変更後に「更新する」を押してください。`
           : '保存済みの記録を編集中です。変更後に「更新する」を押してください。';
@@ -164,8 +181,13 @@
     });
   }
 
-  function handleSubmit(event, form) {
+  function handleSubmit(event) {
     event.preventDefault();
+
+    const form = state.elements.form;
+    if (!form) {
+      return;
+    }
 
     const triggerSelection = collectGroupSelection('trigger');
     const emotionSelection = collectGroupSelection('emotion');
@@ -204,10 +226,10 @@
     }
 
     const logs = loadLogs();
-    if (editingEntryId) {
+    if (state.editingEntryId) {
       let targetFound = false;
       const updatedLogs = logs.map((item) => {
-        if (item.id !== editingEntryId) {
+        if (item.id !== state.editingEntryId) {
           return item;
         }
 
@@ -306,10 +328,10 @@
       return;
     }
 
-    const wasEditing = editingEntryId === entryId;
+    const wasEditing = state.editingEntryId === entryId;
     renderLogs(updatedLogs);
-    if (triggerForm && wasEditing) {
-      resetFormState(triggerForm);
+    if (state.elements.form && wasEditing) {
+      resetFormState(state.elements.form);
       showFeedback('編集中の記録が削除されました。');
     } else {
       showFeedback('記録を削除しました。');
@@ -317,7 +339,8 @@
   }
 
   function startEditingEntry(entryId) {
-    if (!triggerForm) {
+    const form = state.elements.form;
+    if (!form) {
       return;
     }
 
@@ -328,14 +351,14 @@
       return;
     }
 
-    editingEntryId = entryId;
-    resetFormState(triggerForm, { keepEditing: true });
+    state.editingEntryId = entryId;
+    resetFormState(form, { keepEditing: true });
 
     applyGroupSelectionFromEntry('trigger', entry.triggers, entry.triggerOther);
     applyGroupSelectionFromEntry('emotion', entry.emotions, entry.emotionOther);
     applyGroupSelectionFromEntry('action', entry.actions, entry.actionOther);
 
-    const detailsField = triggerForm.querySelector('#trigger-details');
+    const detailsField = form.querySelector('#trigger-details');
     if (detailsField) {
       detailsField.value = typeof entry.details === 'string' ? entry.details : '';
       updateCharCount(detailsField);
@@ -344,11 +367,11 @@
 
     setEditingUiState(true, entry);
 
-    if (triggerForm.scrollIntoView) {
-      triggerForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (form.scrollIntoView) {
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    const firstInteractive = triggerForm.querySelector('.tag-chip');
+    const firstInteractive = form.querySelector('.tag-chip');
     if (firstInteractive) {
       firstInteractive.focus({ preventScroll: true });
     }
@@ -373,21 +396,22 @@
       return;
     }
 
-    const wasEditing = Boolean(editingEntryId);
+    const wasEditing = Boolean(state.editingEntryId);
     renderLogs([]);
-    if (triggerForm && wasEditing) {
-      resetFormState(triggerForm);
+    if (state.elements.form && wasEditing) {
+      resetFormState(state.elements.form);
     }
     showFeedback('すべての記録を削除しました。');
   }
 
   function handleCancelEdit() {
-    if (!triggerForm) {
+    const form = state.elements.form;
+    if (!form) {
       return;
     }
 
-    const wasEditing = Boolean(editingEntryId);
-    resetFormState(triggerForm);
+    const wasEditing = Boolean(state.editingEntryId);
+    resetFormState(form);
 
     if (wasEditing) {
       showFeedback('編集をやめました。');
@@ -589,12 +613,13 @@
     });
 
     if (!keepEditing) {
-      editingEntryId = null;
+      state.editingEntryId = null;
       setEditingUiState(false);
     }
   }
 
   function renderLogs(logs) {
+    const { logList, emptyMessage } = state.elements;
     if (!logList) {
       return;
     }
@@ -613,85 +638,88 @@
     }
 
     logs.forEach((entry) => {
-      const listItem = document.createElement('li');
-      listItem.className = 'log-entry';
-      if (typeof entry.id === 'string') {
-        listItem.dataset.entryId = entry.id;
-      }
-
-      const header = document.createElement('div');
-      header.className = 'log-entry__header';
-
-      const timeElement = document.createElement('time');
-      timeElement.className = 'log-entry__timestamp';
-      if (entry.createdAt) {
-        timeElement.dateTime = entry.createdAt;
-      }
-      timeElement.textContent = formatDateTime(entry.createdAt);
-      header.appendChild(timeElement);
-
-      const displayTime = timeElement.textContent || '';
-
-      const actions = document.createElement('div');
-      actions.className = 'log-entry__actions';
-
-      const editButton = document.createElement('button');
-      editButton.type = 'button';
-      editButton.className = 'text-button log-entry__edit';
-      editButton.textContent = '編集';
-      if (displayTime) {
-        editButton.setAttribute('aria-label', `${displayTime}の記録を編集`);
-      }
-      actions.appendChild(editButton);
-
-      const deleteButton = document.createElement('button');
-      deleteButton.type = 'button';
-      deleteButton.className = 'text-button log-entry__delete';
-      deleteButton.textContent = '削除';
-      if (displayTime) {
-        deleteButton.setAttribute('aria-label', `${displayTime}の記録を削除`);
-      }
-      actions.appendChild(deleteButton);
-
-      header.appendChild(actions);
-
-      listItem.appendChild(header);
-
-      const body = document.createElement('div');
-      body.className = 'log-entry__body';
-
-      const triggerGroup = createChipsGroup('トリガー', entry.triggers, entry.triggerOther, true);
-      if (triggerGroup) {
-        body.appendChild(triggerGroup);
-      }
-
-      if (entry.details) {
-        const detailGroup = document.createElement('div');
-        detailGroup.className = 'log-entry__group';
-        const heading = document.createElement('h3');
-        heading.textContent = '詳細';
-        detailGroup.appendChild(heading);
-
-        const paragraph = document.createElement('p');
-        paragraph.className = 'log-entry__details';
-        paragraph.textContent = entry.details;
-        detailGroup.appendChild(paragraph);
-        body.appendChild(detailGroup);
-      }
-
-      const emotionGroup = createChipsGroup('感情', entry.emotions, entry.emotionOther);
-      if (emotionGroup) {
-        body.appendChild(emotionGroup);
-      }
-
-      const actionGroup = createChipsGroup('行動', entry.actions, entry.actionOther);
-      if (actionGroup) {
-        body.appendChild(actionGroup);
-      }
-
-      listItem.appendChild(body);
-      logList.appendChild(listItem);
+      logList.appendChild(createLogEntryElement(entry));
     });
+  }
+
+  function createLogEntryElement(entry) {
+    const listItem = document.createElement('li');
+    listItem.className = 'log-entry';
+    if (typeof entry.id === 'string') {
+      listItem.dataset.entryId = entry.id;
+    }
+
+    const header = document.createElement('div');
+    header.className = 'log-entry__header';
+
+    const timeElement = document.createElement('time');
+    timeElement.className = 'log-entry__timestamp';
+    if (entry.createdAt) {
+      timeElement.dateTime = entry.createdAt;
+    }
+    timeElement.textContent = formatDateTime(entry.createdAt);
+    header.appendChild(timeElement);
+
+    const displayTime = timeElement.textContent || '';
+
+    const actions = document.createElement('div');
+    actions.className = 'log-entry__actions';
+
+    const editButton = document.createElement('button');
+    editButton.type = 'button';
+    editButton.className = 'text-button log-entry__edit';
+    editButton.textContent = '編集';
+    if (displayTime) {
+      editButton.setAttribute('aria-label', `${displayTime}の記録を編集`);
+    }
+    actions.appendChild(editButton);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.type = 'button';
+    deleteButton.className = 'text-button log-entry__delete';
+    deleteButton.textContent = '削除';
+    if (displayTime) {
+      deleteButton.setAttribute('aria-label', `${displayTime}の記録を削除`);
+    }
+    actions.appendChild(deleteButton);
+
+    header.appendChild(actions);
+    listItem.appendChild(header);
+
+    const body = document.createElement('div');
+    body.className = 'log-entry__body';
+
+    const triggerGroup = createChipsGroup('トリガー', entry.triggers, entry.triggerOther, true);
+    if (triggerGroup) {
+      body.appendChild(triggerGroup);
+    }
+
+    if (entry.details) {
+      const detailGroup = document.createElement('div');
+      detailGroup.className = 'log-entry__group';
+      const heading = document.createElement('h3');
+      heading.textContent = '詳細';
+      detailGroup.appendChild(heading);
+
+      const paragraph = document.createElement('p');
+      paragraph.className = 'log-entry__details';
+      paragraph.textContent = entry.details;
+      detailGroup.appendChild(paragraph);
+      body.appendChild(detailGroup);
+    }
+
+    const emotionGroup = createChipsGroup('感情', entry.emotions, entry.emotionOther);
+    if (emotionGroup) {
+      body.appendChild(emotionGroup);
+    }
+
+    const actionGroup = createChipsGroup('行動', entry.actions, entry.actionOther);
+    if (actionGroup) {
+      body.appendChild(actionGroup);
+    }
+
+    listItem.appendChild(body);
+    return listItem;
   }
 
   function createChipsGroup(title, labels, otherValue, alwaysShow) {
@@ -809,12 +837,13 @@
   }
 
   function showFeedback(message, isError = false) {
-    if (!formFeedback) {
+    const { feedback } = state.elements;
+    if (!feedback) {
       return;
     }
 
-    formFeedback.textContent = message;
-    formFeedback.classList.toggle('is-error', Boolean(isError));
+    feedback.textContent = message;
+    feedback.classList.toggle('is-error', Boolean(isError));
   }
 
   function formatDateTime(value) {

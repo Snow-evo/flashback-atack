@@ -556,12 +556,7 @@ section {
   border-color: color-mix(in srgb, var(--favorite-accent, var(--accent)) 32%, transparent);
   background: rgba(237, 122, 122, 0.12);
   background: color-mix(in srgb, var(--favorite-accent, var(--accent)) 12%, #fff);
-  color: #945a5a;
-  color: color-mix(
-    in srgb,
-    var(--favorite-accent, var(--accent)) 50%,
-    var(--text-main)
-  );
+  color: var(--favorite-accent, var(--accent));
   text-decoration: none;
   font-weight: 700;
   font-size: 1rem;
@@ -579,12 +574,7 @@ section {
   border-color: color-mix(in srgb, var(--favorite-accent, var(--accent)) 45%, transparent);
   box-shadow: 0 14px 28px rgba(237, 122, 122, 0.24);
   box-shadow: 0 14px 28px color-mix(in srgb, var(--favorite-accent, var(--accent)) 28%, transparent);
-  color: #945a5a;
-  color: color-mix(
-    in srgb,
-    var(--favorite-accent, var(--accent)) 50%,
-    var(--text-main)
-  );
+  color: var(--favorite-accent, var(--accent));
 }
 
 .trigger-log-link:hover {

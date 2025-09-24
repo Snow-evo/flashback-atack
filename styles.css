@@ -148,6 +148,29 @@ img {
   outline-offset: 3px;
 }
 
+.quick-access__link--roadmap {
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-deep));
+  color: #fff;
+  border-color: rgba(255, 138, 61, 0.65);
+  box-shadow: 0 8px 22px rgba(255, 138, 61, 0.28);
+}
+
+.quick-access__link--roadmap .quick-access__icon {
+  color: currentColor;
+}
+
+.quick-access__link--roadmap:hover,
+.quick-access__link--roadmap:focus-visible {
+  background: linear-gradient(135deg, #ff9a5c, #ff6b1a);
+  border-color: rgba(255, 138, 61, 0.78);
+  color: #fff;
+  box-shadow: 0 14px 30px rgba(255, 138, 61, 0.32);
+}
+
+.quick-access__link--roadmap:focus-visible {
+  outline: 3px solid rgba(255, 166, 110, 0.45);
+}
+
 .quick-access__link--log {
   background: linear-gradient(135deg, var(--accent-green), var(--accent-green-deep));
   color: #fff;

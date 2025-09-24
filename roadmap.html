@@ -41,6 +41,73 @@
         <p>各ステージに取り組みたいことをメモしたり、いまどこにいるかを記録できます。ボタンで現在地をマークすると、ブラウザのローカルストレージに保存され、ページを再読み込みしても保持されます。</p>
         <p class="roadmap-current-status"><span class="roadmap-current-status__label">現在地:</span> <span data-current-stage-label aria-live="polite">未設定</span></p>
         <p class="roadmap-storage-warning" data-storage-warning hidden>ブラウザーの設定により保存機能が利用できない場合があります。そのときはメモが端末に保持されない可能性があります。</p>
+
+        <div class="roadmap-delivery" aria-labelledby="roadmap-delivery-heading">
+          <div class="roadmap-delivery__header">
+            <h3 id="roadmap-delivery-heading">お届けまでのロードマップ</h3>
+            <p>現在の進捗を一目で確認し、次のステップを見通せます。</p>
+          </div>
+          <ol class="roadmap-delivery__steps" aria-label="配送ステップ">
+            <li class="roadmap-delivery__step is-complete">
+              <span class="roadmap-delivery__step-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+                  <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <span class="visually-hidden">在庫確認: 完了</span>
+              <span class="roadmap-delivery__step-label">在庫確認</span>
+            </li>
+            <li class="roadmap-delivery__step is-complete">
+              <span class="roadmap-delivery__step-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+                  <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <span class="visually-hidden">配送手配: 完了</span>
+              <span class="roadmap-delivery__step-label">配送手配</span>
+            </li>
+            <li class="roadmap-delivery__step is-current is-complete">
+              <span class="roadmap-delivery__step-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+                  <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <span class="visually-hidden">注文確定: 現在地</span>
+              <span class="roadmap-delivery__step-label">注文確定</span>
+              <span class="roadmap-delivery__current-badge" aria-hidden="true">現在地</span>
+            </li>
+            <li class="roadmap-delivery__step">
+              <span class="roadmap-delivery__step-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+                  <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2" />
+                </svg>
+              </span>
+              <span class="visually-hidden">お届け開始: これから</span>
+              <span class="roadmap-delivery__step-label">お届け開始</span>
+            </li>
+            <li class="roadmap-delivery__step">
+              <span class="roadmap-delivery__step-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+                  <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2" />
+                </svg>
+              </span>
+              <span class="visually-hidden">お届け完了: これから</span>
+              <span class="roadmap-delivery__step-label">お届け完了</span>
+            </li>
+          </ol>
+          <div class="roadmap-delivery__store" role="group" aria-labelledby="roadmap-delivery-heading roadmap-delivery-store">
+            <span class="roadmap-delivery__store-label">配送店舗</span>
+            <div class="roadmap-delivery__store-card">
+              <span class="roadmap-delivery__store-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" role="presentation" focusable="false">
+                  <path d="M8 18.5V40h32V18.5M6 21l18-13 18 13" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M18 40V28h12v12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <span class="roadmap-delivery__store-name" id="roadmap-delivery-store">鷹宮桜田２丁目店</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 

@@ -7,9 +7,14 @@
 
   const favoritesStore = createFavoritesStore(STORAGE_KEY);
   const buttonRegistry = new Map();
+  let backToTopInitialized = false;
 
   whenDocumentReady(() => {
     initializeTips();
+    initializeBackToTop();
+  });
+
+  document.addEventListener('components:loaded', () => {
     initializeBackToTop();
   });
 
@@ -176,9 +181,11 @@
 
   function initializeBackToTop() {
     const backToTopButton = document.getElementById('backToTop');
-    if (!backToTopButton) {
+    if (!backToTopButton || backToTopInitialized) {
       return;
     }
+
+    backToTopInitialized = true;
 
     const prefersReducedMotionQuery =
       typeof window.matchMedia === 'function'

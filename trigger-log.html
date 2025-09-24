@@ -12,7 +12,8 @@
   <link rel="stylesheet" href="trigger-log.css">
 </head>
 <body class="trigger-log-page">
-  <header class="site-header log-header">
+  <div data-include="partials/quick-access.html"></div>
+  <header id="top" class="site-header log-header">
     <div class="inner">
       <p class="eyebrow" aria-label="Trigger Log">
         <span class="eyebrow-icon" aria-hidden="true">
@@ -149,8 +150,16 @@
         </div>
       </div>
     </section>
+
+    <div data-include="partials/note.html"></div>
   </main>
 
+  <div data-include="partials/site-footer.html"></div>
+
+  <div data-include="partials/back-to-top.html"></div>
+
+  <script src="component-loader.js" defer></script>
+  <script src="main.js" defer></script>
   <script src="trigger-log.js" defer></script>
 </body>
 </html>

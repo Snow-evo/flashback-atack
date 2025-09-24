@@ -8,6 +8,11 @@ body.trigger-log-page {
   --shadow-card: 0 20px 38px rgba(136, 190, 164, 0.18);
 }
 
+body.trigger-log-page .quick-access {
+  --accent: #ed7a7a;
+  --accent-soft: #f6b6aa;
+}
+
 body.trigger-log-page .site-header {
   background: radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.6), transparent 55%),
     radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.4), transparent 60%),

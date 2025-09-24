@@ -42,72 +42,115 @@
         <p class="roadmap-current-status"><span class="roadmap-current-status__label">現在地:</span> <span data-current-stage-label aria-live="polite">未設定</span></p>
         <p class="roadmap-storage-warning" data-storage-warning hidden>ブラウザーの設定により保存機能が利用できない場合があります。そのときはメモが端末に保持されない可能性があります。</p>
 
-        <div class="roadmap-delivery" aria-labelledby="roadmap-delivery-heading">
-          <div class="roadmap-delivery__header">
-            <h3 id="roadmap-delivery-heading">お届けまでのロードマップ</h3>
-            <p>現在の進捗を一目で確認し、次のステップを見通せます。</p>
-          </div>
-          <ol class="roadmap-delivery__steps" aria-label="配送ステップ">
-            <li class="roadmap-delivery__step is-complete">
-              <span class="roadmap-delivery__step-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" role="presentation" focusable="false">
-                  <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
-              <span class="visually-hidden">在庫確認: 完了</span>
-              <span class="roadmap-delivery__step-label">在庫確認</span>
-            </li>
-            <li class="roadmap-delivery__step is-complete">
-              <span class="roadmap-delivery__step-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" role="presentation" focusable="false">
-                  <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
-              <span class="visually-hidden">配送手配: 完了</span>
-              <span class="roadmap-delivery__step-label">配送手配</span>
-            </li>
-            <li class="roadmap-delivery__step is-current is-complete">
-              <span class="roadmap-delivery__step-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" role="presentation" focusable="false">
-                  <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
-              <span class="visually-hidden">注文確定: 現在地</span>
-              <span class="roadmap-delivery__step-label">注文確定</span>
-              <span class="roadmap-delivery__current-badge" aria-hidden="true">現在地</span>
-            </li>
-            <li class="roadmap-delivery__step">
-              <span class="roadmap-delivery__step-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" role="presentation" focusable="false">
-                  <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2" />
-                </svg>
-              </span>
-              <span class="visually-hidden">お届け開始: これから</span>
-              <span class="roadmap-delivery__step-label">お届け開始</span>
-            </li>
-            <li class="roadmap-delivery__step">
-              <span class="roadmap-delivery__step-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" role="presentation" focusable="false">
-                  <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2" />
-                </svg>
-              </span>
-              <span class="visually-hidden">お届け完了: これから</span>
-              <span class="roadmap-delivery__step-label">お届け完了</span>
-            </li>
-          </ol>
-          <div class="roadmap-delivery__store" role="group" aria-labelledby="roadmap-delivery-heading roadmap-delivery-store">
-            <span class="roadmap-delivery__store-label">配送店舗</span>
-            <div class="roadmap-delivery__store-card">
-              <span class="roadmap-delivery__store-icon" aria-hidden="true">
-                <svg viewBox="0 0 48 48" role="presentation" focusable="false">
-                  <path d="M8 18.5V40h32V18.5M6 21l18-13 18 13" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M18 40V28h12v12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
-              <span class="roadmap-delivery__store-name" id="roadmap-delivery-store">鷹宮桜田２丁目店</span>
-            </div>
-          </div>
+      </div>
+    </section>
+
+    <section class="roadmap-progress" aria-labelledby="roadmap-progress-heading">
+      <div class="roadmap-progress__inner">
+        <div class="roadmap-progress__header">
+          <h2 id="roadmap-progress-heading">回復ステップの現在地</h2>
+          <p>ロードマップの7ステージ全体を俯瞰し、保存した現在地がひと目でわかります。</p>
         </div>
+        <ol class="roadmap-progress__steps" aria-label="トラウマ治療ロードマップのステップ">
+          <li class="roadmap-progress__step" data-progress-stage="stage-1">
+            <span class="roadmap-progress__node" aria-hidden="true">
+              <svg class="roadmap-progress__icon roadmap-progress__icon--complete" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <svg class="roadmap-progress__icon roadmap-progress__icon--pending" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"></circle>
+              </svg>
+            </span>
+            <span class="roadmap-progress__index">STEP 01</span>
+            <span class="roadmap-progress__name">生活基盤の安定</span>
+            <span class="roadmap-progress__badge" aria-hidden="true">現在地</span>
+            <span class="visually-hidden" data-progress-status>未着手</span>
+          </li>
+          <li class="roadmap-progress__step" data-progress-stage="stage-2">
+            <span class="roadmap-progress__node" aria-hidden="true">
+              <svg class="roadmap-progress__icon roadmap-progress__icon--complete" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <svg class="roadmap-progress__icon roadmap-progress__icon--pending" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"></circle>
+              </svg>
+            </span>
+            <span class="roadmap-progress__index">STEP 02</span>
+            <span class="roadmap-progress__name">心理教育</span>
+            <span class="roadmap-progress__badge" aria-hidden="true">現在地</span>
+            <span class="visually-hidden" data-progress-status>未着手</span>
+          </li>
+          <li class="roadmap-progress__step" data-progress-stage="stage-3">
+            <span class="roadmap-progress__node" aria-hidden="true">
+              <svg class="roadmap-progress__icon roadmap-progress__icon--complete" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <svg class="roadmap-progress__icon roadmap-progress__icon--pending" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"></circle>
+              </svg>
+            </span>
+            <span class="roadmap-progress__index">STEP 03</span>
+            <span class="roadmap-progress__name">トラウマ耐性スキルの獲得</span>
+            <span class="roadmap-progress__badge" aria-hidden="true">現在地</span>
+            <span class="visually-hidden" data-progress-status>未着手</span>
+          </li>
+          <li class="roadmap-progress__step" data-progress-stage="stage-4">
+            <span class="roadmap-progress__node" aria-hidden="true">
+              <svg class="roadmap-progress__icon roadmap-progress__icon--complete" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <svg class="roadmap-progress__icon roadmap-progress__icon--pending" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"></circle>
+              </svg>
+            </span>
+            <span class="roadmap-progress__index">STEP 04</span>
+            <span class="roadmap-progress__name">身体的アプローチによるトラウマ処理</span>
+            <span class="roadmap-progress__badge" aria-hidden="true">現在地</span>
+            <span class="visually-hidden" data-progress-status>未着手</span>
+          </li>
+          <li class="roadmap-progress__step" data-progress-stage="stage-5">
+            <span class="roadmap-progress__node" aria-hidden="true">
+              <svg class="roadmap-progress__icon roadmap-progress__icon--complete" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <svg class="roadmap-progress__icon roadmap-progress__icon--pending" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"></circle>
+              </svg>
+            </span>
+            <span class="roadmap-progress__index">STEP 05</span>
+            <span class="roadmap-progress__name">感情整理によるトラウマ処理</span>
+            <span class="roadmap-progress__badge" aria-hidden="true">現在地</span>
+            <span class="visually-hidden" data-progress-status>未着手</span>
+          </li>
+          <li class="roadmap-progress__step" data-progress-stage="stage-6">
+            <span class="roadmap-progress__node" aria-hidden="true">
+              <svg class="roadmap-progress__icon roadmap-progress__icon--complete" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <svg class="roadmap-progress__icon roadmap-progress__icon--pending" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"></circle>
+              </svg>
+            </span>
+            <span class="roadmap-progress__index">STEP 06</span>
+            <span class="roadmap-progress__name">自己の再構築</span>
+            <span class="roadmap-progress__badge" aria-hidden="true">現在地</span>
+            <span class="visually-hidden" data-progress-status>未着手</span>
+          </li>
+          <li class="roadmap-progress__step" data-progress-stage="stage-7">
+            <span class="roadmap-progress__node" aria-hidden="true">
+              <svg class="roadmap-progress__icon roadmap-progress__icon--complete" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <svg class="roadmap-progress__icon roadmap-progress__icon--pending" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"></circle>
+              </svg>
+            </span>
+            <span class="roadmap-progress__index">STEP 07</span>
+            <span class="roadmap-progress__name">新しい生き方の確立</span>
+            <span class="roadmap-progress__badge" aria-hidden="true">現在地</span>
+            <span class="visually-hidden" data-progress-status>未着手</span>
+          </li>
+        </ol>
       </div>
     </section>
 

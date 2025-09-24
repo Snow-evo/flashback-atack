@@ -7,6 +7,9 @@
 
   const storage = getStorage();
   const stageElements = document.querySelectorAll('[data-stage-id]');
+  const progressListElement = document.querySelector('.roadmap-progress__steps');
+  const progressSteps = Array.from(document.querySelectorAll('[data-progress-stage]'));
+  const progressStageOrder = progressSteps.map((element) => element.dataset.progressStage || '');
 
   if (!stageElements.length) {
     const warning = document.querySelector('[data-storage-warning]');
@@ -124,6 +127,8 @@
     if (stageStatusLabel && !effectiveStageId) {
       stageStatusLabel.textContent = '未設定';
     }
+
+    updateProgressIndicator(effectiveStageId);
   }
 
   function scheduleNoteSave(stageId, value) {
@@ -235,6 +240,58 @@
     } catch (error) {
       console.warn('ローカルストレージにアクセスできませんでした。', error);
       return null;
+    }
+  }
+
+  function updateProgressIndicator(stageId) {
+    if (!progressSteps.length) {
+      return;
+    }
+
+    const activeIndex = stageId ? progressStageOrder.findIndex((value) => value === stageId) : -1;
+
+    progressSteps.forEach((stepElement, index) => {
+      const stepStageId = progressStageOrder[index];
+      const hasStage = Boolean(stepStageId);
+      const isCurrent = hasStage && index === activeIndex && activeIndex !== -1;
+      const isComplete = hasStage && activeIndex !== -1 && index < activeIndex;
+
+      stepElement.classList.toggle('is-current', isCurrent);
+      stepElement.classList.toggle('is-complete', isComplete);
+
+      if (isCurrent) {
+        stepElement.setAttribute('aria-current', 'step');
+      } else {
+        stepElement.removeAttribute('aria-current');
+      }
+
+      const statusElement = stepElement.querySelector('[data-progress-status]');
+      if (!statusElement) {
+        return;
+      }
+
+      let statusText = '未着手';
+      if (isCurrent) {
+        statusText = '現在地';
+      } else if (isComplete) {
+        statusText = '完了';
+      }
+
+      statusElement.textContent = statusText;
+    });
+
+    if (progressListElement) {
+      let ratio = 0;
+      if (activeIndex > -1) {
+        if (progressSteps.length > 1) {
+          ratio = activeIndex / (progressSteps.length - 1);
+        } else {
+          ratio = 1;
+        }
+      }
+
+      const clampedRatio = Math.max(0, Math.min(1, ratio));
+      progressListElement.style.setProperty('--progress-position', `${clampedRatio * 100}%`);
     }
   }
 })();

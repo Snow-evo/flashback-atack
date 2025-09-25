@@ -473,7 +473,6 @@ h1 {
 }
 
 .usage-guide {
-  padding: clamp(2.2rem, 6vw, 2.8rem) 0;
 }
 
 .usage-guide .surface-card {
@@ -503,7 +502,7 @@ h1 {
 }
 
 section {
-  padding: 3rem 0;
+  padding: 1.5rem 0 0;
 }
 
 .intro {

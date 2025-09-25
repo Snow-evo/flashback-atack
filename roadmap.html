@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="トラウマ治療のプロセスを7つのステージで可視化したロードマップ。現在地の記録とステージごとのメモを保存できます。">
+  <title>トラウマ治療ロードマップ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="roadmap.css">
+</head>
+<body class="roadmap-page">
+  <div data-include="partials/quick-access.html"></div>
+
+  <header id="top" class="site-header roadmap-header">
+    <div class="inner">
+      <p class="eyebrow" aria-label="Trauma Recovery Roadmap">
+        <span class="eyebrow-icon" aria-hidden="true">
+          <svg class="roadmap-header__icon" viewBox="0 0 64 64" role="presentation" focusable="false">
+            <path d="M20 10 6 16v38l14-6 20 6 18-7V9l-18 7-20-6Z" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M20 10v38m18-31v38" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <circle cx="32" cy="30" r="4.6" fill="currentColor"></circle>
+          </svg>
+        </span>
+        <span class="eyebrow-label">Trauma Recovery Roadmap</span>
+      </p>
+      <h1 class="hero-title">
+        <span>トラウマ治療</span>
+        <span>ロードマップ</span>
+      </h1>
+      <p class="hero-lead">治療の道のりを見通しながら、いまの位置と次の一歩を可視化するためのページです。進み方は人それぞれ。専門家と相談しながら、ご自身のペースで活用してください。</p>
+      <div class="hero-actions">
+        <a class="hero-link hero-link--roadmap" href="#roadmap-progress-heading">
+          <span class="hero-link__label">現在地を確認する</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="roadmap-main">
+    <section class="usage-guide">
+      <div class="inner surface-card surface-card--balanced">
+        <h2 class="section-title">ロードマップの使い方</h2>
+        <p class="section-description">各ステージに取り組みたいことをメモしたり、いまどこにいるかを記録できます。ボタンで現在地をマークすると、ブラウザのローカルストレージに保存され、ページを再読み込みしても保持されます。</p>
+        <p class="roadmap-storage-warning" data-storage-warning hidden>ブラウザーの設定により保存機能が利用できない場合があります。そのときはメモが端末に保持されない可能性があります。</p>
+
+      </div>
+    </section>
+
+    <section class="roadmap-progress" aria-labelledby="roadmap-progress-heading">
+      <div class="roadmap-progress__inner">
+        <div class="roadmap-progress__header">
+          <h2 id="roadmap-progress-heading" class="section-title">回復ステップの現在地</h2>
+          <p class="section-description">ロードマップの7ステージ全体を俯瞰し、保存した現在地がひと目でわかります。</p>
+        </div>
+        <ol class="roadmap-progress__steps" aria-label="トラウマ治療ロードマップのステップ">
+          <li class="roadmap-progress__step" data-progress-stage="stage-1">
+            <span class="roadmap-progress__node" aria-hidden="true">
+              <svg class="roadmap-progress__icon roadmap-progress__icon--complete" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <svg class="roadmap-progress__icon roadmap-progress__icon--pending" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"></circle>
+              </svg>
+            </span>
+            <span class="roadmap-progress__index">STEP 01</span>
+            <span class="roadmap-progress__name">生活基盤の<br>安定</span>
+            <span class="roadmap-progress__badge" aria-hidden="true">現在地</span>
+            <span class="visually-hidden" data-progress-status>未着手</span>
+          </li>
+          <li class="roadmap-progress__step" data-progress-stage="stage-2">
+            <span class="roadmap-progress__node" aria-hidden="true">
+              <svg class="roadmap-progress__icon roadmap-progress__icon--complete" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <svg class="roadmap-progress__icon roadmap-progress__icon--pending" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"></circle>
+              </svg>
+            </span>
+            <span class="roadmap-progress__index">STEP 02</span>
+            <span class="roadmap-progress__name">心理教育</span>
+            <span class="roadmap-progress__badge" aria-hidden="true">現在地</span>
+            <span class="visually-hidden" data-progress-status>未着手</span>
+          </li>
+          <li class="roadmap-progress__step" data-progress-stage="stage-3">
+            <span class="roadmap-progress__node" aria-hidden="true">
+              <svg class="roadmap-progress__icon roadmap-progress__icon--complete" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <svg class="roadmap-progress__icon roadmap-progress__icon--pending" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"></circle>
+              </svg>
+            </span>
+            <span class="roadmap-progress__index">STEP 03</span>
+            <span class="roadmap-progress__name">トラウマ耐性<br>スキル</span>
+            <span class="roadmap-progress__badge" aria-hidden="true">現在地</span>
+            <span class="visually-hidden" data-progress-status>未着手</span>
+          </li>
+          <li class="roadmap-progress__step" data-progress-stage="stage-4">
+            <span class="roadmap-progress__node" aria-hidden="true">
+              <svg class="roadmap-progress__icon roadmap-progress__icon--complete" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <svg class="roadmap-progress__icon roadmap-progress__icon--pending" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"></circle>
+              </svg>
+            </span>
+            <span class="roadmap-progress__index">STEP 04</span>
+            <span class="roadmap-progress__name">身体アプローチ<br>で処理</span>
+            <span class="roadmap-progress__badge" aria-hidden="true">現在地</span>
+            <span class="visually-hidden" data-progress-status>未着手</span>
+          </li>
+          <li class="roadmap-progress__step" data-progress-stage="stage-5">
+            <span class="roadmap-progress__node" aria-hidden="true">
+              <svg class="roadmap-progress__icon roadmap-progress__icon--complete" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <svg class="roadmap-progress__icon roadmap-progress__icon--pending" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"></circle>
+              </svg>
+            </span>
+            <span class="roadmap-progress__index">STEP 05</span>
+            <span class="roadmap-progress__name">感情整理<br>ワーク</span>
+            <span class="roadmap-progress__badge" aria-hidden="true">現在地</span>
+            <span class="visually-hidden" data-progress-status>未着手</span>
+          </li>
+          <li class="roadmap-progress__step" data-progress-stage="stage-6">
+            <span class="roadmap-progress__node" aria-hidden="true">
+              <svg class="roadmap-progress__icon roadmap-progress__icon--complete" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <svg class="roadmap-progress__icon roadmap-progress__icon--pending" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"></circle>
+              </svg>
+            </span>
+            <span class="roadmap-progress__index">STEP 06</span>
+            <span class="roadmap-progress__name">自己の<br>再構築</span>
+            <span class="roadmap-progress__badge" aria-hidden="true">現在地</span>
+            <span class="visually-hidden" data-progress-status>未着手</span>
+          </li>
+          <li class="roadmap-progress__step" data-progress-stage="stage-7">
+            <span class="roadmap-progress__node" aria-hidden="true">
+              <svg class="roadmap-progress__icon roadmap-progress__icon--complete" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <path d="m6 12.5 4 3.5 8-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <svg class="roadmap-progress__icon roadmap-progress__icon--pending" viewBox="0 0 24 24" role="presentation" focusable="false">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"></circle>
+              </svg>
+            </span>
+            <span class="roadmap-progress__index">STEP 07</span>
+            <span class="roadmap-progress__name">新しい生き方<br>の確立</span>
+            <span class="roadmap-progress__badge" aria-hidden="true">現在地</span>
+            <span class="visually-hidden" data-progress-status>未着手</span>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="roadmap-section" aria-labelledby="roadmap-stages-heading">
+      <div class="inner">
+        <h2 id="roadmap-stages-heading" class="visually-hidden">トラウマ治療の7ステージ</h2>
+        <ol class="roadmap-list">
+          <li class="roadmap-step" data-stage-id="stage-1">
+            <div class="roadmap-step__header">
+              <span class="roadmap-step__index">STEP 01</span>
+              <h3 class="roadmap-step__title" id="roadmap-stage-1" data-stage-title>生活基盤の安定</h3>
+            </div>
+            <p class="roadmap-step__description"><strong>心身が休める環境を整える段階。</strong> 投薬治療や食生活、睡眠リズムを整え、揺らぎを最小限にします。</p>
+            <ul class="roadmap-step__focus-list">
+              <li>投薬治療</li>
+              <li>食生活改善</li>
+              <li>生活リズムを整える</li>
+            </ul>
+            <div class="roadmap-step__actions">
+              <button type="button" class="roadmap-step__mark" data-stage-action="mark" data-label-mark="ここにいるとマーク" data-label-current="現在地">
+                <span class="roadmap-step__mark-text">ここにいるとマーク</span>
+              </button>
+            </div>
+            <div class="roadmap-step__note">
+              <label for="roadmap-note-stage-1">「生活基盤の安定」のメモ</label>
+              <textarea id="roadmap-note-stage-1" data-stage-note="stage-1" placeholder="例：服薬リマインダーを設定する、睡眠記録をつける など"></textarea>
+              <p class="roadmap-step__note-status" data-note-status aria-live="polite"></p>
+            </div>
+          </li>
+
+          <li class="roadmap-step" data-stage-id="stage-2">
+            <div class="roadmap-step__header">
+              <span class="roadmap-step__index">STEP 02</span>
+              <h3 class="roadmap-step__title" id="roadmap-stage-2" data-stage-title>心理教育</h3>
+            </div>
+            <p class="roadmap-step__description"><strong>起きていることを理解する段階。</strong> トラウマ反応の仕組みを学び、「自分に起きていること」に言葉を与えます。</p>
+            <ul class="roadmap-step__focus-list">
+              <li>トラウマ反応の理解</li>
+              <li>セルフモニタリング</li>
+              <li>安全計画の確認</li>
+            </ul>
+            <div class="roadmap-step__actions">
+              <button type="button" class="roadmap-step__mark" data-stage-action="mark" data-label-mark="ここにいるとマーク" data-label-current="現在地">
+                <span class="roadmap-step__mark-text">ここにいるとマーク</span>
+              </button>
+            </div>
+            <div class="roadmap-step__note">
+              <label for="roadmap-note-stage-2">「心理教育」のメモ</label>
+              <textarea id="roadmap-note-stage-2" data-stage-note="stage-2" placeholder="例：学んだこと、支援者と共有したいポイントなど"></textarea>
+              <p class="roadmap-step__note-status" data-note-status aria-live="polite"></p>
+            </div>
+          </li>
+
+          <li class="roadmap-step" data-stage-id="stage-3">
+            <div class="roadmap-step__header">
+              <span class="roadmap-step__index">STEP 03</span>
+              <h3 class="roadmap-step__title" id="roadmap-stage-3" data-stage-title>トラウマ耐性スキルの獲得</h3>
+            </div>
+            <p class="roadmap-step__description"><strong>感情の波に耐えられる力を育む段階。</strong> グラウンディングやセルフケアの引き出しを増やします。</p>
+            <ul class="roadmap-step__focus-list">
+              <li>グラウンディング練習</li>
+              <li>安心できるリソースづくり</li>
+              <li>コーピングスキルの反復</li>
+            </ul>
+            <div class="roadmap-step__actions">
+              <button type="button" class="roadmap-step__mark" data-stage-action="mark" data-label-mark="ここにいるとマーク" data-label-current="現在地">
+                <span class="roadmap-step__mark-text">ここにいるとマーク</span>
+              </button>
+            </div>
+            <div class="roadmap-step__note">
+              <label for="roadmap-note-stage-3">「トラウマ耐性スキルの獲得」のメモ</label>
+              <textarea id="roadmap-note-stage-3" data-stage-note="stage-3" placeholder="例：役立ったスキル、練習したい場面など"></textarea>
+              <p class="roadmap-step__note-status" data-note-status aria-live="polite"></p>
+            </div>
+          </li>
+
+          <li class="roadmap-step" data-stage-id="stage-4">
+            <div class="roadmap-step__header">
+              <span class="roadmap-step__index">STEP 04</span>
+              <h3 class="roadmap-step__title" id="roadmap-stage-4" data-stage-title>身体的アプローチによるトラウマ処理</h3>
+            </div>
+            <p class="roadmap-step__description"><strong>身体感覚と安全につながり直す段階。</strong> 呼吸や動きを使い、体が溜め込んだ反応を少しずつ解きほぐします。</p>
+            <ul class="roadmap-step__focus-list">
+              <li>身体感覚へのやさしい気づき</li>
+              <li>呼吸・動作を用いた段階的アプローチ</li>
+              <li>安全な範囲での身体リリース</li>
+            </ul>
+            <div class="roadmap-step__actions">
+              <button type="button" class="roadmap-step__mark" data-stage-action="mark" data-label-mark="ここにいるとマーク" data-label-current="現在地">
+                <span class="roadmap-step__mark-text">ここにいるとマーク</span>
+              </button>
+            </div>
+            <div class="roadmap-step__note">
+              <label for="roadmap-note-stage-4">「身体的アプローチによるトラウマ処理」のメモ</label>
+              <textarea id="roadmap-note-stage-4" data-stage-note="stage-4" placeholder="例：体調の変化、安心できた動きなど"></textarea>
+              <p class="roadmap-step__note-status" data-note-status aria-live="polite"></p>
+            </div>
+          </li>
+
+          <li class="roadmap-step" data-stage-id="stage-5">
+            <div class="roadmap-step__header">
+              <span class="roadmap-step__index">STEP 05</span>
+              <h3 class="roadmap-step__title" id="roadmap-stage-5" data-stage-title>感情整理によるトラウマ処理</h3>
+            </div>
+            <p class="roadmap-step__description"><strong>感情に寄り添い、必要な表現を探す段階。</strong> 感情を言語化し、安全な場での表出方法を整えます。</p>
+            <ul class="roadmap-step__focus-list">
+              <li>感情のラベリングと共有</li>
+              <li>表現手段（書く・話す・アートなど）の活用</li>
+              <li>感情の波を落ち着かせる手順</li>
+            </ul>
+            <div class="roadmap-step__actions">
+              <button type="button" class="roadmap-step__mark" data-stage-action="mark" data-label-mark="ここにいるとマーク" data-label-current="現在地">
+                <span class="roadmap-step__mark-text">ここにいるとマーク</span>
+              </button>
+            </div>
+            <div class="roadmap-step__note">
+              <label for="roadmap-note-stage-5">「感情整理によるトラウマ処理」のメモ</label>
+              <textarea id="roadmap-note-stage-5" data-stage-note="stage-5" placeholder="例：表現してみたい方法、気づいた感情など"></textarea>
+              <p class="roadmap-step__note-status" data-note-status aria-live="polite"></p>
+            </div>
+          </li>
+
+          <li class="roadmap-step" data-stage-id="stage-6">
+            <div class="roadmap-step__header">
+              <span class="roadmap-step__index">STEP 06</span>
+              <h3 class="roadmap-step__title" id="roadmap-stage-6" data-stage-title>自己の再構築</h3>
+            </div>
+            <p class="roadmap-step__description"><strong>新しい自己像を育てる段階。</strong> 認知や対人スキルを見直し、安心できるつながり方を選び直します。</p>
+            <ul class="roadmap-step__focus-list">
+              <li>認知の書き換え</li>
+              <li>脳内回路の再接続</li>
+              <li>境界線ワーク等の対人関係スキル</li>
+            </ul>
+            <div class="roadmap-step__actions">
+              <button type="button" class="roadmap-step__mark" data-stage-action="mark" data-label-mark="ここにいるとマーク" data-label-current="現在地">
+                <span class="roadmap-step__mark-text">ここにいるとマーク</span>
+              </button>
+            </div>
+            <div class="roadmap-step__note">
+              <label for="roadmap-note-stage-6">「自己の再構築」のメモ</label>
+              <textarea id="roadmap-note-stage-6" data-stage-note="stage-6" placeholder="例：書き換えたい思考、境界線ワークの気づきなど"></textarea>
+              <p class="roadmap-step__note-status" data-note-status aria-live="polite"></p>
+            </div>
+          </li>
+
+          <li class="roadmap-step" data-stage-id="stage-7">
+            <div class="roadmap-step__header">
+              <span class="roadmap-step__index">STEP 07</span>
+              <h3 class="roadmap-step__title" id="roadmap-stage-7" data-stage-title>新しい生き方の確立</h3>
+            </div>
+            <p class="roadmap-step__description"><strong>築き上げた力を日常に広げる段階。</strong> 大切にしたい価値観を軸に、新しいライフスタイルを少しずつ定着させます。</p>
+            <ul class="roadmap-step__focus-list">
+              <li>価値観と目標の再確認</li>
+              <li>新しい行動パターンの試行</li>
+              <li>継続的なセルフケアの設計</li>
+            </ul>
+            <div class="roadmap-step__actions">
+              <button type="button" class="roadmap-step__mark" data-stage-action="mark" data-label-mark="ここにいるとマーク" data-label-current="現在地">
+                <span class="roadmap-step__mark-text">ここにいるとマーク</span>
+              </button>
+            </div>
+            <div class="roadmap-step__note">
+              <label for="roadmap-note-stage-7">「新しい生き方の確立」のメモ</label>
+              <textarea id="roadmap-note-stage-7" data-stage-note="stage-7" placeholder="例：実践してみたいこと、支えになった習慣など"></textarea>
+              <p class="roadmap-step__note-status" data-note-status aria-live="polite"></p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <div data-include="partials/note.html"></div>
+  </main>
+
+  <div data-include="partials/site-footer.html"></div>
+  <div data-include="partials/back-to-top.html"></div>
+
+  <script src="component-loader.js" defer></script>
+  <script src="main.js" defer></script>
+  <script src="roadmap.js" defer></script>
+</body>
+</html>

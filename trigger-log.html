@@ -27,22 +27,26 @@
         </span>
         <span class="eyebrow-label">Trigger Log</span>
       </p>
-      <h1 class="log-header__title" aria-label="フラッシュバック・トリガー記録">
-        <span class="log-header__title-main">フラッシュバック</span>
-        <span class="log-header__title-sub">トリガー記録</span>
+      <h1 class="hero-title" aria-label="フラッシュバック・トリガー記録">
+        <span>フラッシュバック</span>
+        <span>トリガー記録</span>
       </h1>
-      <p class="lead">いま感じたこと、ちょっとだけ残そう。</p>
-      <a class="log-back-link" href="#trigger-log-header">トリガーを記録する</a>
+      <p class="hero-lead">いま感じたこと、ちょっとだけ残そう。</p>
+      <div class="hero-actions">
+        <a class="hero-link hero-link--log" href="#trigger-log-header">
+          <span class="hero-link__label">トリガーを記録する</span>
+        </a>
+      </div>
     </div>
   </header>
 
   <main class="log-main">
     <section class="log-section">
       <div class="inner">
-        <div class="log-card log-card--form">
-          <div class="log-card__header">
-            <h2 id="trigger-log-header">トリガー記録フォーム</h2>
-            <p>心にひっかかった出来事を数タップでメモできます。入力内容はお使いの端末にのみ保存されます。</p>
+        <div class="log-card surface-card log-card--form">
+          <div class="log-card__header usage-guide">
+            <h2 id="trigger-log-header" class="section-title">トリガー記録フォーム</h2>
+            <p class="section-description">心にひっかかった出来事を数タップでメモできます。入力内容はお使いの端末にのみ保存されます。</p>
           </div>
           <form id="trigger-log-form" class="trigger-form" novalidate>
             <div class="form-field" data-field="trigger">
@@ -139,12 +143,12 @@
 
     <section class="log-section">
       <div class="inner">
-        <div class="log-card log-card--history">
+        <div class="log-card surface-card log-card--history">
           <div class="log-card__header log-history__header">
-            <h2>記録一覧</h2>
+            <h2 class="section-title">記録一覧</h2>
             <button type="button" class="text-button log-clear-button" data-action="clear-logs">すべて削除</button>
           </div>
-          <p class="log-history__description">あとで見返したいときに、ここから確認できます。データは端末内に保存されます。</p>
+          <p class="log-history__description section-description">あとで見返したいときに、ここから確認できます。データは端末内に保存されます。</p>
           <p class="log-empty-message" data-empty-message>まだ記録がありません。</p>
           <ol class="log-list" id="log-list" aria-live="polite" aria-label="保存したトリガー記録"></ol>
         </div>

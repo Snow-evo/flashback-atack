@@ -32,10 +32,6 @@ body.trigger-log-page .bandage-icon .bandage-hole {
   fill: var(--accent);
 }
 
-.log-header .lead {
-  max-width: 520px;
-  margin-bottom: 1.6rem;
-}
 
 .log-header__title-main,
 .log-header__title-sub {
@@ -52,7 +48,7 @@ body.trigger-log-page .bandage-icon .bandage-hole {
   justify-content: center;
   gap: 0.35rem;
   padding: 0.6rem 1.35rem;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   border: 1px solid rgba(98, 187, 161, 0.4);
   background: rgba(98, 187, 161, 0.15);
   color: var(--accent);
@@ -83,24 +79,7 @@ body.trigger-log-page .bandage-icon .bandage-hole {
 .log-card {
   position: relative;
   z-index: 1;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 28px;
-  padding: clamp(1.8rem, 4vw, 2.5rem) clamp(1.6rem, 5vw, 2.8rem);
-  box-shadow: var(--shadow-soft);
   backdrop-filter: blur(14px);
-}
-
-.log-card__header h2 {
-  margin: 0;
-  font-size: clamp(1.45rem, 2.6vw, 1.8rem);
-  font-weight: 700;
-}
-
-.log-card__header p {
-  margin: 0.65rem 0 0;
-  color: var(--text-muted);
-  line-height: 1.65;
 }
 
 .trigger-form {
@@ -158,7 +137,7 @@ body.trigger-log-page .bandage-icon .bandage-hole {
   flex-wrap: wrap;
   gap: 0.6rem;
   padding: 0.55rem;
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   background: rgba(98, 187, 161, 0.08);
   border: 1px solid rgba(98, 187, 161, 0.18);
 }
@@ -169,7 +148,7 @@ body.trigger-log-page .bandage-icon .bandage-hole {
   justify-content: center;
   gap: 0.35rem;
   padding: 0.6rem 1.15rem;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   border: 1px solid rgba(98, 187, 161, 0.2);
   background: rgba(255, 255, 255, 0.85);
   color: var(--accent);
@@ -210,7 +189,7 @@ body.trigger-log-page .bandage-icon .bandage-hole {
   display: grid;
   gap: 0.55rem;
   padding: 0.8rem 1rem 1rem;
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   background: rgba(255, 255, 255, 0.95);
   border: 1px solid rgba(98, 187, 161, 0.18);
 }
@@ -225,7 +204,7 @@ body.trigger-log-page .bandage-icon .bandage-hole {
 .trigger-form input[type="text"] {
   width: 100%;
   font: inherit;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   border: 1px solid rgba(98, 187, 161, 0.28);
   padding: 0.85rem 1rem;
   background: rgba(255, 255, 255, 0.92);
@@ -278,7 +257,7 @@ body.trigger-log-page .bandage-icon .bandage-hole {
   justify-content: center;
   gap: 0.4rem;
   padding: 0.95rem 2.6rem;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   border: none;
   font: inherit;
   font-weight: 700;
@@ -320,7 +299,7 @@ body.trigger-log-page .bandage-icon .bandage-hole {
 .form-editing-notice {
   margin: 0.4rem 0 0;
   padding: 0.75rem 1rem;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   background: rgba(98, 187, 161, 0.12);
   color: var(--accent);
   font-size: 0.92rem;
@@ -335,7 +314,7 @@ body.trigger-log-page .bandage-icon .bandage-hole {
   font-weight: 600;
   cursor: pointer;
   padding: 0.4rem 0.8rem;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   transition: background 0.2s ease, color 0.2s ease;
 }
 
@@ -355,9 +334,8 @@ body.trigger-log-page .bandage-icon .bandage-hole {
   gap: 1rem;
 }
 
-.log-history__description {
-  margin: 0.75rem 0 0;
-  color: var(--text-muted);
+.log-history__description.section-description {
+  margin-top: 0.75rem;
 }
 
 .log-empty-message {
@@ -381,7 +359,7 @@ body.trigger-log-page .bandage-icon .bandage-hole {
 .log-entry {
   background: rgba(255, 255, 255, 0.95);
   border: 1px solid rgba(98, 187, 161, 0.18);
-  border-radius: 22px;
+  border-radius: var(--radius-2xl);
   padding: 1.5rem;
   box-shadow: 0 14px 30px rgba(98, 187, 161, 0.16);
 }
@@ -432,7 +410,7 @@ body.trigger-log-page .bandage-icon .bandage-hole {
   align-items: center;
   justify-content: center;
   padding: 0.45rem 0.9rem;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   background: rgba(98, 187, 161, 0.14);
   color: var(--accent);
   font-size: 0.95rem;
@@ -447,7 +425,7 @@ body.trigger-log-page .bandage-icon .bandage-hole {
   margin: 0;
   padding: 1rem 1.1rem;
   background: rgba(98, 187, 161, 0.1);
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   color: var(--text-main);
   white-space: pre-wrap;
   line-height: 1.6;
@@ -458,8 +436,9 @@ body.trigger-log-page .bandage-icon .bandage-hole {
 }
 
 @media (max-width: 720px) {
-  .log-card {
-    padding: 1.6rem 1.4rem;
+  .log-card.surface-card {
+    --surface-padding-block: 1.6rem;
+    --surface-padding-inline: 1.4rem;
   }
 
   .log-history__header {

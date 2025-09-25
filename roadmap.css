@@ -112,7 +112,7 @@
 .roadmap-progress__badge {
   margin-top: 0.2rem;
   padding: 0.25rem 0.85rem;
-  border-radius: var(--radius-full);
+  border-radius: 0.5rem;
   background: var(--accent-green-deep);
   color: #fff;
   font-size: 0.75rem;
@@ -205,9 +205,10 @@
   }
 
   .roadmap-progress__badge {
-    padding: 0.18rem 0.65rem;
+    padding: 0.3rem 0.2rem;
     font-size: 0.68rem;
-    letter-spacing: 0.1em;
+    line-height: 1;
+    letter-spacing: 0;
   }
 }
 

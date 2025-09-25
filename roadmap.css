@@ -10,49 +10,10 @@
   background: linear-gradient(140deg, rgba(255, 255, 255, 0.5), transparent 70%);
 }
 
-.roadmap-header__title {
-  font-family: var(--heading-font);
-  font-weight: 600;
-  font-size: clamp(2.4rem, 6vw, 3.4rem);
-  letter-spacing: 0.05em;
-  margin: clamp(1rem, 4vw, 1.5rem) 0 0.6rem;
-  line-height: 1.15;
-}
-
-.roadmap-header__title span {
-  display: block;
-}
-
-.roadmap-header__lead {
-  margin: 0 auto;
-  max-width: 720px;
-  font-size: 1.05rem;
-  color: var(--text-muted);
-}
-
 .roadmap-main {
   padding: clamp(2.4rem, 6vw, 3.8rem) 0 4rem;
 }
 
-.roadmap-intro .inner {
-  background: var(--card-bg);
-  border-radius: 28px;
-  padding: clamp(1.8rem, 5vw, 2.4rem) clamp(1.6rem, 4vw, 2.6rem);
-  border: 1px solid var(--card-border);
-  box-shadow: var(--shadow-soft);
-  backdrop-filter: blur(12px);
-  display: grid;
-  gap: 1rem;
-}
-
-.roadmap-intro h2 {
-  margin: 0;
-  font-size: clamp(1.4rem, 3.2vw, 1.8rem);
-}
-
-.roadmap-intro p {
-  margin: 0;
-}
 
 .roadmap-progress {
   margin: clamp(2rem, 5vw, 3.2rem) 0 clamp(2.4rem, 6vw, 3.6rem);
@@ -62,7 +23,7 @@
   width: min(1100px, 100%);
   margin: 0 auto;
   padding: clamp(1.4rem, 4vw, 2.2rem) clamp(1rem, 3vw, 1.8rem) clamp(1.6rem, 4.4vw, 2.4rem);
-  border-radius: 28px;
+  border-radius: var(--radius-4xl);
   border: 1px solid var(--card-border);
   background: linear-gradient(135deg, rgba(224, 244, 236, 0.96), rgba(255, 255, 255, 0.94));
   box-shadow: 0 24px 48px rgba(98, 187, 161, 0.18);
@@ -70,15 +31,8 @@
   gap: clamp(1.2rem, 3vw, 1.8rem);
 }
 
-.roadmap-progress__header h2 {
-  margin: 0;
-  font-size: clamp(1.4rem, 3.4vw, 1.9rem);
-}
-
-.roadmap-progress__header p {
-  margin: 0.35rem 0 0;
-  color: var(--text-muted);
-  font-size: clamp(0.96rem, 2.4vw, 1.05rem);
+.roadmap-progress__header .section-description {
+  margin-top: 0.4rem;
 }
 
 .roadmap-progress__steps {
@@ -104,7 +58,7 @@
   left: var(--pad-x);
   right: var(--pad-x);
   height: 4px;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   background: linear-gradient(
     90deg,
     rgba(98, 187, 161, 0.85) 0%,
@@ -131,7 +85,7 @@
 .roadmap-progress__node {
   width: var(--node-size);
   height: var(--node-size);
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   border: 2px solid rgba(98, 187, 161, 0.32);
   background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 14px 28px rgba(98, 187, 161, 0.18);
@@ -172,7 +126,7 @@
 .roadmap-progress__badge {
   margin-top: 0.2rem;
   padding: 0.25rem 0.85rem;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   background: var(--accent-green-deep);
   color: #fff;
   font-size: 0.75rem;
@@ -245,7 +199,7 @@
 
 @media (max-width: 720px) {
   .roadmap-progress__inner {
-    border-radius: 24px;
+    border-radius: var(--radius-3xl);
   }
 
   .roadmap-progress__steps {
@@ -285,7 +239,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.55rem 1.1rem;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   background: rgba(98, 187, 161, 0.16);
   color: var(--accent-green-deep);
   font-weight: 600;
@@ -303,7 +257,7 @@
 .roadmap-storage-warning {
   margin-top: 0.6rem;
   padding: 0.75rem 1rem;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   background: rgba(237, 122, 122, 0.18);
   color: var(--accent);
   font-size: 0.95rem;
@@ -325,7 +279,7 @@
 .roadmap-step {
   position: relative;
   padding: clamp(1.8rem, 3.6vw, 2.6rem);
-  border-radius: 28px;
+  border-radius: var(--radius-4xl);
   border: 1px solid rgba(255, 255, 255, 0.68);
   background: var(--card-bg);
   box-shadow: var(--shadow-soft);
@@ -393,7 +347,7 @@
 
 .roadmap-step__focus-list li {
   padding: 0.35rem 0.85rem;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   background: rgba(255, 255, 255, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.75);
   font-size: 0.92rem;
@@ -413,7 +367,7 @@
 
 .roadmap-step__mark {
   padding: 0.55rem 1.3rem;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   border: 1px solid rgba(255, 138, 61, 0.45);
   background: rgba(255, 255, 255, 0.9);
   font-weight: 600;
@@ -453,7 +407,7 @@
   width: 100%;
   min-height: 6.5rem;
   padding: 0.9rem 1rem;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   border: 1px solid rgba(0, 0, 0, 0.08);
   background: rgba(255, 255, 255, 0.95);
   font-family: var(--body-font);

@@ -10,15 +10,6 @@
   background: linear-gradient(140deg, rgba(255, 255, 255, 0.5), transparent 70%);
 }
 
-.roadmap-main {
-  padding: clamp(2.4rem, 6vw, 3.8rem) 0 4rem;
-}
-
-
-.roadmap-progress {
-  margin: clamp(2rem, 5vw, 3.2rem) 0 clamp(2.4rem, 6vw, 3.6rem);
-}
-
 .roadmap-progress__inner {
   width: min(1100px, 100%);
   margin: 0 auto;
@@ -30,19 +21,14 @@
   display: grid;
   gap: clamp(1.2rem, 3vw, 1.8rem);
 }
-
-.roadmap-progress__header .section-description {
-  margin-top: 0.4rem;
-}
-
 .roadmap-progress__steps {
-  --pad-x: clamp(0.6rem, 2.2vw, 1.2rem);
-  --pad-top: clamp(0.9rem, 2.6vw, 1.4rem);
+  --pad-x: 0.5rem;
+  --pad-top: 0.5rem;
   --node-size: clamp(38px, 6vw, 46px);
   --progress-position: 0%;
   list-style: none;
   margin: 0;
-  padding: var(--pad-top) var(--pad-x) clamp(1.1rem, 3vw, 1.6rem);
+  padding: var(--pad-top) var(--pad-x) 0.5rem;
   display: flex;
   flex-wrap: nowrap;
   align-items: flex-start;
@@ -183,12 +169,12 @@
 
 @media (max-width: 1024px) {
   .roadmap-progress__inner {
-    padding: clamp(1.2rem, 4.8vw, 1.8rem) clamp(0.9rem, 3.2vw, 1.4rem) clamp(1.4rem, 4.8vw, 2rem);
+    padding: 0.7rem;
   }
 
   .roadmap-progress__steps {
-    --pad-x: clamp(0.5rem, 2.4vw, 1rem);
-    --pad-top: clamp(0.75rem, 2.8vw, 1.1rem);
+    --pad-x: 0.5rem;
+    --pad-top: 0.5rem;
     gap: clamp(0.3rem, 1.6vw, 0.6rem);
   }
 
@@ -204,8 +190,9 @@
 
   .roadmap-progress__steps {
     --node-size: clamp(32px, 8vw, 38px);
-    --pad-x: clamp(0.4rem, 3vw, 0.8rem);
-    padding: clamp(0.8rem, 4vw, 1.1rem) var(--pad-x) clamp(0.9rem, 4vw, 1.3rem);
+    --pad-x: 0.45rem;
+    --pad-top: 0.5rem;
+    padding: var(--pad-top) var(--pad-x) 0.5rem;
   }
 
   .roadmap-progress__index {

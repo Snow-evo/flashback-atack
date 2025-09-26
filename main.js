@@ -327,11 +327,23 @@
       return null;
     }
 
+    // 並び順変更による移行処理（2024年並び順変更対応）
+    const migrationMap = {
+      // 安心感を育てるセルフケア（旧41-50 → 新31-40）
+      'tip-41': 'tip-31', 'tip-42': 'tip-32', 'tip-43': 'tip-33', 'tip-44': 'tip-34', 'tip-45': 'tip-35',
+      'tip-46': 'tip-36', 'tip-47': 'tip-37', 'tip-48': 'tip-38', 'tip-49': 'tip-39', 'tip-50': 'tip-40',
+      // つながりとサポートを頼る（旧31-40 → 新41-50）
+      'tip-31': 'tip-41', 'tip-32': 'tip-42', 'tip-33': 'tip-43', 'tip-34': 'tip-44', 'tip-35': 'tip-45',
+      'tip-36': 'tip-46', 'tip-37': 'tip-47', 'tip-38': 'tip-48', 'tip-39': 'tip-49', 'tip-40': 'tip-50'
+    };
+
     const tipFormatMatch = value.match(/^tip-(\d+)$/u);
     if (tipFormatMatch) {
       const numericId = Number.parseInt(tipFormatMatch[1], 10);
       if (!Number.isNaN(numericId)) {
-        return `tip-${String(numericId).padStart(2, '0')}`;
+        const paddedId = `tip-${String(numericId).padStart(2, '0')}`;
+        // 移行マップがある場合は新しいIDを返す
+        return migrationMap[paddedId] || paddedId;
       }
       return null;
     }
@@ -340,7 +352,9 @@
     if (legacyFormatMatch) {
       const numericId = Number.parseInt(legacyFormatMatch[1], 10);
       if (!Number.isNaN(numericId)) {
-        return `tip-${String(numericId).padStart(2, '0')}`;
+        const paddedId = `tip-${String(numericId).padStart(2, '0')}`;
+        // 移行マップがある場合は新しいIDを返す
+        return migrationMap[paddedId] || paddedId;
       }
     }
 

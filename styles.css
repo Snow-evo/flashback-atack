@@ -258,6 +258,29 @@ img {
   outline: 3px solid rgba(98, 187, 161, 0.45);
 }
 
+.quick-access__link--voice {
+  background: linear-gradient(135deg, #8f87f7, #b9a8ff);
+  border-color: rgba(143, 135, 247, 0.48);
+  box-shadow: 0 8px 22px rgba(143, 135, 247, 0.26);
+  color: #fff;
+}
+
+.quick-access__link--voice .quick-access__icon {
+  color: currentColor;
+}
+
+.quick-access__link--voice:hover,
+.quick-access__link--voice:focus-visible {
+  background: linear-gradient(135deg, #a7a0ff, #cfc5ff);
+  border-color: rgba(143, 135, 247, 0.62);
+  color: #fff;
+  box-shadow: 0 14px 30px rgba(143, 135, 247, 0.32);
+}
+
+.quick-access__link--voice:focus-visible {
+  outline: 3px solid rgba(143, 135, 247, 0.32);
+}
+
 @media (max-width: 600px) {
   .quick-access .inner {
     flex-wrap: wrap;
@@ -470,6 +493,20 @@ h1 {
 .hero-link--log:focus-visible {
   background: linear-gradient(135deg, #6ed2b4, #2f7c62);
   border-color: rgba(59, 141, 114, 0.78);
+}
+
+.hero-link--voice {
+  background: linear-gradient(135deg, #837af6, #b0a0ff);
+  border-color: rgba(143, 135, 247, 0.52);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(143, 135, 247, 0.28);
+}
+
+.hero-link--voice:hover,
+.hero-link--voice:focus-visible {
+  background: linear-gradient(135deg, #998ffb, #c8beff);
+  border-color: rgba(143, 135, 247, 0.68);
+  box-shadow: 0 12px 28px rgba(143, 135, 247, 0.34);
 }
 
 .usage-guide {

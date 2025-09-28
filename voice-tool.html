@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="複雑性PTSDの人が自己批判の声をキャラクター化して外在化するためのツール。安全な置き場所と応急処置ガイドへの導線を備えています。">
+  <title>自己批判の声を外在化するツール</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="voice-tool.css">
+</head>
+<body class="voice-tool-page">
+  <div data-include="partials/quick-access.html"></div>
+
+  <header id="top" class="site-header voice-header">
+    <div class="inner">
+      <p class="eyebrow" aria-label="Voice Externalization Tool">
+        <span class="eyebrow-icon" aria-hidden="true">
+          <svg class="voice-header__icon" viewBox="0 0 64 64" role="presentation" focusable="false">
+            <path d="M12 32c0-11 9-20 20-20s20 9 20 20c0 8.7-5.6 16-13.4 18.7L32 56l-6.6-5.3C17.6 48 12 40.7 12 32Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M32 20v11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <circle cx="32" cy="39" r="2.6" fill="currentColor"></circle>
+          </svg>
+        </span>
+        <span class="eyebrow-label">Voice Externalization Tool</span>
+      </p>
+      <h1 class="hero-title">
+        <span>責める声を</span>
+        <span>安全に外へ出す</span>
+      </h1>
+      <p class="hero-lead">強い自己否定感や責める声が現れたときに、姿と場所を与えて距離を取るためのツールです。信頼できる支援者と共有しながら、無理のないペースで使ってください。</p>
+      <div class="hero-actions">
+        <a class="hero-link hero-link--voice" href="#voice-form-heading">
+          <span class="hero-link__label">キャラクターを整える</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="voice-main">
+    <section class="usage-guide">
+      <div class="inner surface-card surface-card--balanced">
+        <h2 class="section-title">使い方</h2>
+        <p class="section-description">フォームに入力すると、責める声を1人のキャラクターとして可視化します。位置づけを決めておくと、現れたときに「ここにいてね」と置き直すイメージが持ちやすくなります。入力内容はお使いの端末にのみ保存され、ページを再読み込みしても保持されます。</p>
+      </div>
+    </section>
+
+    <section class="voice-tool" aria-labelledby="voice-form-heading">
+      <div class="inner voice-tool__layout">
+        <div class="voice-panel surface-card voice-panel--form">
+          <div class="voice-panel__header">
+            <h2 id="voice-form-heading" class="section-title">責める声のキャラ化フォーム</h2>
+            <p class="section-description">短い言葉でOK。入力した内容はリアルタイムで右側に反映されます。</p>
+          </div>
+          <form id="voice-character-form" class="voice-form" autocomplete="off" novalidate>
+            <div class="voice-field">
+              <label for="voice-name">名前 <span class="voice-badge">必須</span></label>
+              <input type="text" id="voice-name" name="name" inputmode="text" maxlength="40" required>
+              <p class="voice-field__help">例：影のコーチ、批判さん など</p>
+            </div>
+            <div class="voice-field voice-field--inline">
+              <div class="voice-field__group">
+                <label for="voice-gender">性別 <span class="voice-badge voice-badge--optional">任意</span></label>
+                <select id="voice-gender" name="gender">
+                  <option value="" selected>設定しない</option>
+                  <option value="female">女性的</option>
+                  <option value="male">男性的</option>
+                  <option value="neutral">中性的</option>
+                  <option value="other">その他</option>
+                </select>
+              </div>
+              <div class="voice-field__group">
+                <label for="voice-age">年齢 <span class="voice-badge voice-badge--optional">任意</span></label>
+                <input type="number" id="voice-age" name="age" inputmode="numeric" min="1" max="130" placeholder="--">
+              </div>
+            </div>
+            <div class="voice-field">
+              <label for="voice-appearance">姿のイメージ <span class="voice-badge voice-badge--optional">任意</span></label>
+              <select id="voice-appearance" name="appearance">
+                <option value="">選択してください</option>
+                <option value="shadow">影のような存在</option>
+                <option value="child">小さな子ども</option>
+                <option value="mentor">厳しい先生</option>
+                <option value="relative">親しい人に似ている</option>
+                <option value="future">未来の自分</option>
+                <option value="custom">自分で書く</option>
+              </select>
+              <div class="voice-field__custom" id="appearance-note-group" hidden>
+                <label for="voice-appearance-note">自由に書く（1〜120文字）</label>
+                <textarea id="voice-appearance-note" name="appearanceNote" rows="2" maxlength="120"></textarea>
+                <p class="voice-field__counter" data-count-for="voice-appearance-note">0 / 120</p>
+              </div>
+            </div>
+            <div class="voice-field">
+              <label for="voice-phrases">よく言う言葉 <span class="voice-badge voice-badge--optional">任意</span></label>
+              <textarea id="voice-phrases" name="phrases" rows="3" maxlength="200" placeholder="例：「どうせ失敗する」「また迷惑をかける」など"></textarea>
+              <p class="voice-field__counter" data-count-for="voice-phrases">0 / 200</p>
+            </div>
+            <div class="voice-field">
+              <label for="voice-message">伝えたい言葉 <span class="voice-badge voice-badge--optional">任意</span></label>
+              <textarea id="voice-message" name="message" rows="3" maxlength="200" placeholder="例：あなたが守りたいものは何？ 今は休んでいいよ など"></textarea>
+              <p class="voice-field__counter" data-count-for="voice-message">0 / 200</p>
+            </div>
+            <p class="voice-storage-warning" data-storage-warning hidden>ブラウザーの設定により保存機能が利用できない場合があります。</p>
+          </form>
+        </div>
+
+        <aside class="voice-panel surface-card voice-panel--preview" aria-live="polite">
+          <h2 class="voice-preview__heading">キャラクターの記録</h2>
+          <dl class="voice-preview__list">
+            <div class="voice-preview__item">
+              <dt>名前</dt>
+              <dd data-preview="name">（未設定）</dd>
+            </div>
+            <div class="voice-preview__item">
+              <dt>属性</dt>
+              <dd data-preview="meta">性別・年齢は未設定</dd>
+            </div>
+            <div class="voice-preview__item">
+              <dt>姿</dt>
+              <dd data-preview="appearance">（未設定）</dd>
+            </div>
+            <div class="voice-preview__item">
+              <dt>よく言う言葉</dt>
+              <dd data-preview="phrases">（まだ入力されていません）</dd>
+            </div>
+            <div class="voice-preview__item">
+              <dt>あなたから伝えたいこと</dt>
+              <dd data-preview="message">（まだ入力されていません）</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <section class="voice-placement" aria-labelledby="voice-placement-heading">
+      <div class="inner">
+        <div class="voice-room surface-card">
+          <div class="voice-room__header">
+            <div>
+              <h2 id="voice-placement-heading" class="section-title">置き場所を決める</h2>
+              <p class="section-description">広い部屋の一角に安全な置き場を用意しておくと、現れたときに「ここにいて」とイメージしやすくなります。</p>
+            </div>
+            <button type="button" class="voice-place-button" data-action="toggle-placement" aria-pressed="false">ここに置いておく</button>
+          </div>
+          <div class="voice-room__space" role="img" aria-label="広い部屋のイメージ。中央に置き場所があります。">
+            <div class="voice-room__zone" data-room-zone>
+              <p class="voice-room__empty" data-room-empty>まだ誰も置かれていません。ボタンを押すとここにそっと居場所を用意します。</p>
+              <div class="voice-room__character" data-room-character hidden>
+                <div class="voice-room__name" data-room-name></div>
+                <p class="voice-room__note" data-room-note></p>
+              </div>
+            </div>
+          </div>
+          <p class="voice-room__status" data-placement-status aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="voice-emergency" aria-labelledby="voice-emergency-heading">
+      <div class="inner surface-card surface-card--balanced">
+        <h2 id="voice-emergency-heading" class="section-title">つらくなったら</h2>
+        <p class="section-description">強くつらくなったら一度作業を中断して、<a href="index.html#top" class="voice-emergency__link">フラッシュバック応急処置ガイド</a>へ移動してください。安全が最優先です。</p>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="partials/site-footer.html"></div>
+  <div data-include="partials/back-to-top.html"></div>
+
+  <script src="component-loader.js" defer></script>
+  <script src="main.js" defer></script>
+  <script src="voice-tool.js" defer></script>
+</body>
+</html>

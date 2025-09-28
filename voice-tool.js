@@ -1,15 +1,21 @@
 (() => {
   'use strict';
 
-  const STORAGE_KEY_PROFILE = 'voiceCharacterProfile';
-  const STORAGE_KEY_PLACEMENT = 'voiceCharacterPlacement';
+  const STORAGE_KEY_PROFILES = 'voiceCharacterProfiles';
+  const STORAGE_KEY_PLACEMENTS = 'voiceCharacterPlacements';
+  const LEGACY_PROFILE_KEY = 'voiceCharacterProfile';
+  const LEGACY_PLACEMENT_KEY = 'voiceCharacterPlacement';
 
   const state = {
     form: null,
     feedback: null,
+    savedList: null,
+    createButton: null,
     selectedSpot: null,
+    profiles: [],
+    placements: {},
+    activeProfileId: null,
     profile: createEmptyProfile(),
-    placement: null,
   };
 
   whenDocumentReady(init);
@@ -30,10 +36,20 @@
 
     state.form = form;
     state.feedback = document.getElementById('form-feedback');
+    state.savedList = document.getElementById('saved-characters-list');
+    state.createButton = document.getElementById('create-character-button');
 
     initializeCharCounters(form);
 
     form.addEventListener('submit', handleFormSubmit);
+
+    if (state.savedList) {
+      state.savedList.addEventListener('click', handleSavedListClick);
+    }
+
+    if (state.createButton) {
+      state.createButton.addEventListener('click', handleCreateNewProfile);
+    }
 
     const grid = document.getElementById('placement-grid');
     if (grid) {
@@ -50,19 +66,18 @@
       clearPlacementButton.addEventListener('click', handleClearPlacement);
     }
 
-    const savedProfile = loadProfile();
-    if (savedProfile) {
-      state.profile = savedProfile;
-      populateForm(savedProfile);
+    state.profiles = loadProfiles();
+    state.placements = loadPlacements(state.profiles);
+
+    if (state.profiles.length > 0) {
+      const firstProfileId = state.profiles[0].id;
+      setActiveProfile(firstProfileId);
+    } else {
+      populateForm(state.profile);
+      renderPlacement();
     }
 
-    const savedPlacement = loadPlacement();
-    if (savedPlacement) {
-      state.placement = savedPlacement;
-      state.selectedSpot = savedPlacement.spot || null;
-    }
-
-    renderPlacement();
+    renderProfileList();
   }
 
   function createEmptyProfile() {
@@ -129,14 +144,39 @@
       reminder,
     };
 
-    if (!persistProfile(profile)) {
+    const activeId = state.activeProfileId;
+    let updatedProfiles;
+
+    if (activeId) {
+      updatedProfiles = state.profiles.map((item) => {
+        if (item.id === activeId) {
+          return { id: activeId, ...profile };
+        }
+        return item;
+      });
+    } else {
+      const newId = generateProfileId();
+      updatedProfiles = [{ id: newId, ...profile }, ...state.profiles];
+      state.activeProfileId = newId;
+    }
+
+    if (!persistProfiles(updatedProfiles)) {
       showFeedback('保存中にエラーが発生しました。ブラウザの設定をご確認ください。', true);
       return;
     }
 
+    state.profiles = updatedProfiles;
+    const currentId = state.activeProfileId;
+    if (!currentId) {
+      // In case persistence failed to set id earlier.
+      const first = state.profiles[0];
+      state.activeProfileId = first ? first.id : null;
+    }
+
     state.profile = profile;
-    showFeedback('キャラクターを保存しました。置き場所を決めることもできます。');
+    renderProfileList();
     renderPlacement();
+    showFeedback('キャラクターを保存しました。置き場所を決めることもできます。');
   }
 
   function getFormValue(formData, key) {
@@ -270,18 +310,46 @@
     updateCharCount(field);
   }
 
-  function persistProfile(profile) {
+  function persistProfiles(profiles) {
     try {
-      window.localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(profile));
+      window.localStorage.setItem(STORAGE_KEY_PROFILES, JSON.stringify(profiles));
       return true;
     } catch (error) {
       return false;
     }
   }
 
-  function loadProfile() {
+  function loadProfiles() {
     try {
-      const stored = window.localStorage.getItem(STORAGE_KEY_PROFILE);
+      const stored = window.localStorage.getItem(STORAGE_KEY_PROFILES);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          const sanitized = parsed
+            .map((item) => sanitizeProfileRecord(item))
+            .filter(Boolean);
+          if (sanitized.length) {
+            return sanitized;
+          }
+        }
+      }
+    } catch (error) {
+      // fall through to legacy load
+    }
+
+    const legacy = loadLegacyProfile();
+    if (legacy) {
+      persistProfiles([legacy]);
+      removeLegacyProfile();
+      return [legacy];
+    }
+
+    return [];
+  }
+
+  function loadLegacyProfile() {
+    try {
+      const stored = window.localStorage.getItem(LEGACY_PROFILE_KEY);
       if (!stored) {
         return null;
       }
@@ -290,6 +358,7 @@
         return null;
       }
       return {
+        id: generateProfileId(),
         name: sanitizeString(parsed.name ?? '', 40),
         gender: sanitizeGender(parsed.gender ?? ''),
         age: normalizeAgeValue(parsed.age),
@@ -301,6 +370,35 @@
     } catch (error) {
       return null;
     }
+  }
+
+  function removeLegacyProfile() {
+    try {
+      window.localStorage.removeItem(LEGACY_PROFILE_KEY);
+    } catch (error) {
+      // ignore storage removal errors
+    }
+  }
+
+  function sanitizeProfileRecord(record) {
+    if (!record || typeof record !== 'object') {
+      return null;
+    }
+    const rawId = typeof record.id === 'string' ? record.id : '';
+    const id = rawId.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 40);
+    if (!id) {
+      return null;
+    }
+    return {
+      id,
+      name: sanitizeString(record.name ?? '', 40),
+      gender: sanitizeGender(record.gender ?? ''),
+      age: normalizeAgeValue(record.age),
+      appearancePreset: sanitizeAppearancePreset(record.appearancePreset ?? ''),
+      appearanceDetail: sanitizeString(record.appearanceDetail ?? '', 80),
+      phrases: sanitizeMultiline(record.phrases ?? '', 300),
+      reminder: sanitizeMultiline(record.reminder ?? '', 300),
+    };
   }
 
   function normalizeAgeValue(value) {
@@ -348,30 +446,46 @@
       return;
     }
 
+    const activeId = state.activeProfileId;
+    if (!activeId) {
+      showFeedback('キャラクターを保存してから置き場所を決めてください。', true);
+      return;
+    }
+
     const spot = state.selectedSpot;
     if (!spot) {
       showFeedback('置き場所を選んでください。', true);
       return;
     }
 
-    const placement = { spot };
-    if (!persistPlacement(placement)) {
+    const updatedPlacements = { ...state.placements, [activeId]: spot };
+
+    if (!persistPlacements(updatedPlacements)) {
       showFeedback('位置を保存できませんでした。ブラウザの設定をご確認ください。', true);
       return;
     }
 
-    state.placement = placement;
+    state.placements = updatedPlacements;
     showFeedback('選んだ場所にそっと置きました。', false);
     renderPlacement();
   }
 
   function handleClearPlacement() {
-    try {
-      window.localStorage.removeItem(STORAGE_KEY_PLACEMENT);
-    } catch (error) {
-      // ignore storage errors on remove
+    const activeId = state.activeProfileId;
+    if (!activeId || !state.placements[activeId]) {
+      showFeedback('リセットする置き場所がありません。');
+      return;
     }
-    state.placement = null;
+
+    const updatedPlacements = { ...state.placements };
+    delete updatedPlacements[activeId];
+
+    if (!persistPlacements(updatedPlacements)) {
+      showFeedback('置き場所をリセットできませんでした。ブラウザの設定をご確認ください。', true);
+      return;
+    }
+
+    state.placements = updatedPlacements;
     state.selectedSpot = null;
     updateSpotSelection(null);
     renderPlacement();
@@ -382,18 +496,19 @@
     const display = document.querySelector('[data-character-display]');
     const emptyMessage = document.querySelector('[data-empty-message]');
     const profile = state.profile;
-    const placement = state.placement;
+    const activeId = state.activeProfileId;
+    const savedSpot = activeId ? state.placements[activeId] : null;
 
     if (!display || !emptyMessage) {
       return;
     }
 
-    if (placement && placement.spot && profile && profile.name) {
+    const selectedForHighlight = state.selectedSpot || savedSpot || null;
+    updateSpotSelection(selectedForHighlight);
+
+    if (savedSpot && profile && profile.name) {
       emptyMessage.hidden = true;
       display.hidden = false;
-      updateSpotSelection(placement.spot);
-      state.selectedSpot = placement.spot;
-
       setTextContent('placement-name', profile.name);
       setTextContent('placement-gender', profile.gender || '選択なし');
       setTextContent('placement-age', profile.age ? `${profile.age}歳` : '選択なし');
@@ -403,7 +518,6 @@
     } else {
       emptyMessage.hidden = false;
       display.hidden = true;
-      updateSpotSelection(state.selectedSpot || null);
     }
   }
 
@@ -429,18 +543,59 @@
     return parts.join(' / ');
   }
 
-  function persistPlacement(placement) {
+  function persistPlacements(placements) {
     try {
-      window.localStorage.setItem(STORAGE_KEY_PLACEMENT, JSON.stringify(placement));
+      if (!placements || !Object.keys(placements).length) {
+        window.localStorage.removeItem(STORAGE_KEY_PLACEMENTS);
+      } else {
+        window.localStorage.setItem(STORAGE_KEY_PLACEMENTS, JSON.stringify(placements));
+      }
       return true;
     } catch (error) {
       return false;
     }
   }
 
-  function loadPlacement() {
+  function loadPlacements(existingProfiles = []) {
     try {
-      const stored = window.localStorage.getItem(STORAGE_KEY_PLACEMENT);
+      const stored = window.localStorage.getItem(STORAGE_KEY_PLACEMENTS);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed && typeof parsed === 'object') {
+          const allowedSpots = ['window', 'sofa', 'shelf', 'door'];
+          const sanitized = Object.entries(parsed).reduce((acc, [key, value]) => {
+            if (typeof key !== 'string' || typeof value !== 'string') {
+              return acc;
+            }
+            const sanitizedKey = key.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 40);
+            if (!sanitizedKey || !allowedSpots.includes(value)) {
+              return acc;
+            }
+            acc[sanitizedKey] = value;
+            return acc;
+          }, {});
+          if (Object.keys(sanitized).length) {
+            return sanitized;
+          }
+        }
+      }
+    } catch (error) {
+      // fall through to legacy load
+    }
+
+    const legacy = loadLegacyPlacement(existingProfiles);
+    if (legacy) {
+      persistPlacements(legacy);
+      removeLegacyPlacement();
+      return legacy;
+    }
+
+    return {};
+  }
+
+  function loadLegacyPlacement(existingProfiles) {
+    try {
+      const stored = window.localStorage.getItem(LEGACY_PLACEMENT_KEY);
       if (!stored) {
         return null;
       }
@@ -453,9 +608,134 @@
       if (!allowedSpots.includes(spot)) {
         return null;
       }
-      return { spot };
+      const profiles = Array.isArray(existingProfiles) && existingProfiles.length ? existingProfiles : loadProfiles();
+      const firstProfileId = profiles[0] ? profiles[0].id : null;
+      if (!firstProfileId) {
+        return null;
+      }
+      return { [firstProfileId]: spot };
     } catch (error) {
       return null;
     }
+  }
+
+  function removeLegacyPlacement() {
+    try {
+      window.localStorage.removeItem(LEGACY_PLACEMENT_KEY);
+    } catch (error) {
+      // ignore storage removal errors
+    }
+  }
+
+  function generateProfileId() {
+    return `char_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
+  }
+
+  function handleSavedListClick(event) {
+    const button = event.target instanceof HTMLElement ? event.target.closest('[data-profile-id]') : null;
+    if (!button) {
+      return;
+    }
+    const id = button.getAttribute('data-profile-id');
+    if (!id) {
+      return;
+    }
+    setActiveProfile(id);
+    showFeedback('保存したキャラクターを開きました。');
+  }
+
+  function handleCreateNewProfile() {
+    state.activeProfileId = null;
+    state.profile = createEmptyProfile();
+    state.selectedSpot = null;
+    populateForm(state.profile);
+    updateSpotSelection(null);
+    renderPlacement();
+    renderProfileList();
+    clearFieldError('name');
+    clearFieldError('age');
+    showFeedback('新しいキャラクターを作成できます。');
+  }
+
+  function setActiveProfile(profileId) {
+    const targetProfile = state.profiles.find((item) => item.id === profileId);
+    if (!targetProfile) {
+      return;
+    }
+    state.activeProfileId = targetProfile.id;
+    state.profile = {
+      name: targetProfile.name,
+      gender: targetProfile.gender,
+      age: targetProfile.age,
+      appearancePreset: targetProfile.appearancePreset,
+      appearanceDetail: targetProfile.appearanceDetail,
+      phrases: targetProfile.phrases,
+      reminder: targetProfile.reminder,
+    };
+    state.selectedSpot = state.placements[profileId] || null;
+    populateForm(state.profile);
+    clearFieldError('name');
+    clearFieldError('age');
+    renderProfileList();
+    renderPlacement();
+  }
+
+  function renderProfileList() {
+    const list = state.savedList;
+    if (!list) {
+      return;
+    }
+
+    while (list.firstChild) {
+      list.removeChild(list.firstChild);
+    }
+
+    if (!state.profiles.length) {
+      const emptyItem = document.createElement('li');
+      emptyItem.className = 'saved-characters__empty';
+      emptyItem.textContent = '保存したキャラクターはまだありません。';
+      list.appendChild(emptyItem);
+      return;
+    }
+
+    state.profiles.forEach((profile) => {
+      const item = document.createElement('li');
+      item.className = 'saved-characters__item';
+
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'saved-characters__button';
+      if (profile.id === state.activeProfileId) {
+        button.classList.add('is-active');
+      }
+      button.setAttribute('data-profile-id', profile.id);
+
+      const name = document.createElement('span');
+      name.className = 'saved-characters__name';
+      name.textContent = profile.name;
+
+      const meta = document.createElement('span');
+      meta.className = 'saved-characters__meta';
+      meta.textContent = formatProfileMeta(profile);
+
+      button.appendChild(name);
+      button.appendChild(meta);
+      item.appendChild(button);
+      list.appendChild(item);
+    });
+  }
+
+  function formatProfileMeta(profile) {
+    const parts = [];
+    if (profile.age) {
+      parts.push(`${profile.age}歳`);
+    }
+    if (profile.gender) {
+      parts.push(profile.gender);
+    }
+    if (!parts.length && profile.appearancePreset) {
+      parts.push(profile.appearancePreset);
+    }
+    return parts.join(' / ') || '詳細なし';
   }
 })();

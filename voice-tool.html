@@ -48,6 +48,13 @@
             <h2 id="voice-tool-form" class="section-title">責める声のキャラ化フォーム</h2>
             <p class="section-description">イメージを外に出すことで、心の中の距離を作る手助けになります。入力は端末にのみ保存されます。</p>
           </div>
+          <div class="saved-characters" aria-live="polite">
+            <div class="saved-characters__header">
+              <h3 class="saved-characters__title">保存したキャラクター</h3>
+              <button type="button" class="text-button saved-characters__new" id="create-character-button">新しく作る</button>
+            </div>
+            <ul class="saved-characters__list" id="saved-characters-list"></ul>
+          </div>
           <form id="character-form" class="character-form" novalidate autocomplete="off">
             <div class="form-grid">
               <div class="form-field" data-field="name">

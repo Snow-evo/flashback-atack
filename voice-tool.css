@@ -144,6 +144,35 @@ body.voice-tool-page .bandage-icon .bandage-hole {
   color: var(--text-muted);
 }
 
+.saved-characters__details {
+  display: grid;
+  gap: 0.35rem;
+  width: 100%;
+}
+
+.saved-characters__detail {
+  margin: 0;
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.saved-characters__detail-label {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.saved-characters__detail-value {
+  color: var(--text-main);
+  white-space: pre-line;
+}
+
+.saved-characters__detail-value.is-empty {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
 .saved-characters__empty {
   margin: 0;
   padding: 0.8rem;
@@ -376,15 +405,59 @@ body.voice-tool-page .bandage-icon .bandage-hole {
   line-height: 1.7;
 }
 
-.placement-character {
+.placement-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
   gap: 1rem;
 }
 
+.placement-list__item {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(153, 129, 212, 0.28);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.placement-list__item.is-active {
+  border-color: var(--accent);
+  box-shadow: 0 12px 24px rgba(153, 129, 212, 0.25);
+}
+
+.placement-character {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.placement-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
 .placement-name {
   margin: 0;
-  font-size: 1.35rem;
+  font-size: 1.2rem;
   font-weight: 700;
+}
+
+.placement-location {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-full);
+  background: rgba(153, 129, 212, 0.12);
+  color: var(--accent-purple);
+  font-weight: 600;
+  font-size: 0.85rem;
 }
 
 .placement-details {
@@ -419,6 +492,12 @@ body.voice-tool-page .bandage-icon .bandage-hole {
   border-radius: var(--radius-lg);
   background: rgba(153, 129, 212, 0.08);
   border: 1px solid rgba(153, 129, 212, 0.18);
+}
+
+.placement-phrases.is-empty,
+.placement-reminder.is-empty {
+  color: var(--text-muted);
+  font-style: italic;
 }
 
 .placement-actions {

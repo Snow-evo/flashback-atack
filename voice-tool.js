@@ -5,6 +5,12 @@
   const STORAGE_KEY_PLACEMENTS = 'voiceCharacterPlacements';
   const LEGACY_PROFILE_KEY = 'voiceCharacterProfile';
   const LEGACY_PLACEMENT_KEY = 'voiceCharacterPlacement';
+  const SPOT_LABELS = {
+    window: '窓辺',
+    sofa: 'ソファのそば',
+    shelf: '棚の上',
+    door: 'ドアのそば',
+  };
 
   const state = {
     form: null,
@@ -493,40 +499,78 @@
   }
 
   function renderPlacement() {
-    const display = document.querySelector('[data-character-display]');
     const emptyMessage = document.querySelector('[data-empty-message]');
-    const profile = state.profile;
-    const activeId = state.activeProfileId;
-    const savedSpot = activeId ? state.placements[activeId] : null;
-
-    if (!display || !emptyMessage) {
+    const list = document.getElementById('placement-list');
+    if (!emptyMessage || !list) {
       return;
     }
 
-    const selectedForHighlight = state.selectedSpot || savedSpot || null;
+    const activeId = state.activeProfileId;
+    const savedSpotForActive = activeId ? state.placements[activeId] : null;
+    const selectedForHighlight = state.selectedSpot || savedSpotForActive || null;
     updateSpotSelection(selectedForHighlight);
 
-    if (savedSpot && profile && profile.name) {
-      emptyMessage.hidden = true;
-      display.hidden = false;
-      setTextContent('placement-name', profile.name);
-      setTextContent('placement-gender', profile.gender || '選択なし');
-      setTextContent('placement-age', profile.age ? `${profile.age}歳` : '選択なし');
-      setTextContent('placement-appearance', formatAppearance(profile));
-      setTextContent('placement-phrases', profile.phrases);
-      setTextContent('placement-reminder', profile.reminder);
-    } else {
-      emptyMessage.hidden = false;
-      display.hidden = true;
+    while (list.firstChild) {
+      list.removeChild(list.firstChild);
     }
-  }
 
-  function setTextContent(id, value) {
-    const element = document.getElementById(id);
-    if (!element) {
+    const placedProfiles = state.profiles.filter((profile) => state.placements[profile.id]);
+
+    if (!placedProfiles.length) {
+      emptyMessage.hidden = false;
+      list.hidden = true;
       return;
     }
-    element.textContent = value || '';
+
+    emptyMessage.hidden = true;
+    list.hidden = false;
+
+    placedProfiles.forEach((profile) => {
+      const spot = state.placements[profile.id];
+      const item = document.createElement('li');
+      item.className = 'placement-list__item';
+      if (profile.id === activeId) {
+        item.classList.add('is-active');
+      }
+
+      const character = document.createElement('div');
+      character.className = 'placement-character';
+
+      const header = document.createElement('div');
+      header.className = 'placement-header';
+
+      const name = document.createElement('h3');
+      name.className = 'placement-name';
+      name.textContent = profile.name;
+
+      const location = document.createElement('span');
+      location.className = 'placement-location';
+      location.textContent = formatSpotLabel(spot);
+
+      header.appendChild(name);
+      header.appendChild(location);
+      character.appendChild(header);
+
+      const details = document.createElement('dl');
+      details.className = 'placement-details';
+      appendDetail(details, '性別', profile.gender || '選択なし');
+      appendDetail(details, '年齢', profile.age ? `${profile.age}歳` : '選択なし');
+      appendDetail(details, '姿', formatAppearance(profile));
+      character.appendChild(details);
+
+      const phrases = document.createElement('p');
+      phrases.className = 'placement-phrases';
+      setParagraphText(phrases, profile.phrases, 'よく言う言葉は未入力です');
+      character.appendChild(phrases);
+
+      const reminder = document.createElement('p');
+      reminder.className = 'placement-reminder';
+      setParagraphText(reminder, profile.reminder, '伝えたい言葉は未入力です');
+      character.appendChild(reminder);
+
+      item.appendChild(character);
+      list.appendChild(item);
+    });
   }
 
   function formatAppearance(profile) {
@@ -720,9 +764,90 @@
 
       button.appendChild(name);
       button.appendChild(meta);
+
+      const details = document.createElement('div');
+      details.className = 'saved-characters__details';
+
+      const appearanceValue = formatAppearance(profile);
+      details.appendChild(createProfileDetail('姿', appearanceValue, !profile.appearancePreset && !profile.appearanceDetail));
+
+      const phrasesValue = formatListPreview(profile.phrases);
+      details.appendChild(createProfileDetail('よく言う言葉', phrasesValue, !profile.phrases));
+
+      const reminderValue = formatListPreview(profile.reminder);
+      details.appendChild(createProfileDetail('伝えたい言葉', reminderValue, !profile.reminder));
+
+      button.appendChild(details);
       item.appendChild(button);
       list.appendChild(item);
     });
+  }
+
+  function createProfileDetail(label, value, isEmpty) {
+    const detail = document.createElement('p');
+    detail.className = 'saved-characters__detail';
+
+    const labelElement = document.createElement('span');
+    labelElement.className = 'saved-characters__detail-label';
+    labelElement.textContent = label;
+
+    const valueElement = document.createElement('span');
+    valueElement.className = 'saved-characters__detail-value';
+    if (isEmpty) {
+      valueElement.classList.add('is-empty');
+    }
+    valueElement.textContent = value || '未入力';
+
+    detail.appendChild(labelElement);
+    detail.appendChild(valueElement);
+    return detail;
+  }
+
+  function formatListPreview(text) {
+    if (!text) {
+      return '未入力';
+    }
+    const normalized = text.replace(/\r\n/g, '\n').trim();
+    if (!normalized) {
+      return '未入力';
+    }
+    const preview = normalized.split('\n').slice(0, 2).join('\n');
+    return truncateText(preview, 120);
+  }
+
+  function truncateText(value, maxLength) {
+    if (typeof value !== 'string') {
+      return '';
+    }
+    if (value.length <= maxLength) {
+      return value;
+    }
+    return `${value.slice(0, maxLength - 1)}…`;
+  }
+
+  function appendDetail(list, term, value) {
+    const row = document.createElement('div');
+    const dt = document.createElement('dt');
+    dt.textContent = term;
+    const dd = document.createElement('dd');
+    dd.textContent = value || '選択なし';
+    row.appendChild(dt);
+    row.appendChild(dd);
+    list.appendChild(row);
+  }
+
+  function setParagraphText(element, value, emptyMessage) {
+    if (!value) {
+      element.textContent = `（${emptyMessage}）`;
+      element.classList.add('is-empty');
+      return;
+    }
+    element.textContent = value;
+    element.classList.remove('is-empty');
+  }
+
+  function formatSpotLabel(spot) {
+    return SPOT_LABELS[spot] || '未設定の場所';
   }
 
   function formatProfileMeta(profile) {

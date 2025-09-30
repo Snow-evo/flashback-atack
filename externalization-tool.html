@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="自分を責める声を外に出し、優しいサポート役として再設定するためのツールです。キャラクターと使う場所を段階的に整理できます。">
+  <title>外部化ツール | フラッシュバック応急対処ガイド</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="externalization-tool.css">
+</head>
+<body class="externalization-page">
+  <div data-include="partials/quick-access.html"></div>
+
+  <header id="top" class="site-header externalization-header">
+    <div class="inner">
+      <p class="eyebrow" aria-label="Externalization Tool">
+        <span class="eyebrow-icon" aria-hidden="true">
+          <svg class="externalization-header__icon" viewBox="0 0 64 64" role="presentation" focusable="false">
+            <path d="M12 32a20 20 0 1 1 40 0 20 20 0 0 1-40 0Z" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M32 17v8" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"></path>
+            <path d="M24 36h16" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"></path>
+            <path d="M20 44h8l4 7 4-7h8" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </span>
+        <span class="eyebrow-label">Externalization Tool</span>
+      </p>
+      <h1 class="hero-title">
+        <span>外部化ツール</span>
+        <span>やさしい味方をつくる</span>
+      </h1>
+      <p class="hero-lead">心の中の厳しい声を、頼れるサポート役として書き換えるためのワークです。<br>キャラクターと活用シーンを順番に整理して、日常で使える形に整えましょう。</p>
+      <div class="hero-actions">
+        <a class="hero-link hero-link--guide" href="#externalization-wizard">
+          <span class="hero-link__label">ワークを始める</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="externalization-main">
+    <section class="usage-guide">
+      <div class="inner surface-card surface-card--balanced">
+        <h2 class="section-title">ツールの使い方</h2>
+        <p class="section-description">ステップに沿って入力するだけで、「どんな味方をつくるか」「どこで使うか」を整理できます。<br>入力した内容はブラウザに保存され、あとで一覧から見返せます。</p>
+      </div>
+    </section>
+
+    <section id="externalization-wizard" class="externalization-section">
+      <div class="inner">
+        <div class="externalization-card surface-card">
+          <div class="externalization-card__header">
+            <h2 class="section-title">ステップで作る外部化プラン</h2>
+            <p class="section-description">「キャラクターの設定」→「使う場所を決める」の順番で入力します。</p>
+          </div>
+
+          <ol class="wizard-progress" aria-label="外部化ツールのステップ">
+            <li class="wizard-progress__item" data-progress-step="0">
+              <span class="wizard-progress__index">STEP 01</span>
+              <span class="wizard-progress__label">キャラクターの設定</span>
+            </li>
+            <li class="wizard-progress__item" data-progress-step="1">
+              <span class="wizard-progress__index">STEP 02</span>
+              <span class="wizard-progress__label">使う場所を決める</span>
+            </li>
+          </ol>
+
+          <form id="externalization-form" class="wizard-form" novalidate>
+            <section class="wizard-step" data-step-index="0" aria-labelledby="step1-heading">
+              <div class="wizard-step__header">
+                <p class="wizard-step__eyebrow">STEP 01</p>
+                <h3 id="step1-heading" class="wizard-step__title">キャラクターの設定</h3>
+                <p class="wizard-step__description">厳しい声の代わりに、自分を支えてくれるキャラクターを描いてみましょう。</p>
+              </div>
+
+              <div class="wizard-field" data-field="name">
+                <label for="character-name">キャラクターの名前 <span class="field-required">必須</span></label>
+                <input type="text" id="character-name" name="characterName" autocomplete="off" maxlength="40" placeholder="例：あったか森のガイド" required>
+                <p class="wizard-field__hint">呼びかけやすい名前にすると、安心を思い出しやすくなります。</p>
+              </div>
+
+              <div class="wizard-field" data-field="persona">
+                <label for="character-persona">どんな雰囲気の人？ <span class="field-optional">任意</span></label>
+                <textarea id="character-persona" name="characterPersona" rows="3" maxlength="400" placeholder="外見・性格・口調などを書き留める"></textarea>
+              </div>
+
+              <div class="wizard-field" data-field="support">
+                <label for="character-support">どんな言葉で支えてくれる？ <span class="field-optional">任意</span></label>
+                <textarea id="character-support" name="characterSupport" rows="3" maxlength="400" placeholder="例：「いま安全だよ」「深呼吸しようか」など"></textarea>
+              </div>
+
+              <div class="wizard-actions">
+                <button type="button" class="wizard-button wizard-button--primary" data-action="next">次へ</button>
+              </div>
+            </section>
+
+            <section class="wizard-step" data-step-index="1" aria-labelledby="step2-heading" hidden>
+              <div class="wizard-step__header">
+                <p class="wizard-step__eyebrow">STEP 02</p>
+                <h3 id="step2-heading" class="wizard-step__title">使う場所を決める</h3>
+                <p class="wizard-step__description">キャラクターをどこで思い出すか、日常の中の「配置場所」を考えましょう。</p>
+              </div>
+
+              <div class="wizard-field" data-field="scene">
+                <label for="support-scene">どんな場面で登場させたい？ <span class="field-required">必須</span></label>
+                <input type="text" id="support-scene" name="supportScene" autocomplete="off" maxlength="80" placeholder="例：朝の支度をするとき、寝る前など" required>
+              </div>
+
+              <div class="wizard-field" data-field="location">
+                <label for="support-location">思い出しやすい置き場所 <span class="field-optional">任意</span></label>
+                <input type="text" id="support-location" name="supportLocation" autocomplete="off" maxlength="80" placeholder="例：スマホの待ち受け、手帳の1ページ目" >
+                <p class="wizard-field__hint">以前の「部屋に置く」という表現をやめ、日常で目にする場所を自由に設定できます。</p>
+              </div>
+
+              <div class="wizard-field" data-field="action">
+                <label for="support-action">思い出したときのアクション <span class="field-optional">任意</span></label>
+                <textarea id="support-action" name="supportAction" rows="3" maxlength="400" placeholder="キャラクターを思い出したらどう行動するかを書き残しましょう"></textarea>
+              </div>
+
+              <div class="wizard-actions">
+                <button type="button" class="wizard-button" data-action="prev">戻る</button>
+                <button type="submit" class="wizard-button wizard-button--primary" data-action="save">保存する</button>
+              </div>
+            </section>
+          </form>
+          <p class="wizard-feedback" id="wizard-feedback" aria-live="polite" hidden></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="externalization-section">
+      <div class="inner">
+        <div class="externalization-card surface-card externalization-card--list">
+          <div class="externalization-card__header externalization-card__header--list">
+            <h2 class="section-title">保存したプラン</h2>
+            <button type="button" class="text-button" data-action="clear" aria-describedby="clear-description">すべて削除</button>
+          </div>
+          <p id="clear-description" class="section-description">保存内容はお使いの端末にのみ保存されます。不要になったら削除できます。</p>
+          <p class="externalization-empty" data-empty-message>まだ保存されたプランはありません。</p>
+          <ol class="externalization-list" id="externalization-list" aria-live="polite" aria-label="保存した外部化プラン"></ol>
+        </div>
+      </div>
+    </section>
+
+    <div data-include="partials/note.html"></div>
+  </main>
+
+  <div data-include="partials/site-footer.html"></div>
+
+  <div data-include="partials/back-to-top.html"></div>
+
+  <script src="component-loader.js" defer></script>
+  <script src="main.js" defer></script>
+  <script src="externalization-tool.js" defer></script>
+</body>
+</html>

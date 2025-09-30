@@ -235,6 +235,29 @@ img {
   outline: 3px solid rgba(255, 166, 110, 0.45);
 }
 
+.quick-access__link--externalization {
+  background: linear-gradient(135deg, rgba(142, 152, 235, 0.92), rgba(105, 178, 230, 0.88));
+  color: #fff;
+  border-color: rgba(120, 150, 230, 0.6);
+  box-shadow: 0 8px 24px rgba(120, 150, 230, 0.28);
+}
+
+.quick-access__link--externalization .quick-access__icon {
+  color: currentColor;
+}
+
+.quick-access__link--externalization:hover,
+.quick-access__link--externalization:focus-visible {
+  background: linear-gradient(135deg, rgba(158, 168, 240, 0.98), rgba(113, 186, 238, 0.95));
+  border-color: rgba(120, 150, 230, 0.75);
+  color: #fff;
+  box-shadow: 0 14px 32px rgba(120, 150, 230, 0.34);
+}
+
+.quick-access__link--externalization:focus-visible {
+  outline: 3px solid rgba(120, 150, 230, 0.36);
+}
+
 .quick-access__link--log {
   background: linear-gradient(135deg, var(--accent-green), var(--accent-green-deep));
   color: #fff;

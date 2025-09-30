@@ -189,7 +189,7 @@
 
       const value = nameField.value.trim();
       if (!value) {
-        nameField.setCustomValidity('キャラクターの名前を入力してください');
+        nameField.setCustomValidity('責める声に付ける名前を入力してください');
         nameField.reportValidity();
         return false;
       }
@@ -205,7 +205,7 @@
 
       const value = sceneField.value.trim();
       if (!value) {
-        sceneField.setCustomValidity('キャラクターを登場させたい場面を書いてください');
+        sceneField.setCustomValidity('現れてほしい場面を書いてください');
         sceneField.reportValidity();
         return false;
       }
@@ -286,7 +286,7 @@
 
       const scene = document.createElement('p');
       scene.className = 'externalization-entry__scene';
-      scene.textContent = `登場シーン：${entry.supportScene}`;
+      scene.textContent = `現れてほしい場面：${entry.supportScene}`;
       header.appendChild(scene);
 
       item.appendChild(header);
@@ -295,19 +295,19 @@
       bodyList.className = 'externalization-entry__body';
 
       if (entry.characterPersona) {
-        bodyList.appendChild(createDetailItem('キャラクター像', entry.characterPersona));
+        bodyList.appendChild(createDetailItem('雰囲気や特徴', entry.characterPersona));
       }
 
       if (entry.characterSupport) {
-        bodyList.appendChild(createDetailItem('かけてもらいたい言葉', entry.characterSupport));
+        bodyList.appendChild(createDetailItem('よく言ってくる言葉', entry.characterSupport));
       }
 
       if (entry.supportLocation) {
-        bodyList.appendChild(createDetailItem('思い出しやすい場所', entry.supportLocation));
+        bodyList.appendChild(createDetailItem('置いておく場所', entry.supportLocation));
       }
 
       if (entry.supportAction) {
-        bodyList.appendChild(createDetailItem('思い出したときのアクション', entry.supportAction));
+        bodyList.appendChild(createDetailItem('見かけたときの対応', entry.supportAction));
       }
 
       if (bodyList.children.length) {

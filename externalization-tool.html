@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="自分を責める声を外に出し、優しいサポート役として再設定するためのツールです。キャラクターと使う場所を段階的に整理できます。">
+  <meta name="description" content="自分を責める声を外に書き出し、距離を取るための外部化ワーク。キャラクターと置き場所を段階的に整理できます。">
   <title>外部化ツール | フラッシュバック応急対処ガイド</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,9 +29,9 @@
       </p>
       <h1 class="hero-title">
         <span>外部化ツール</span>
-        <span>やさしい味方をつくる</span>
+        <span>責める声と距離をとる</span>
       </h1>
-      <p class="hero-lead">心の中の厳しい声を、頼れるサポート役として書き換えるためのワークです。<br>キャラクターと活用シーンを順番に整理して、日常で使える形に整えましょう。</p>
+      <p class="hero-lead">心の中で責め立ててくる声をキャラクターとして外に出し、距離を取るためのワークです。<br>キャラクターと置き場所を順番に整理して、現実の世界に位置づけましょう。</p>
       <div class="hero-actions">
         <a class="hero-link hero-link--guide" href="#externalization-wizard">
           <span class="hero-link__label">ワークを始める</span>
@@ -44,7 +44,7 @@
     <section class="usage-guide">
       <div class="inner surface-card surface-card--balanced">
         <h2 class="section-title">ツールの使い方</h2>
-        <p class="section-description">ステップに沿って入力するだけで、「どんな味方をつくるか」「どこで使うか」を整理できます。<br>入力した内容はブラウザに保存され、あとで一覧から見返せます。</p>
+        <p class="section-description">ステップに沿って入力するだけで、「責める声をどんなキャラクターとして切り離すか」「現実世界のどこに置くか」を整理できます。<br>入力した内容はブラウザに保存され、あとで一覧から見返せます。</p>
       </div>
     </section>
 
@@ -53,7 +53,7 @@
         <div class="externalization-card surface-card">
           <div class="externalization-card__header">
             <h2 class="section-title">ステップで作る外部化プラン</h2>
-            <p class="section-description">「キャラクターの設定」→「使う場所を決める」の順番で入力します。</p>
+            <p class="section-description">「キャラクターの設定」→「置き場所を決める」の順番で入力します。</p>
           </div>
 
           <ol class="wizard-progress" aria-label="外部化ツールのステップ">
@@ -63,7 +63,7 @@
             </li>
             <li class="wizard-progress__item" data-progress-step="1">
               <span class="wizard-progress__index">STEP 02</span>
-              <span class="wizard-progress__label">使う場所を決める</span>
+              <span class="wizard-progress__label">置き場所を決める</span>
             </li>
           </ol>
 
@@ -72,23 +72,23 @@
               <div class="wizard-step__header">
                 <p class="wizard-step__eyebrow">STEP 01</p>
                 <h3 id="step1-heading" class="wizard-step__title">キャラクターの設定</h3>
-                <p class="wizard-step__description">厳しい声の代わりに、自分を支えてくれるキャラクターを描いてみましょう。</p>
+                <p class="wizard-step__description">心の中の責める声を、外部化できるようにキャラクターとして描き出してみましょう。</p>
               </div>
 
               <div class="wizard-field" data-field="name">
-                <label for="character-name">キャラクターの名前 <span class="field-required">必須</span></label>
-                <input type="text" id="character-name" name="characterName" autocomplete="off" maxlength="40" placeholder="例：あったか森のガイド" required>
-                <p class="wizard-field__hint">呼びかけやすい名前にすると、安心を思い出しやすくなります。</p>
+                <label for="character-name">責める声に付ける名前 <span class="field-required">必須</span></label>
+                <input type="text" id="character-name" name="characterName" autocomplete="off" maxlength="40" placeholder="例：口うるさいコーチ、文句さん" required>
+                <p class="wizard-field__hint">名前を付けておくと「これは自分とは別の声だ」と切り離しやすくなります。</p>
               </div>
 
               <div class="wizard-field" data-field="persona">
-                <label for="character-persona">どんな雰囲気の人？ <span class="field-optional">任意</span></label>
-                <textarea id="character-persona" name="characterPersona" rows="3" maxlength="400" placeholder="外見・性格・口調などを書き留める"></textarea>
+                <label for="character-persona">どんな雰囲気で迫ってくる？ <span class="field-optional">任意</span></label>
+                <textarea id="character-persona" name="characterPersona" rows="3" maxlength="400" placeholder="外見・性格・口調、体格などを書き留める"></textarea>
               </div>
 
               <div class="wizard-field" data-field="support">
-                <label for="character-support">どんな言葉で支えてくれる？ <span class="field-optional">任意</span></label>
-                <textarea id="character-support" name="characterSupport" rows="3" maxlength="400" placeholder="例：「いま安全だよ」「深呼吸しようか」など"></textarea>
+                <label for="character-support">よく言ってくる言葉 <span class="field-optional">任意</span></label>
+                <textarea id="character-support" name="characterSupport" rows="3" maxlength="400" placeholder="例：「もっと頑張れ」「全部あなたのせい」など"></textarea>
               </div>
 
               <div class="wizard-actions">
@@ -99,24 +99,24 @@
             <section class="wizard-step" data-step-index="1" aria-labelledby="step2-heading" hidden>
               <div class="wizard-step__header">
                 <p class="wizard-step__eyebrow">STEP 02</p>
-                <h3 id="step2-heading" class="wizard-step__title">使う場所を決める</h3>
-                <p class="wizard-step__description">キャラクターをどこで思い出すか、日常の中の「配置場所」を考えましょう。</p>
+                <h3 id="step2-heading" class="wizard-step__title">置き場所を決める</h3>
+                <p class="wizard-step__description">外に出したキャラクターをどこに置くか決めて、目の前の現実に存在させましょう。</p>
               </div>
 
               <div class="wizard-field" data-field="scene">
-                <label for="support-scene">どんな場面で登場させたい？ <span class="field-required">必須</span></label>
-                <input type="text" id="support-scene" name="supportScene" autocomplete="off" maxlength="80" placeholder="例：朝の支度をするとき、寝る前など" required>
+                <label for="support-scene">どんな場面で現れてほしい？ <span class="field-required">必須</span></label>
+                <input type="text" id="support-scene" name="supportScene" autocomplete="off" maxlength="80" placeholder="例：自分を責めそうになった瞬間、仕事のチェック中など" required>
               </div>
 
               <div class="wizard-field" data-field="location">
-                <label for="support-location">思い出しやすい置き場所 <span class="field-optional">任意</span></label>
-                <input type="text" id="support-location" name="supportLocation" autocomplete="off" maxlength="80" placeholder="例：スマホの待ち受け、手帳の1ページ目" >
-                <p class="wizard-field__hint">以前の「部屋に置く」という表現をやめ、日常で目にする場所を自由に設定できます。</p>
+                <label for="support-location">外に出したものを置く場所 <span class="field-optional">任意</span></label>
+                <input type="text" id="support-location" name="supportLocation" autocomplete="off" maxlength="80" placeholder="例：ノートの中、机の上のフィギュア、スマホの待ち受け">
+                <p class="wizard-field__hint">日常で目にしやすい場所を書き出して、責める声を頭の外に置いておきましょう。</p>
               </div>
 
               <div class="wizard-field" data-field="action">
-                <label for="support-action">思い出したときのアクション <span class="field-optional">任意</span></label>
-                <textarea id="support-action" name="supportAction" rows="3" maxlength="400" placeholder="キャラクターを思い出したらどう行動するかを書き残しましょう"></textarea>
+                <label for="support-action">見かけたときにどう対応する？ <span class="field-optional">任意</span></label>
+                <textarea id="support-action" name="supportAction" rows="3" maxlength="400" placeholder="例：深呼吸をして距離を取る、声に返事をする"></textarea>
               </div>
 
               <div class="wizard-actions">

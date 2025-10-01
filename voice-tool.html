@@ -34,7 +34,7 @@
       <p class="hero-lead">自分を責める声をキャラクターにして、心の中から一歩離してみる練習ページです。</p>
       <div class="hero-actions">
         <a class="hero-link hero-link--log" href="#voice-tool-form">
-          <span class="hero-link__label">キャラを作る</span>
+          <span class="hero-link__label">ワークを始める</span>
         </a>
       </div>
     </div>
@@ -45,7 +45,7 @@
       <div class="inner">
         <div class="voice-card surface-card voice-card--form">
           <div class="voice-card__header usage-guide">
-            <h2 id="voice-tool-form" class="section-title">責める声のキャラ化フォーム</h2>
+            <h2 id="voice-tool-form" class="section-title">責める声のワーク</h2>
             <p class="section-description">ここで書いた内容は端末内だけに保存されます。思い浮かんだ姿を言葉にして、ゆっくり外に出してみましょう。</p>
           </div>
           <div class="saved-characters" aria-live="polite">
@@ -55,103 +55,119 @@
             </div>
             <ul class="saved-characters__list" id="saved-characters-list"></ul>
           </div>
-          <form id="character-form" class="character-form" novalidate autocomplete="off">
-            <div class="form-grid">
-              <div class="form-field" data-field="name">
-                <label for="character-name">名前 <span class="field-required">必須</span></label>
-                <div class="input-with-counter">
-                  <input type="text" id="character-name" name="name" inputmode="text" maxlength="40" data-maxlength="40" required>
-                  <span class="char-count" data-count-for="character-name">0 / 40</span>
+          <div class="character-workflow" id="character-workflow" data-current-step="details">
+            <ol class="workflow-steps" role="list">
+              <li class="workflow-step-item">
+                <button type="button" class="workflow-step is-active" data-step="details" id="workflow-step-details" aria-controls="workflow-panel-details" aria-current="step">
+                  <span class="workflow-step__number">ステップ1</span>
+                  <span class="workflow-step__label">キャラクターを書く</span>
+                </button>
+              </li>
+              <li class="workflow-step-item">
+                <button type="button" class="workflow-step" data-step="placement" id="workflow-step-placement" aria-controls="workflow-panel-placement" aria-disabled="true" disabled>
+                  <span class="workflow-step__number">ステップ2</span>
+                  <span class="workflow-step__label">部屋に置く</span>
+                </button>
+              </li>
+            </ol>
+            <div class="workflow-panels">
+              <section class="workflow-panel workflow-panel--details is-active" id="workflow-panel-details" data-step-panel="details" role="region" aria-labelledby="workflow-step-details">
+                <h3 class="workflow-panel__title">キャラクターの設定</h3>
+                <p class="workflow-panel__lead">名前や姿、よく聞こえる言葉などを書いて、責める声を外に出す準備をしましょう。</p>
+                <form id="character-form" class="character-form" novalidate autocomplete="off">
+                  <div class="form-grid">
+                    <div class="form-field" data-field="name">
+                      <label for="character-name">名前 <span class="field-required">必須</span></label>
+                      <div class="input-with-counter">
+                        <input type="text" id="character-name" name="name" inputmode="text" maxlength="40" data-maxlength="40" required>
+                        <span class="char-count" data-count-for="character-name">0 / 40</span>
+                      </div>
+                      <p class="field-hint">あとで呼びかけやすい短い名前を書いてみましょう。</p>
+                      <p class="field-error" data-error-target="name" aria-live="polite"></p>
+                    </div>
+
+                    <div class="form-field">
+                      <label for="character-gender">性別 <span class="field-optional">任意</span></label>
+                      <select id="character-gender" name="gender">
+                        <option value="">選択しない</option>
+                        <option value="女性">女性</option>
+                        <option value="男性">男性</option>
+                        <option value="中性">中性</option>
+                        <option value="不明">不明</option>
+                      </select>
+                    </div>
+
+                    <div class="form-field" data-field="age">
+                      <label for="character-age">年齢 <span class="field-optional">任意</span></label>
+                      <input type="number" id="character-age" name="age" inputmode="numeric" min="0" max="120" step="1">
+                      <p class="field-hint">年齢を決めづらいときは空欄のままで構いません。</p>
+                      <p class="field-error" data-error-target="age" aria-live="polite"></p>
+                    </div>
+                  </div>
+
+                  <div class="form-field">
+                    <label for="character-appearance">姿のイメージ <span class="field-optional">任意</span></label>
+                    <div class="appearance-inputs">
+                      <select id="character-appearance" name="appearancePreset">
+                        <option value="">選択しない</option>
+                        <option value="影">影</option>
+                        <option value="霧">霧</option>
+                        <option value="動物">動物</option>
+                        <option value="人物">人物</option>
+                        <option value="物体">物体</option>
+                        <option value="その他">その他</option>
+                      </select>
+                      <div class="input-with-counter">
+                        <input type="text" id="character-appearance-detail" name="appearanceDetail" inputmode="text" maxlength="80" data-maxlength="80" placeholder="思い浮かんだ特徴を短くメモ（最大80文字）">
+                        <span class="char-count" data-count-for="character-appearance-detail">0 / 80</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-field">
+                    <label for="character-phrases">よく言う言葉 <span class="field-optional">任意</span></label>
+                    <textarea id="character-phrases" name="phrases" rows="4" maxlength="300" data-maxlength="300" placeholder="頭の中でよく聞こえてくる言葉をそのまま書いてください"></textarea>
+                    <div class="field-footer">
+                      <span class="char-count" data-count-for="character-phrases">0 / 300</span>
+                    </div>
+                  </div>
+
+                  <div class="form-field">
+                    <label for="character-reminder">伝えたい言葉 <span class="field-optional">任意</span></label>
+                    <textarea id="character-reminder" name="reminder" rows="4" maxlength="300" data-maxlength="300" placeholder="落ち着いているときの自分から伝えたい言葉を書いてください"></textarea>
+                    <div class="field-footer">
+                      <span class="char-count" data-count-for="character-reminder">0 / 300</span>
+                    </div>
+                  </div>
+
+                  <div class="form-actions">
+                    <button type="submit" class="voice-submit-button">保存する</button>
+                  </div>
+                  <p class="form-feedback" id="form-feedback" aria-live="polite"></p>
+                </form>
+              </section>
+
+              <section class="workflow-panel workflow-panel--placement voice-card--placement" id="workflow-panel-placement" data-step-panel="placement" role="region" aria-labelledby="workflow-step-placement" hidden>
+                <h3 class="workflow-panel__title">部屋での置き場所</h3>
+                <p class="workflow-panel__lead">イメージの中の広い部屋で、安心できる場所にそっと置いて距離を確かめてみましょう。</p>
+                <div class="placement-room" role="region" aria-live="polite" aria-label="キャラクターの置き場所">
+                  <div class="room-grid" id="placement-grid">
+                    <button type="button" class="placement-spot" data-spot="window" aria-pressed="false">窓辺</button>
+                    <button type="button" class="placement-spot" data-spot="sofa" aria-pressed="false">ソファのそば</button>
+                    <button type="button" class="placement-spot" data-spot="shelf" aria-pressed="false">棚の上</button>
+                    <button type="button" class="placement-spot" data-spot="door" aria-pressed="false">ドアのそば</button>
+                  </div>
+                  <div class="placement-display" id="placement-display">
+                    <p class="placement-empty" data-empty-message>まだ部屋に置いていません。下の「ここに置いておく」を押すと、選んだ場所に表示されます。</p>
+                    <ul class="placement-list" id="placement-list" aria-label="配置したキャラクター一覧" hidden></ul>
+                  </div>
                 </div>
-                <p class="field-hint">あとで呼びかけやすい短い名前を書いてみましょう。</p>
-                <p class="field-error" data-error-target="name" aria-live="polite"></p>
-              </div>
-
-              <div class="form-field">
-                <label for="character-gender">性別 <span class="field-optional">任意</span></label>
-                <select id="character-gender" name="gender">
-                  <option value="">選択しない</option>
-                  <option value="女性">女性</option>
-                  <option value="男性">男性</option>
-                  <option value="中性">中性</option>
-                  <option value="不明">不明</option>
-                </select>
-              </div>
-
-              <div class="form-field" data-field="age">
-                <label for="character-age">年齢 <span class="field-optional">任意</span></label>
-                <input type="number" id="character-age" name="age" inputmode="numeric" min="0" max="120" step="1">
-                <p class="field-hint">年齢を決めづらいときは空欄のままで構いません。</p>
-                <p class="field-error" data-error-target="age" aria-live="polite"></p>
-              </div>
-            </div>
-
-            <div class="form-field">
-              <label for="character-appearance">姿のイメージ <span class="field-optional">任意</span></label>
-              <div class="appearance-inputs">
-                <select id="character-appearance" name="appearancePreset">
-                  <option value="">選択しない</option>
-                  <option value="影">影</option>
-                  <option value="霧">霧</option>
-                  <option value="動物">動物</option>
-                  <option value="人物">人物</option>
-                  <option value="物体">物体</option>
-                  <option value="その他">その他</option>
-                </select>
-                <div class="input-with-counter">
-                  <input type="text" id="character-appearance-detail" name="appearanceDetail" inputmode="text" maxlength="80" data-maxlength="80" placeholder="思い浮かんだ特徴を短くメモ（最大80文字）">
-                  <span class="char-count" data-count-for="character-appearance-detail">0 / 80</span>
+                <div class="placement-actions">
+                  <button type="button" class="text-button" id="place-character-button">ここに置いておく</button>
+                  <button type="button" class="text-button text-button--danger" id="clear-placement-button">位置をクリア</button>
                 </div>
-              </div>
+              </section>
             </div>
-
-            <div class="form-field">
-              <label for="character-phrases">よく言う言葉 <span class="field-optional">任意</span></label>
-              <textarea id="character-phrases" name="phrases" rows="4" maxlength="300" data-maxlength="300" placeholder="頭の中でよく聞こえてくる言葉をそのまま書いてください"></textarea>
-              <div class="field-footer">
-                <span class="char-count" data-count-for="character-phrases">0 / 300</span>
-              </div>
-            </div>
-
-            <div class="form-field">
-              <label for="character-reminder">伝えたい言葉 <span class="field-optional">任意</span></label>
-              <textarea id="character-reminder" name="reminder" rows="4" maxlength="300" data-maxlength="300" placeholder="落ち着いているときの自分から伝えたい言葉を書いてください"></textarea>
-              <div class="field-footer">
-                <span class="char-count" data-count-for="character-reminder">0 / 300</span>
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <button type="submit" class="voice-submit-button">保存する</button>
-            </div>
-            <p class="form-feedback" id="form-feedback" aria-live="polite"></p>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <section class="voice-tool-section">
-      <div class="inner">
-        <div class="voice-card surface-card voice-card--placement">
-          <div class="voice-card__header">
-            <h2 class="section-title">置き場所</h2>
-            <p class="section-description">イメージの中の広い部屋で、安心できる場所にそっと置いて距離を確かめてみましょう。</p>
-          </div>
-          <div class="placement-room" role="region" aria-live="polite" aria-label="キャラクターの置き場所">
-            <div class="room-grid" id="placement-grid">
-              <button type="button" class="placement-spot" data-spot="window" aria-pressed="false">窓辺</button>
-              <button type="button" class="placement-spot" data-spot="sofa" aria-pressed="false">ソファのそば</button>
-              <button type="button" class="placement-spot" data-spot="shelf" aria-pressed="false">棚の上</button>
-              <button type="button" class="placement-spot" data-spot="door" aria-pressed="false">ドアのそば</button>
-            </div>
-            <div class="placement-display" id="placement-display">
-              <p class="placement-empty" data-empty-message>まだ部屋に置いていません。下の「ここに置いておく」を押すと、選んだ場所に表示されます。</p>
-              <ul class="placement-list" id="placement-list" aria-label="配置したキャラクター一覧" hidden></ul>
-            </div>
-          </div>
-          <div class="placement-actions">
-            <button type="button" class="text-button" id="place-character-button">ここに置いておく</button>
-            <button type="button" class="text-button text-button--danger" id="clear-placement-button">位置をクリア</button>
           </div>
         </div>
       </div>

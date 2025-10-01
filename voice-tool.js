@@ -17,6 +17,9 @@
     feedback: null,
     savedList: null,
     createButton: null,
+    stepButtons: {},
+    stepPanels: {},
+    currentStep: 'details',
     selectedSpot: null,
     profiles: [],
     placements: {},
@@ -44,6 +47,16 @@
     state.feedback = document.getElementById('form-feedback');
     state.savedList = document.getElementById('saved-characters-list');
     state.createButton = document.getElementById('create-character-button');
+    state.stepButtons = {
+      details: document.querySelector('[data-step="details"]'),
+      placement: document.querySelector('[data-step="placement"]'),
+    };
+    state.stepPanels = {
+      details: document.querySelector('[data-step-panel="details"]'),
+      placement: document.querySelector('[data-step-panel="placement"]'),
+    };
+
+    setupWorkflowControls();
 
     initializeCharCounters(form);
 
@@ -84,6 +97,88 @@
     }
 
     renderProfileList();
+    syncStepAvailability();
+  }
+
+  function setupWorkflowControls() {
+    const detailsButton = state.stepButtons.details;
+    if (detailsButton) {
+      detailsButton.addEventListener('click', () => setStep('details'));
+    }
+
+    const placementButton = state.stepButtons.placement;
+    if (placementButton) {
+      placementButton.addEventListener('click', () => setStep('placement'));
+    }
+
+    updateStepUI();
+  }
+
+  function setStep(step) {
+    if (step !== 'details' && step !== 'placement') {
+      return;
+    }
+
+    if (step === 'placement' && isPlacementStepDisabled()) {
+      return;
+    }
+
+    if (state.currentStep === step) {
+      return;
+    }
+
+    state.currentStep = step;
+    updateStepUI();
+  }
+
+  function isPlacementStepDisabled() {
+    const placementButton = state.stepButtons.placement;
+    return Boolean(placementButton && placementButton.disabled);
+  }
+
+  function updateStepUI() {
+    Object.entries(state.stepButtons).forEach(([key, button]) => {
+      if (!button) {
+        return;
+      }
+      const isActive = state.currentStep === key;
+      button.classList.toggle('is-active', isActive);
+      if (isActive) {
+        button.setAttribute('aria-current', 'step');
+      } else {
+        button.removeAttribute('aria-current');
+      }
+    });
+
+    Object.entries(state.stepPanels).forEach(([key, panel]) => {
+      if (!panel) {
+        return;
+      }
+      const isActive = state.currentStep === key;
+      panel.classList.toggle('is-active', isActive);
+      panel.hidden = !isActive;
+    });
+  }
+
+  function syncStepAvailability() {
+    const placementButton = state.stepButtons.placement;
+    if (!placementButton) {
+      return;
+    }
+
+    const hasActiveProfile = Boolean(state.activeProfileId);
+    if (hasActiveProfile) {
+      placementButton.disabled = false;
+      placementButton.removeAttribute('aria-disabled');
+    } else {
+      placementButton.disabled = true;
+      placementButton.setAttribute('aria-disabled', 'true');
+      if (state.currentStep === 'placement') {
+        state.currentStep = 'details';
+      }
+    }
+
+    updateStepUI();
   }
 
   function createEmptyProfile() {
@@ -182,6 +277,8 @@
     state.profile = profile;
     renderProfileList();
     renderPlacement();
+    syncStepAvailability();
+    setStep('placement');
     showFeedback('キャラクターを保存しました。下のエリアで置き場所も選べます。');
   }
 
@@ -699,6 +796,8 @@
     clearFieldError('name');
     clearFieldError('age');
     showFeedback('新しいキャラクターを作成できます。');
+    syncStepAvailability();
+    setStep('details');
   }
 
   function setActiveProfile(profileId) {
@@ -722,6 +821,7 @@
     clearFieldError('age');
     renderProfileList();
     renderPlacement();
+    syncStepAvailability();
   }
 
   function renderProfileList() {

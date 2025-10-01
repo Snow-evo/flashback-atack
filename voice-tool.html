@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="複雑性PTSDの方が責める声を安全に外在化し、安心できる場所に置いておくためのキャラクター化ツールです。記録は端末内に保存されます。">
+  <meta name="description" content="複雑性PTSDの方が責める声を安全に外に出し、安心できる場所にそっと置いておくためのキャラクター化ツールです。入力内容は端末内だけに保存されます。">
   <title>責める声のキャラ化ツール</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +31,7 @@
         <span>責める声を</span>
         <span>そっと部屋に置く</span>
       </h1>
-      <p class="hero-lead">自分を責める声を安全にキャラクター化し、距離を置く練習ページです。</p>
+      <p class="hero-lead">自分を責める声をキャラクターにして、心の中から一歩離してみる練習ページです。</p>
       <div class="hero-actions">
         <a class="hero-link hero-link--log" href="#voice-tool-form">
           <span class="hero-link__label">キャラを作る</span>
@@ -46,7 +46,7 @@
         <div class="voice-card surface-card voice-card--form">
           <div class="voice-card__header usage-guide">
             <h2 id="voice-tool-form" class="section-title">責める声のキャラ化フォーム</h2>
-            <p class="section-description">イメージを外に出すことで、心の中の距離を作る手助けになります。入力は端末にのみ保存されます。</p>
+            <p class="section-description">ここで書いた内容は端末内だけに保存されます。思い浮かんだ姿を言葉にして、ゆっくり外に出してみましょう。</p>
           </div>
           <div class="saved-characters" aria-live="polite">
             <div class="saved-characters__header">
@@ -63,7 +63,7 @@
                   <input type="text" id="character-name" name="name" inputmode="text" maxlength="40" data-maxlength="40" required>
                   <span class="char-count" data-count-for="character-name">0 / 40</span>
                 </div>
-                <p class="field-hint">呼びかけやすい呼び名をつけましょう。</p>
+                <p class="field-hint">あとで呼びかけやすい短い名前を書いてみましょう。</p>
                 <p class="field-error" data-error-target="name" aria-live="polite"></p>
               </div>
 
@@ -81,7 +81,7 @@
               <div class="form-field" data-field="age">
                 <label for="character-age">年齢 <span class="field-optional">任意</span></label>
                 <input type="number" id="character-age" name="age" inputmode="numeric" min="0" max="120" step="1">
-                <p class="field-hint">数字がしっくり来ない場合は空白のままでOKです。</p>
+                <p class="field-hint">年齢を決めづらいときは空欄のままで構いません。</p>
                 <p class="field-error" data-error-target="age" aria-live="polite"></p>
               </div>
             </div>
@@ -99,7 +99,7 @@
                   <option value="その他">その他</option>
                 </select>
                 <div class="input-with-counter">
-                  <input type="text" id="character-appearance-detail" name="appearanceDetail" inputmode="text" maxlength="80" data-maxlength="80" placeholder="短くメモ（最大80文字）">
+                  <input type="text" id="character-appearance-detail" name="appearanceDetail" inputmode="text" maxlength="80" data-maxlength="80" placeholder="思い浮かんだ特徴を短くメモ（最大80文字）">
                   <span class="char-count" data-count-for="character-appearance-detail">0 / 80</span>
                 </div>
               </div>
@@ -107,7 +107,7 @@
 
             <div class="form-field">
               <label for="character-phrases">よく言う言葉 <span class="field-optional">任意</span></label>
-              <textarea id="character-phrases" name="phrases" rows="4" maxlength="300" data-maxlength="300" placeholder="頭の中で繰り返される言葉を書き留めておきましょう"></textarea>
+              <textarea id="character-phrases" name="phrases" rows="4" maxlength="300" data-maxlength="300" placeholder="頭の中でよく聞こえてくる言葉をそのまま書いてください"></textarea>
               <div class="field-footer">
                 <span class="char-count" data-count-for="character-phrases">0 / 300</span>
               </div>
@@ -115,7 +115,7 @@
 
             <div class="form-field">
               <label for="character-reminder">伝えたい言葉 <span class="field-optional">任意</span></label>
-              <textarea id="character-reminder" name="reminder" rows="4" maxlength="300" data-maxlength="300" placeholder="落ち着いたときの自分から伝えたいメッセージ"></textarea>
+              <textarea id="character-reminder" name="reminder" rows="4" maxlength="300" data-maxlength="300" placeholder="落ち着いているときの自分から伝えたい言葉を書いてください"></textarea>
               <div class="field-footer">
                 <span class="char-count" data-count-for="character-reminder">0 / 300</span>
               </div>
@@ -135,7 +135,7 @@
         <div class="voice-card surface-card voice-card--placement">
           <div class="voice-card__header">
             <h2 class="section-title">置き場所</h2>
-            <p class="section-description">広い部屋の中の安全な場所に置いて、今の自分との距離を確かめましょう。</p>
+            <p class="section-description">イメージの中の広い部屋で、安心できる場所にそっと置いて距離を確かめてみましょう。</p>
           </div>
           <div class="placement-room" role="region" aria-live="polite" aria-label="キャラクターの置き場所">
             <div class="room-grid" id="placement-grid">
@@ -145,7 +145,7 @@
               <button type="button" class="placement-spot" data-spot="door" aria-pressed="false">ドアのそば</button>
             </div>
             <div class="placement-display" id="placement-display">
-              <p class="placement-empty" data-empty-message>まだ部屋に置いていません。下の「ここに置いておく」を押すと、好きな位置に置けます。</p>
+              <p class="placement-empty" data-empty-message>まだ部屋に置いていません。下の「ここに置いておく」を押すと、選んだ場所に表示されます。</p>
               <ul class="placement-list" id="placement-list" aria-label="配置したキャラクター一覧" hidden></ul>
             </div>
           </div>
@@ -162,7 +162,7 @@
         <div class="voice-card surface-card voice-card--support">
           <h2 class="section-title">つらくなったら</h2>
           <p class="section-description">
-            感情が強くなりすぎたときは、作業を中断して落ち着くためのステップを試しましょう。
+            感情が強くなりすぎたときは無理をせずに中断し、落ち着くためのステップを試しましょう。
             <a href="index.html#favorites-five-senses" class="support-link">フラッシュバック応急処置ガイドはこちら</a>
           </p>
         </div>
@@ -175,7 +175,7 @@
   <div data-include="partials/site-footer.html"></div>
 
   <noscript>
-    <p class="noscript-message">JavaScriptを有効にするとキャラクターの保存や置き場所の表示が利用できます。</p>
+    <p class="noscript-message">JavaScriptを有効にするとキャラクターの保存や置き場所の表示が使えるようになります。</p>
   </noscript>
 
   <div data-include="partials/back-to-top.html"></div>

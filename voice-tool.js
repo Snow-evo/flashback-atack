@@ -122,7 +122,7 @@
     const name = sanitizeString(nameRaw, 40);
     if (!name) {
       setFieldError('name', '1〜40文字で入力してください。');
-      showFeedback('保存できませんでした。必須項目を確認してください。', true);
+      showFeedback('保存できませんでした。必須の項目に入力漏れがないか確かめてください。', true);
       return;
     }
 
@@ -130,8 +130,8 @@
 
     const age = sanitizeAge(ageRaw);
     if (age === null) {
-      setFieldError('age', '0〜120の数字を入力してください。');
-      showFeedback('保存できませんでした。入力内容を確認してください。', true);
+      setFieldError('age', '0〜120までの数字で入力してください。');
+      showFeedback('保存できませんでした。入力した内容をもう一度確認してください。', true);
       return;
     }
 
@@ -167,7 +167,7 @@
     }
 
     if (!persistProfiles(updatedProfiles)) {
-      showFeedback('保存中にエラーが発生しました。ブラウザの設定をご確認ください。', true);
+      showFeedback('保存中に問題が起きました。ブラウザの保存設定をご確認ください。', true);
       return;
     }
 
@@ -182,7 +182,7 @@
     state.profile = profile;
     renderProfileList();
     renderPlacement();
-    showFeedback('キャラクターを保存しました。置き場所を決めることもできます。');
+    showFeedback('キャラクターを保存しました。下のエリアで置き場所も選べます。');
   }
 
   function getFormValue(formData, key) {

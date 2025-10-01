@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="複雑性PTSDの方が責める声を安全に外在化し、安心できる場所に置いておくためのキャラクター化ツールです。記録は端末内に保存されます。">
+  <title>責める声のキャラ化ツール</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="voice-tool.css">
+</head>
+<body class="voice-tool-page">
+  <div data-include="partials/quick-access.html"></div>
+  <header id="top" class="site-header voice-tool-header">
+    <div class="inner">
+      <p class="eyebrow" aria-label="Voice Externalization Tool">
+        <span class="eyebrow-icon" aria-hidden="true">
+          <svg class="bandage-icon" viewBox="0 0 64 24" role="presentation" focusable="false">
+            <rect class="bandage-base" x="4" y="6" width="56" height="12" rx="6"></rect>
+            <rect class="bandage-center" x="22" y="4" width="20" height="16" rx="5"></rect>
+            <circle class="bandage-hole" cx="28" cy="12" r="1.4"></circle>
+            <circle class="bandage-hole" cx="32" cy="12" r="1.4"></circle>
+            <circle class="bandage-hole" cx="36" cy="12" r="1.4"></circle>
+          </svg>
+        </span>
+        <span class="eyebrow-label">Voice Externalization Tool</span>
+      </p>
+      <h1 class="hero-title" aria-label="責める声のキャラ化ツール">
+        <span>責める声を</span>
+        <span>そっと部屋に置く</span>
+      </h1>
+      <p class="hero-lead">自分を責める声を安全にキャラクター化し、距離を置く練習ページです。</p>
+      <div class="hero-actions">
+        <a class="hero-link hero-link--log" href="#voice-tool-form">
+          <span class="hero-link__label">キャラを作る</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="voice-tool-main">
+    <section class="voice-tool-section">
+      <div class="inner">
+        <div class="voice-card surface-card voice-card--form">
+          <div class="voice-card__header usage-guide">
+            <h2 id="voice-tool-form" class="section-title">責める声のキャラ化フォーム</h2>
+            <p class="section-description">イメージを外に出すことで、心の中の距離を作る手助けになります。入力は端末にのみ保存されます。</p>
+          </div>
+          <div class="saved-characters" aria-live="polite">
+            <div class="saved-characters__header">
+              <h3 class="saved-characters__title">保存したキャラクター</h3>
+              <button type="button" class="text-button saved-characters__new" id="create-character-button">新しく作る</button>
+            </div>
+            <ul class="saved-characters__list" id="saved-characters-list"></ul>
+          </div>
+          <form id="character-form" class="character-form" novalidate autocomplete="off">
+            <div class="form-grid">
+              <div class="form-field" data-field="name">
+                <label for="character-name">名前 <span class="field-required">必須</span></label>
+                <div class="input-with-counter">
+                  <input type="text" id="character-name" name="name" inputmode="text" maxlength="40" data-maxlength="40" required>
+                  <span class="char-count" data-count-for="character-name">0 / 40</span>
+                </div>
+                <p class="field-hint">呼びかけやすい呼び名をつけましょう。</p>
+                <p class="field-error" data-error-target="name" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="character-gender">性別 <span class="field-optional">任意</span></label>
+                <select id="character-gender" name="gender">
+                  <option value="">選択しない</option>
+                  <option value="女性">女性</option>
+                  <option value="男性">男性</option>
+                  <option value="中性">中性</option>
+                  <option value="不明">不明</option>
+                </select>
+              </div>
+
+              <div class="form-field" data-field="age">
+                <label for="character-age">年齢 <span class="field-optional">任意</span></label>
+                <input type="number" id="character-age" name="age" inputmode="numeric" min="0" max="120" step="1">
+                <p class="field-hint">数字がしっくり来ない場合は空白のままでOKです。</p>
+                <p class="field-error" data-error-target="age" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="character-appearance">姿のイメージ <span class="field-optional">任意</span></label>
+              <div class="appearance-inputs">
+                <select id="character-appearance" name="appearancePreset">
+                  <option value="">選択しない</option>
+                  <option value="影">影</option>
+                  <option value="霧">霧</option>
+                  <option value="動物">動物</option>
+                  <option value="人物">人物</option>
+                  <option value="物体">物体</option>
+                  <option value="その他">その他</option>
+                </select>
+                <div class="input-with-counter">
+                  <input type="text" id="character-appearance-detail" name="appearanceDetail" inputmode="text" maxlength="80" data-maxlength="80" placeholder="短くメモ（最大80文字）">
+                  <span class="char-count" data-count-for="character-appearance-detail">0 / 80</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="character-phrases">よく言う言葉 <span class="field-optional">任意</span></label>
+              <textarea id="character-phrases" name="phrases" rows="4" maxlength="300" data-maxlength="300" placeholder="頭の中で繰り返される言葉を書き留めておきましょう"></textarea>
+              <div class="field-footer">
+                <span class="char-count" data-count-for="character-phrases">0 / 300</span>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="character-reminder">伝えたい言葉 <span class="field-optional">任意</span></label>
+              <textarea id="character-reminder" name="reminder" rows="4" maxlength="300" data-maxlength="300" placeholder="落ち着いたときの自分から伝えたいメッセージ"></textarea>
+              <div class="field-footer">
+                <span class="char-count" data-count-for="character-reminder">0 / 300</span>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="voice-submit-button">保存する</button>
+            </div>
+            <p class="form-feedback" id="form-feedback" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="voice-tool-section">
+      <div class="inner">
+        <div class="voice-card surface-card voice-card--placement">
+          <div class="voice-card__header">
+            <h2 class="section-title">置き場所</h2>
+            <p class="section-description">広い部屋の中の安全な場所に置いて、今の自分との距離を確かめましょう。</p>
+          </div>
+          <div class="placement-room" role="region" aria-live="polite" aria-label="キャラクターの置き場所">
+            <div class="room-grid" id="placement-grid">
+              <button type="button" class="placement-spot" data-spot="window" aria-pressed="false">窓辺</button>
+              <button type="button" class="placement-spot" data-spot="sofa" aria-pressed="false">ソファのそば</button>
+              <button type="button" class="placement-spot" data-spot="shelf" aria-pressed="false">棚の上</button>
+              <button type="button" class="placement-spot" data-spot="door" aria-pressed="false">ドアのそば</button>
+            </div>
+            <div class="placement-display" id="placement-display">
+              <p class="placement-empty" data-empty-message>まだ部屋に置いていません。下の「ここに置いておく」を押すと、好きな位置に置けます。</p>
+              <ul class="placement-list" id="placement-list" aria-label="配置したキャラクター一覧" hidden></ul>
+            </div>
+          </div>
+          <div class="placement-actions">
+            <button type="button" class="text-button" id="place-character-button">ここに置いておく</button>
+            <button type="button" class="text-button text-button--danger" id="clear-placement-button">位置をクリア</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="voice-tool-section">
+      <div class="inner">
+        <div class="voice-card surface-card voice-card--support">
+          <h2 class="section-title">つらくなったら</h2>
+          <p class="section-description">
+            感情が強くなりすぎたときは、作業を中断して落ち着くためのステップを試しましょう。
+            <a href="index.html#favorites-five-senses" class="support-link">フラッシュバック応急処置ガイドはこちら</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div data-include="partials/note.html"></div>
+  </main>
+
+  <div data-include="partials/site-footer.html"></div>
+
+  <noscript>
+    <p class="noscript-message">JavaScriptを有効にするとキャラクターの保存や置き場所の表示が利用できます。</p>
+  </noscript>
+
+  <div data-include="partials/back-to-top.html"></div>
+
+  <script src="component-loader.js" defer></script>
+  <script src="voice-tool.js" defer></script>
+</body>
+</html>

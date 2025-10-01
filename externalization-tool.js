@@ -205,7 +205,7 @@
 
       const value = sceneField.value.trim();
       if (!value) {
-        sceneField.setCustomValidity('現れてほしい場面を書いてください');
+        sceneField.setCustomValidity('現れやすい場面を書いてください');
         sceneField.reportValidity();
         return false;
       }
@@ -286,7 +286,7 @@
 
       const scene = document.createElement('p');
       scene.className = 'externalization-entry__scene';
-      scene.textContent = `現れてほしい場面：${entry.supportScene}`;
+      scene.textContent = `現れやすい場面：${entry.supportScene}`;
       header.appendChild(scene);
 
       item.appendChild(header);

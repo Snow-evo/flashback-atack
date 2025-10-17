@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="心の中の責める声をキャラクターとして書き出し、外側に置いて眺められるローカルツール。記録は端末にのみ保存されます。">
+  <title>責める声の外部化</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="character-manager.css">
+</head>
+<body class="character-manager-page">
+  <div data-include="partials/quick-access.html"></div>
+
+  <header id="top" class="site-header character-header">
+    <div class="inner">
+      <p class="eyebrow" aria-label="Character Manager">
+        <span class="eyebrow-icon" aria-hidden="true">
+          <svg class="quill-icon" viewBox="0 0 64 32" role="presentation" focusable="false">
+            <path d="M12 24C12 14 28 8 40 8c4 0 8 1 12 3l-26 17c-2 1.4-3.6 2-6 2H12Z" fill="currentColor" opacity="0.2"></path>
+            <path d="M20 24s20-13 27-13c1.5 0 3 .5 4.5 1.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M14 24h8l-2.5 4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </span>
+        <span class="eyebrow-label">Character Manager</span>
+      </p>
+      <h1 class="hero-title" aria-label="責める声のキャラクター化">
+        <span>責める声の</span>
+        <span>外部化ツール</span>
+      </h1>
+      <p class="hero-lead">自分を責める声をキャラクターとして切り出し、ここで安全に外部化してみましょう。</p>
+      <div class="hero-actions">
+        <a class="hero-link hero-link--primary" href="#character-form">
+          <span class="hero-link__label">責める声を書き出す</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="character-main">
+    <section class="character-section">
+      <div class="inner">
+        <div class="surface-card character-card">
+          <div class="character-card__header">
+            <h2 id="character-form" class="section-title">キャラクター情報</h2>
+            <p class="section-description">内側にある責める声をキャラクター化して書き出すフォームです。入力内容はこの端末のみに保存されます。</p>
+          </div>
+          <form id="character-manager-form" class="character-form" novalidate>
+            <div class="character-form__grid">
+              <div class="character-field" data-field="name">
+                <label class="field-label" for="character-name">名前 <span class="field-required">必須</span></label>
+                <input id="character-name" name="name" type="text" inputmode="text" autocomplete="off" required maxlength="80" placeholder="例：春野 シオリ">
+                <p class="field-error" data-error-target="name" aria-live="polite"></p>
+              </div>
+              <div class="character-field" data-field="era">
+                <label class="field-label" for="character-era">年代 <span class="field-optional">任意</span></label>
+                <input id="character-era" name="era" type="text" inputmode="text" autocomplete="off" maxlength="60" placeholder="例：25歳、10代前半 など">
+              </div>
+              <div class="character-field" data-field="gender">
+                <label class="field-label" for="character-gender">性別 <span class="field-optional">任意</span></label>
+                <input id="character-gender" name="gender" type="text" inputmode="text" autocomplete="off" maxlength="40" placeholder="例：女性／ノンバイナリー など">
+              </div>
+              <div class="character-field character-field--wide" data-field="appearance">
+                <label class="field-label" for="character-appearance">姿の特徴 <span class="field-optional">任意</span></label>
+                <textarea id="character-appearance" name="appearance" rows="3" maxlength="300" placeholder="髪型・服装・動物の姿・雰囲気など"></textarea>
+              </div>
+              <div class="character-field character-field--wide" data-field="catchphrase">
+                <label class="field-label" for="character-catchphrase">よく口にする言葉 <span class="field-optional">任意</span></label>
+                <textarea id="character-catchphrase" name="catchphrase" rows="2" maxlength="200" placeholder="印象的なセリフを書き留めておきましょう"></textarea>
+              </div>
+              <div class="character-field character-field--wide" data-field="message">
+                <label class="field-label" for="character-message">伝えたい言葉 <span class="field-optional">任意</span></label>
+                <textarea id="character-message" name="message" rows="3" maxlength="400" placeholder="このキャラクターが読者や誰かに伝えたいこと"></textarea>
+              </div>
+            </div>
+            <div class="character-form__actions">
+              <button type="button" class="text-button character-cancel-button" data-action="cancel-edit" hidden>編集をやめる</button>
+              <button type="submit" class="character-submit-button">保存する</button>
+            </div>
+            <p class="form-feedback" id="character-feedback" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="character-section">
+      <div class="inner">
+        <div class="surface-card character-card character-card--list">
+          <div class="character-card__header character-list__header">
+            <h2 class="section-title">保存した責める声キャラクター</h2>
+          </div>
+          <p class="section-description">ここに保存した責める声のキャラクターが表示されます。端末のローカルストレージにのみ保存され、オンラインには送信されません。</p>
+          <p class="character-empty-message" data-empty-message>まだ責める声のキャラクターが登録されていません。</p>
+          <ul class="character-list" id="character-list" aria-live="polite" aria-label="保存した責める声キャラクター一覧"></ul>
+        </div>
+      </div>
+    </section>
+
+    <div data-include="partials/note.html"></div>
+  </main>
+
+  <div data-include="partials/site-footer.html"></div>
+
+  <div data-include="partials/back-to-top.html"></div>
+
+  <script src="component-loader.js" defer></script>
+  <script src="main.js" defer></script>
+  <script src="character-manager.js" defer></script>
+</body>
+</html>

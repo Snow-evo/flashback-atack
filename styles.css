@@ -258,6 +258,25 @@ img {
   outline: 3px solid rgba(98, 187, 161, 0.45);
 }
 
+.quick-access__link--character {
+  border-color: rgba(183, 178, 174, 0.65);
+  box-shadow: 0 8px 22px rgba(139, 139, 139, 0.28);
+}
+
+.quick-access__link--character .quick-access__icon {
+  color: currentColor;
+}
+
+.quick-access__link--character:hover,
+.quick-access__link--character:focus-visible {
+  border-color: rgba(174, 167, 162, 0.78);
+  box-shadow: 0 14px 30px rgba(139, 139, 139, 0.32);
+}
+
+.quick-access__link--character:focus-visible {
+  outline: 3px solid rgba(206, 194, 187, 0.45);
+}
+
 @media (max-width: 600px) {
   .quick-access .inner {
     flex-wrap: wrap;

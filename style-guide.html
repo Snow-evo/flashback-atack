@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flashback First Aid Design System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Playfair+Display:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="style-guide.css" />
+  </head>
+  <body>
+    <header class="guide-header">
+      <div class="guide-header__inner">
+        <h1 class="guide-title">Flashback First Aid &mdash; Design System</h1>
+        <nav class="guide-nav" aria-label="Style guide sections">
+          <a href="#tokens">Tokens</a>
+          <a href="#typography">Typography</a>
+          <a href="#layout">Layout Primitives</a>
+          <a href="#components">Component Examples</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="tokens" class="guide-section">
+        <header>
+          <h2>Design Tokens</h2>
+          <p class="section-lead">
+            All visual decisions flow from the shared CSS custom properties declared in
+            <code>styles.css</code>. Use them whenever you introduce a new color, radius, spacing value, or
+            shadow so the live site and this playground stay aligned.
+          </p>
+        </header>
+
+        <div class="token-grid">
+          <article class="token-card">
+            <h3>Palette</h3>
+            <div class="token-list">
+              <div class="token-swatch">
+                <div class="token-swatch__color" style="background: var(--accent);"></div>
+                <div class="token-swatch__meta">
+                  <strong>--accent</strong>
+                  <code>#ed7a7a</code>
+                </div>
+              </div>
+              <div class="token-swatch">
+                <div class="token-swatch__color" style="background: var(--accent-soft);"></div>
+                <div class="token-swatch__meta">
+                  <strong>--accent-soft</strong>
+                  <code>#f6b6aa</code>
+                </div>
+              </div>
+              <div class="token-swatch">
+                <div class="token-swatch__color" style="background: var(--accent-green);"></div>
+                <div class="token-swatch__meta">
+                  <strong>--accent-green</strong>
+                  <code>#62bba1</code>
+                </div>
+              </div>
+              <div class="token-swatch">
+                <div class="token-swatch__color" style="background: var(--accent-orange);"></div>
+                <div class="token-swatch__meta">
+                  <strong>--accent-orange</strong>
+                  <code>#ff8a3d</code>
+                </div>
+              </div>
+              <div class="token-swatch">
+                <div class="token-swatch__color" style="background: var(--card-bg);"></div>
+                <div class="token-swatch__meta">
+                  <strong>--card-bg</strong>
+                  <span>Frosted glass</span>
+                </div>
+              </div>
+              <div class="token-swatch">
+                <div class="token-swatch__color" style="background: var(--bg-gradient);"></div>
+                <div class="token-swatch__meta">
+                  <strong>--bg-gradient</strong>
+                  <span>Background gradient</span>
+                </div>
+              </div>
+            </div>
+            <p class="utility-callout">
+              Apply colors via the token names, e.g. <code>color: var(--text-muted);</code> or
+              <code>background: var(--accent-green-soft);</code>.
+            </p>
+          </article>
+
+          <article class="token-card">
+            <h3>Spacing Scale</h3>
+            <table class="utility-table" role="presentation">
+              <thead>
+                <tr>
+                  <th scope="col">Token</th>
+                  <th scope="col">Pixels</th>
+                  <th scope="col">Usage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>--space-sm</code></td>
+                  <td>8px</td>
+                  <td>Compact gaps, pill padding</td>
+                </tr>
+                <tr>
+                  <td><code>--space-md</code></td>
+                  <td>12.8px</td>
+                  <td>Standard text spacing</td>
+                </tr>
+                <tr>
+                  <td><code>--space-lg</code></td>
+                  <td>16px</td>
+                  <td>Card content rhythm</td>
+                </tr>
+                <tr>
+                  <td><code>--space-xl</code></td>
+                  <td>19.2px</td>
+                  <td>Section padding</td>
+                </tr>
+                <tr>
+                  <td><code>--space-4xl</code></td>
+                  <td>28.8px</td>
+                  <td>Large layout offsets</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="utility-legend">
+              <span>Utilities: <code>.u-padding-md</code>, <code>.u-padding-xl</code>, <code>.u-stack-md</code></span>
+              <span>Structure classes such as <code>.inner</code> and <code>.surface-card</code> also consume this scale.</span>
+            </div>
+          </article>
+
+          <article class="token-card">
+            <h3>Radius &amp; Shadows</h3>
+            <div class="token-list">
+              <div class="token-swatch">
+                <div class="token-swatch__color u-bg-card u-padding-md" style="border-radius: var(--radius-4xl);"></div>
+                <div class="token-swatch__meta">
+                  <strong>--radius-4xl</strong>
+                  <span>Primary card corner</span>
+                </div>
+              </div>
+              <div class="token-swatch">
+                <div class="token-swatch__color u-bg-card u-padding-md" style="border-radius: var(--radius-full);"></div>
+                <div class="token-swatch__meta">
+                  <strong>--radius-full</strong>
+                  <span>Pill buttons</span>
+                </div>
+              </div>
+              <div class="token-swatch">
+                <div class="token-swatch__color u-bg-card u-padding-md" style="box-shadow: var(--shadow-soft);"></div>
+                <div class="token-swatch__meta">
+                  <strong>--shadow-soft</strong>
+                  <span>Default elevation</span>
+                </div>
+              </div>
+              <div class="token-swatch">
+                <div class="token-swatch__color u-bg-card u-padding-md" style="box-shadow: var(--shadow-card);"></div>
+                <div class="token-swatch__meta">
+                  <strong>--shadow-card</strong>
+                  <span>Feature cards</span>
+                </div>
+              </div>
+            </div>
+            <div class="utility-legend">
+              <span>Utilities: <code>.u-radius-4xl</code>, <code>.u-radius-pill</code>, <code>.u-shadow-soft</code></span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="typography" class="guide-section">
+        <header>
+          <h2>Typography</h2>
+          <p class="section-lead">
+            The experience pairs the serif headline font <strong>Playfair Display</strong> with the sans-serif
+            body font <strong>Noto Sans JP</strong>. Keep hierarchy by following the clamp-based scale below.
+          </p>
+        </header>
+
+        <div class="typography-samples">
+          <article>
+            <h3 class="hero-title">ヒーローヘッダー / Hero Title</h3>
+            <p class="typography-token">class: <code>.hero-title</code> &mdash; clamp(2rem, 5vw, 2.8rem)</p>
+            <p class="hero-lead">
+              サイトの最初に登場する印象的な見出し。Playfair Display をベースに、柔らかい行間で安心感を演出します。
+            </p>
+          </article>
+          <article>
+            <h3 class="section-title">セクション見出し / Section Title</h3>
+            <p class="typography-token">class: <code>.section-title</code> &mdash; clamp(1.45rem, 2.8vw, 1.85rem)</p>
+            <p class="section-description">
+              セクション導入に使用。<code>.section-description</code> で補足テキストを続け、読みやすさを保ちます。
+            </p>
+          </article>
+          <article>
+            <h3>本文スタイル / Body Copy</h3>
+            <p class="typography-token">element: <code>&lt;p&gt;</code> &mdash; font-family: var(--body-font); line-height: 1.7</p>
+            <p>
+              五感のグラウンディングや呼吸の調整など、どのテクニックも「今ここ」に戻るための小さなステップです。文章は短く、
+              安心を感じられる言葉選びを心掛けます。
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="layout" class="guide-section">
+        <header>
+          <h2>Layout Primitives</h2>
+          <p class="section-lead">
+            Reuse the structural helpers below to keep spacing, rhythm, and frosted surfaces consistent across the
+            site.
+          </p>
+        </header>
+
+        <div class="layout-demos">
+          <div class="surface-card demo-stack">
+            <h3>.inner</h3>
+            <p>
+              A centered container constrained to <code>min(1100px, 90vw)</code>. Combine with
+              <code>.surface-card</code> for glassmorphism panels.
+            </p>
+            <div class="demo-grid">
+              <div class="surface-card surface-card--balanced">
+                <h4>Surface Card</h4>
+                <p>
+                  Default elevation with blurred background and generous radii. Use for key sections and summaries.
+                </p>
+              </div>
+              <div class="surface-card">
+                <h4>Stack Utility</h4>
+                <div class="u-stack-md">
+                  <p class="utility-token"><code>.u-stack-md</code></p>
+                  <p>
+                    Utility classes expose the spacing tokens without duplicating component styles. Tweak the gap to
+                    explore responsive density.
+                  </p>
+                </div>
+              </div>
+              <div class="surface-card">
+                <h4>Padding Utility</h4>
+                <div class="u-stack-md">
+                  <p><code>.u-padding-md</code></p>
+                  <div class="u-padding-md u-bg-card u-radius-4xl">
+                    カード内部の余白を即座に調整できます。
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="components" class="guide-section">
+        <header>
+          <h2>Component Examples</h2>
+          <p class="section-lead">
+            The patterns below recreate production markup so changes can be previewed here before landing in
+            <code>index.html</code> or other pages.
+          </p>
+        </header>
+
+        <div class="component-showcase">
+          <section>
+            <header>
+              <h3>Hero Header</h3>
+            </header>
+            <div class="component-body hero-demo">
+              <p class="eyebrow" aria-label="Flashback First Aid">
+                <span class="eyebrow-icon" aria-hidden="true">
+                  <svg class="bandage-icon" viewBox="0 0 64 24" role="presentation" focusable="false">
+                    <rect class="bandage-base" x="4" y="6" width="56" height="12" rx="6"></rect>
+                    <rect class="bandage-center" x="22" y="4" width="20" height="16" rx="5"></rect>
+                    <circle class="bandage-hole" cx="28" cy="12" r="1.4"></circle>
+                    <circle class="bandage-hole" cx="32" cy="12" r="1.4"></circle>
+                    <circle class="bandage-hole" cx="36" cy="12" r="1.4"></circle>
+                  </svg>
+                </span>
+                <span class="eyebrow-label">Flashback First Aid</span>
+              </p>
+              <h2 class="hero-title">
+                <span>フラッシュバック</span>
+                <span>応急対処ガイド</span>
+              </h2>
+              <p class="hero-lead">
+                記憶の波に飲み込まれそうになった瞬間に、「今ここ」に戻るためのアイデアを集めました。
+              </p>
+              <div class="hero-actions">
+                <a class="hero-link hero-link--guide" href="#">
+                  <span class="hero-link__icon" aria-hidden="true">
+                    <svg class="heart-icon" viewBox="0 0 24 24" role="presentation" focusable="false">
+                      <path
+                        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                      ></path>
+                    </svg>
+                  </span>
+                  <span class="hero-link__label">お気に入りを選ぶ</span>
+                </a>
+              </div>
+            </div>
+            <div class="component-body component-meta">
+              <p>Source: <code>index.html</code> hero block. Tweak copy, spacing, or icon here before copying upstream.</p>
+              <p>
+                Remember to update both <code>style-guide.html</code> and <code>styles.css</code> if structural styles change.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <header>
+              <h3>Quick Access Pills</h3>
+            </header>
+            <div class="component-body quick-access quick-access-demo">
+              <div class="inner">
+                <a class="quick-access__link" href="#favorites-five-senses">五感で「今」をつかまえる</a>
+                <a class="quick-access__link" href="#breathing">呼吸と身体を整える</a>
+              </div>
+            </div>
+            <div class="component-body component-meta">
+              <p>
+                Pair with sticky positioning for persistent navigation. Buttons share the radius and border tokens
+                highlighted above.
+              </p>
+              <pre class="code-sample">&lt;div class="quick-access"&gt;
+  &lt;div class="inner"&gt;
+    &lt;a class="quick-access__link" href="#"&gt;セクション&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </section>
+
+          <section>
+            <header>
+              <h3>Tip Card</h3>
+            </header>
+            <div class="component-body">
+              <ol class="tip-list">
+                <li>
+                  <div class="tip-content">
+                    <h4>5-4-3-2-1 グラウンディング</h4>
+                    <p>感覚を一つずつ数えて、過去の映像から距離を取ります。</p>
+                  </div>
+                </li>
+              </ol>
+            </div>
+            <div class="component-body component-meta">
+              <p>
+                Tip items live in ordered lists with <code>.tip-list</code>. Use <code>data-tip-id</code> when you need anchor
+                links.
+              </p>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        このガイドで確認した変更は、対応する本番ファイルにも反映してください。色・タイポグラフィ・余白の追加はまず
+        <code>styles.css</code> にトークンを定義し、その後コンポーネントとドキュメントを更新します。
+      </p>
+    </footer>
+  </body>
+</html>
